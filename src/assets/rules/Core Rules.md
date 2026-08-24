@@ -293,7 +293,7 @@ Repeat from step 3
 | **Feral** | See Animal Transformation |
 # Character Creation
 ## Free Starter Choices 
-Begin with 5 Body, 5 Mind and 5 Soul 
+Begin with 5 Body, 5 Mind, 5 Soul and 5 movement
 
 ### Background (Free)
 

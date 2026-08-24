@@ -574,7 +574,7 @@ You will gain **Class Points** from **Bonus Objectives**, and you need a certain
 
 # Character Creation
 ## Free Starter Choices 
-Begin with 5 Body, 5 Mind, and 5 Soul 
+Begin with 5 Body, 5 Mind, 5 Soul and 5 movement
 
 ### Background
 
