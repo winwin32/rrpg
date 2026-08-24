@@ -8,7 +8,7 @@ ReactDOM.createRoot(
     document.getElementById("root")
 ).render(
     <React.StrictMode>
-        <BrowserRouter>
+        <BrowserRouter basename="/rrpg">
             <App />
         </BrowserRouter>
     </React.StrictMode>
