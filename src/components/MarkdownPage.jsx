@@ -160,6 +160,13 @@ function MarkdownPage({ files, images = {}, title }) {
     );
 
     const [selectedHeading, setSelectedHeading] = useState(null);
+    const [isFileListOpen, setIsFileListOpen] = useState(false);
+
+    function selectFile(path, headingId = null) {
+        setSelectedFile(path);
+        setSelectedHeading(headingId);
+        setIsFileListOpen(false);
+    }
 
     useEffect(() => {
         if (!markdownContentRef.current) {
@@ -183,8 +190,40 @@ function MarkdownPage({ files, images = {}, title }) {
 
     return (
         <div className="markdown-page">
-            <aside className="markdown-sidebar">
+            <button
+                className="markdown-file-toggle"
+                aria-expanded={isFileListOpen}
+                aria-controls="markdown-file-list"
+                onClick={() => setIsFileListOpen(true)}
+            >
+                More
+            </button>
+
+            {isFileListOpen && (
+                <button
+                    className="markdown-sidebar-backdrop"
+                    aria-label="Close file list"
+                    onClick={() => setIsFileListOpen(false)}
+                />
+            )}
+
+            <aside
+                id="markdown-file-list"
+                className={
+                    isFileListOpen
+                        ? "markdown-sidebar mobile-open"
+                        : "markdown-sidebar"
+                }
+            >
                 <h2>{title}</h2>
+
+                <button
+                    className="markdown-file-close"
+                    aria-label="Close file list"
+                    onClick={() => setIsFileListOpen(false)}
+                >
+                    Close
+                </button>
 
                 {entries.map(([path, markdown]) => {
                     const filename =
@@ -202,10 +241,7 @@ function MarkdownPage({ files, images = {}, title }) {
                                         ? "markdown-file active"
                                         : "markdown-file"
                                 }
-                                onClick={() => {
-                                    setSelectedFile(path);
-                                    setSelectedHeading(null);
-                                }}
+                                onClick={() => selectFile(path)}
                             >
                                 {filename}
                             </button>
@@ -218,10 +254,9 @@ function MarkdownPage({ files, images = {}, title }) {
                                             paddingLeft: `${8 + heading.level * 10}px`
                                         }}
                                         key={heading.id}
-                                        onClick={() => {
-                                            setSelectedFile(path);
-                                            setSelectedHeading(heading.id);
-                                        }}
+                                        onClick={() =>
+                                            selectFile(path, heading.id)
+                                        }
                                     >
                                         {heading.text}
                                     </button>
