@@ -450,6 +450,10 @@ svg {
 
         padding: 20px;
     }
+
+    .tooltip-popup {
+        width: min(300px, calc(100vw - 24px));
+    }
 }
 
 /* ========================= */
