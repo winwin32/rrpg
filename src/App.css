@@ -1,0 +1,578 @@
+body {
+    margin: 0;
+    background: #1e1e1e;
+    color: white;
+    font-family: Arial, sans-serif;
+}
+
+.game {
+    padding: 20px;
+}
+
+h1 {
+    margin-top: 0;
+}
+
+svg {
+    background: #111;
+    border: 1px solid #444;
+}
+
+.hex {
+    fill: #292929;
+    stroke: #555;
+    stroke-width: 2;
+}
+
+.hex:hover {
+    fill: #3b3b3b;
+}
+
+.hex.selected {
+    fill: #555;
+    stroke: #4da6ff;
+    stroke-width: 4;
+}
+
+.unit-name {
+    fill: white;
+    font-size: 11px;
+    font-weight: bold;
+    pointer-events: none;
+}
+
+.unit-selection {
+    fill: none;
+    stroke: #4da6ff;
+    stroke-width: 3;
+    pointer-events: none;
+}
+
+/* ========================= */
+/* PROFILE MODAL             */
+/* ========================= */
+
+.profile-overlay {
+    position: fixed;
+    inset: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(0, 0, 0, 0.75);
+
+    z-index: 1000;
+}
+
+.profile-modal {
+    width: 350px;
+
+    padding: 30px;
+
+    background: #242424;
+
+    border: 1px solid #555;
+    border-radius: 10px;
+
+    box-shadow:
+        0 10px 40px rgba(0, 0, 0, 0.6);
+}
+
+.profile-modal h2 {
+    margin-top: 0;
+    margin-bottom: 25px;
+}
+
+.profile-modal label {
+    display: block;
+
+    margin-bottom: 6px;
+
+    font-weight: bold;
+}
+
+.profile-modal input,
+.profile-modal select {
+    width: 100%;
+
+    box-sizing: border-box;
+
+    margin-bottom: 20px;
+
+    padding: 10px;
+
+    background: #151515;
+    color: white;
+
+    border: 1px solid #555;
+    border-radius: 5px;
+
+    font-size: 16px;
+}
+
+.profile-modal button {
+    color:#111;
+
+    width: 100%;
+
+    padding: 12px;
+
+    font-size: 16px;
+
+    cursor: pointer;
+}
+
+.profile-modal button:disabled {
+    color:#111;
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.profile-preview {
+    display: block;
+
+    width: 100px;
+    height: 100px;
+
+    object-fit: contain;
+
+    margin: 0 auto 20px;
+}
+
+.enemy-hex {
+    fill: #5a3030;
+}
+
+/* ========================= */
+/* MAIN NAVIGATION           */
+/* ========================= */
+
+.main-nav {
+    display: flex;
+    gap: 10px;
+
+    padding: 12px 20px;
+
+    background: #111;
+    border-bottom: 1px solid #444;
+}
+
+.main-nav a {
+    padding: 8px 14px;
+
+    color: #ccc;
+    text-decoration: none;
+
+    border-radius: 4px;
+}
+
+.main-nav a:hover {
+    background: #333;
+}
+
+.main-nav a.active {
+    background: #4da6ff;
+    color: white;
+}
+
+
+/* ========================= */
+/* MARKDOWN PAGES            */
+/* ========================= */
+
+.markdown-page {
+    display: flex;
+
+    height: calc(100vh - 60px);
+}
+
+
+/* LEFT FILE LIST */
+
+.markdown-sidebar {
+    width: 150px;
+
+    flex-shrink: 0;
+
+    padding: 20px;
+
+    background: #181818;
+
+    border-right: 1px solid #444;
+
+    overflow-y: auto;
+}
+
+.markdown-sidebar h2 {
+    margin-top: 0;
+}
+
+
+/* FILE BUTTONS */
+
+.markdown-file {
+    display: block;
+
+    width: 100%;
+
+    padding: 10px;
+    margin-bottom: 5px;
+
+    text-align: left;
+
+    background: transparent;
+
+    color: #ccc;
+
+    border: none;
+
+    cursor: pointer;
+}
+
+.markdown-file:hover {
+    background: #333;
+}
+
+.markdown-file.active {
+    background: #4da6ff;
+    color: white;
+}
+
+.markdown-file-group {
+    margin-bottom: 12px;
+}
+
+.markdown-outline {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.markdown-heading-link {
+    width: 100%;
+
+    padding-top: 4px;
+    padding-right: 4px;
+    padding-bottom: 4px;
+
+    text-align: left;
+
+    background: transparent;
+
+    color: #999;
+
+    border: none;
+
+    cursor: pointer;
+}
+
+.markdown-heading-link:hover {
+    background: #2b2b2b;
+
+    color: white;
+}
+
+
+/* MARKDOWN CONTENT */
+
+.markdown-content {
+    flex: 1;
+
+    text-align: left;
+
+    padding: 40px;
+
+    overflow-y: auto;
+
+    background: #1e1e1e;
+
+    color: #ddd;
+}
+
+.markdown-content img {
+    max-width: 100%;
+    padding: 20px;
+}
+
+.markdown-content h1,
+.markdown-content h2,
+.markdown-content h3 {
+    color: white;
+}
+
+.markdown-content h1 {
+    border-bottom: 1px solid #555;
+    padding-bottom: 20px;
+    font-size: 2em;
+}
+
+.markdown-content code {
+    padding: 2px 5px;
+
+    background: #111;
+
+    border-radius: 3px;
+}
+
+.markdown-content pre {
+    padding: 15px;
+
+    background: #111;
+
+    overflow-x: auto;
+}
+
+.markdown-content blockquote {
+    margin-left: 0;
+
+    padding-left: 15px;
+
+    border-left: 4px solid #4da6ff;
+
+    color: #aaa;
+}
+
+.markdown-content table {
+    width: 100%;
+
+    margin: 20px 0;
+
+    border-collapse: collapse;
+}
+
+.markdown-content th,
+.markdown-content td {
+    padding: 10px 12px;
+
+    text-align: left;
+
+    border: 1px solid #555;
+}
+
+.markdown-content th {
+    background: #2b2b2b;
+
+    color: white;
+}
+
+.markdown-content tr:nth-child(even) {
+    background: #242424;
+}
+
+/* ========================= */
+/* ABILITIES PAGE            */
+/* ========================= */
+
+.abilities-page {
+    padding: 20px;
+}
+
+
+/* ========================= */
+/* FILTERS                   */
+/* ========================= */
+
+.ability-filters {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 8px;
+
+    margin-bottom: 25px;
+
+    padding-bottom: 15px;
+
+    border-bottom: 1px solid #444;
+}
+
+.ability-filter {
+    padding: 8px 14px;
+
+    background: #242424;
+
+    color: #ccc;
+
+    border: 1px solid #555;
+    border-radius: 5px;
+
+    cursor: pointer;
+}
+
+.ability-filter:hover {
+    background: #333;
+}
+
+.ability-filter.active {
+    background: #4da6ff;
+
+    border-color: #4da6ff;
+
+    color: white;
+}
+
+.ability-filter-group {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap: 6px;
+
+    align-items: center;
+}
+
+.ability-filter.requirement {
+    background: #1d2b36;
+
+    border-color: #405b6d;
+
+    color: #a9c7d9;
+}
+
+.ability-filter.requirement.active {
+    background: #35749e;
+
+    border-color: #5da8d8;
+
+    color: white;
+}
+
+.ability-requirement-input {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    color: #ccc;
+}
+
+.ability-requirement-input input {
+    width: 70px;
+
+    padding: 8px;
+
+    background: #1b1b1b;
+
+    color: white;
+
+    border: 1px solid #555;
+    border-radius: 5px;
+}
+
+
+/* ========================= */
+/* ABILITY                   */
+/* ========================= */
+
+.ability-section {
+    text-align: left;
+
+    max-width: 900px;
+
+    margin-bottom: 35px;
+
+    padding-bottom: 25px;
+
+    border-bottom: 1px solid #444;
+}
+
+.ability-section h2 {
+    margin-top: 0;
+
+    color: white;
+}
+
+.ability-section p {
+    line-height: 1.6;
+}
+
+/* ========================= */
+/* TOOLTIP                   */
+/* ========================= */
+
+.tooltip-wrapper {
+    position: relative;
+
+    display: inline;
+}
+
+.tooltip-term {
+    color: #96c7f7;
+
+    border-bottom: none;
+
+    cursor: help;
+}
+
+.tooltip-gm-discretion .tooltip-term {
+    padding: 1px 4px;
+
+    background: #315f3b;
+
+    color: #d8f5dc;
+
+    border-radius: 3px;
+}
+
+.tooltip-popup {
+    position: fixed;
+
+    width: 300px;
+
+    padding: 12px 15px;
+
+    background: #181818;
+
+    color: #ddd;
+
+    border: 1px solid #555;
+    border-radius: 6px;
+
+    box-shadow:
+        0 5px 20px
+        rgba(0, 0, 0, 0.5);
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    pointer-events: none;
+
+    transition:
+        opacity 0.15s ease;
+
+    z-index: 9999;
+}
+
+.tooltip-wrapper:hover
+.tooltip-popup {
+
+    opacity: 1;
+
+    visibility: visible;
+}
+
+.tooltip-popup-visible {
+    opacity: 1;
+
+    visibility: visible;
+}
+
+.tooltip-popup.tooltip-gm-discretion {
+    border-color: #6fb77a;
+
+    box-shadow:
+        0 5px 20px
+        rgba(49, 95, 59, 0.5);
+}
+
+.tooltip-popup h1,
+.tooltip-popup h2,
+.tooltip-popup h3 {
+    margin-top: 0;
+
+    color: white;
+}
+
+.tooltip-popup p {
+    margin-bottom: 0;
+}
