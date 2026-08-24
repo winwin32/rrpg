@@ -3,7 +3,7 @@ Player characters can attempt anything in Reforged RPG.
 
 If the action is impossible, the action fails, and the Game Master determines the consequence of failure. 
 
-If the action is possible and is difficult, dangerous or has a time constraint, roll the ten- sided- die plus any bonuses against a target number. 
+If the action is possible and is difficult, dangerous or has a time constraint, roll the ten-sided-die plus any bonuses against a target number. 
 
 -  If the roll is equal to or higher than the target number, the player succeeds. 
 
@@ -101,7 +101,7 @@ The **Action Pool** replenishes whenever the character gets ==an adequate rest.=
 
 This ==highlight== designates that this is left up to the Game Master's Discretion, they can decide how this best fits the adventure. 
 # Abilities
-An **Ability** is a pre- defined action a player can take. 
+An **Ability** is a pre-defined action a player can take. 
 
 Like actions, abilities cost 1 **Action Token** while used inside encounters and sometimes require rolls. 
 
@@ -415,7 +415,7 @@ Passive
 
 Passive 
 
--  Gain 1 weapon (requires “long- ranged” tag) 
+-  Gain 1 weapon (requires “long-ranged” tag) 
 
 -  Unlock Long Ranged Weapons Training 
 
