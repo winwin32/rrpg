@@ -448,7 +448,7 @@ Upon adding the 6th die to the pool, roll the **tension pool** and clear it.
 
 On a world map, each day of travel by foot is represented by 1 map-hex. 
 
-==hex-map.png==
+![Hex Map](../hex-map.png)
 
 Every time a party crosses a hex, they must Navigate. 
 
