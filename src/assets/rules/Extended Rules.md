@@ -78,6 +78,10 @@ There are 3 attributes in Reforged RPG, **Body**, **Mind** and **Soul**
 
 Most bonuses for rolls will use one of these attributes.
 
+Each character starts off with a base 5 in each attribute, but only numbers higher or lower than five will affect rolls. 
+
+6 body gives a +1 to body rolls, 4 mind gives -1 to mind rolls, etc.
+
 - - -
 
 # Encounters
