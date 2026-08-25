@@ -14,7 +14,7 @@ Honeycomb
 
 Large
 
-Class points 
+Progression Points 
 
 Hex 
 
@@ -104,7 +104,7 @@ An **objective** is something the party wants to accomplish, and there can be mo
 
 A **bonus objective** is something an individual party member wants to accomplish other than the main objective while in this encounter. 
 
-Bonus objectives always award **Class Points** (See Character Progression for more details) 
+Bonus objectives always award **Progression Points** (See Character Progression for more details) 
 
 ### Example Bonus Objectives:
 
@@ -314,7 +314,7 @@ Ability rolls always succeed against vulnerable targets
 
 **Total Threat** is equal to the base threat of all enemies in range to attack at the start of Step 5 of the combat encounter.
 
-All enemies then attack on Step 5, not requiring a roll.
+Note that enemies do not require a roll to hit an attack in this stage of the encounter.
 
 **Party Defense** is determined by adding a character’s toughness to the total every time a character is attacked. 
 
@@ -340,7 +340,7 @@ Shifting does not cost an action token
 
 Lockdown is a scaling effect that makes movement around the subject more difficult. 
 
-Stacking lockdown can help protect more vulnerable party members by controlling areas of the battlefield. 
+Stacking lockdown can help protect more vulnerable party members by controlling the hexes surrounding the player that stacks it. 
 
 Lockdown is a condition, **Conditions** are effects added by abilities. 
 
@@ -568,255 +568,6 @@ To level up, characters need to complete the main objective of 3 encounters.
 
 All characters receive 2 experience points to spend every level up. They also receive their **Foreshadowed Ability** for free.
 
-**Class points** represent specific experience with a skill or source of power. 
+**Progression Points** represent specific experience with a skill or source of power. 
 
-You will gain **Class Points** from **Bonus Objectives**, and you need a certain threshold to unlock higher-level abilities. 
-
-# Character Creation
-## Free Starter Choices 
-Begin with 5 Body, 5 Mind, 5 Soul and 5 movement
-
-### Background
-
-Free 
-
-Choose 1: 
-
-Body, Mind, Soul 
-
-Gain +1 to that attribute 
-
-
-Choose 1: 
-
-Sneak, Expound, Persuasion
-
-Gain +1 to roll when using that ability 
-
-Choose a “social context” that fits your background 
-
-
-### Race and Culture
-
-Free 
-
-Choose a “social context” that fits your race and culture 
-
-If choosing a race other than human, gain 1 Magical Heritage 
-
-
-### Equipment 
-
-Free 
-
-1 torch 
-
-1 small knife 
-
-1 day of rations 
-
-5 gold coins 
-
-Common clothing 
-
-
-## Allocate 5 Experience Points 
-
-(When receiving a new item or ability, answer “How did the character get this?”) 
-
-
-
-### Tailored 
-
-Passive 
-
-Gain one of the following:
-
-**Cheap Armor** 
-
-- +1 Toughness 
-
-**Traveller’s Clothes**
-
-- +1 Comfort 
-
-**Loose Wrap**
-
-- +1 Body
-
-**Enchanted Robe**
-
-- +1 Mind
-
-**Stylish Outfit**
-
-- +1 Soul 
-
-
-### **Shield** 
-
-Passive 
-
-- Gain weapon (no “heavy” or “long ranged” tags) 
-
-- Gain shield 
-
-- Unlock Shield Training 
-
-- +1 Body 
-
-- “Threatening” social context 
-
-### **Heavy**
-
-Passive 
-
-- Gain weapon (requires “heavy” tag) 
-
-- Unlock Heavy Weapon Training 
-
-- +1 Body 
-
-- “Threatening” social context 
-
-### **Light**
-
-Passive 
-
-- Gain weapon (requires “light” tag) 
-
-- Unlock Light Weapon Training
-
-- +1 Body 
-
-- “Threatening” social context 
-
-### **Dual Wielding**
-
-Passive 
-
-- Gain 2 weapons (no “heavy” or “long ranged” tags)
-
-- Unlock Dual Weapons Training 
-
-- +1 Body 
-
-- “Threatening” social context 
-
-### **Long Ranged**
-
-Passive 
-
-- Gain 1 weapon (requires “long-ranged” tag) 
-
-- Unlock Long Ranged Weapons Training 
-
-- +1 Body 
-
-- “Threatening” social context 
-
-### **The Elements**
-
-Passive 
-
-- Gain “Elemental Crystal”
-
-- Unlock Arcane Energy 
-
-- Gain “Studious” social context 
-
-- +1 Mind 
-
-### **Necromancy**
-
-Passive 
-
-- Gain “Grimoire”
-
-- Unlock Dark Power 
-
-- Gain “Creepy” social context 
-
-- +1 Mind 
-
-### **Illusions**
-
-Passive 
-
-- Gain “Night’s Cloak”
-
-- Unlock Magical Secrets 
-
-- +1 Mind 
-
-### **Performance**
-
-Passive 
-
-- Gain “Musical Instrument” or other tool for performance 
-
-- Unlock Dramatic Flair 
-
-- Gain “Performer” social context 
-
-- +1 Soul
-
-### **Justice and Mercy**
-
-Passive 
-
-- Gain “Symbol of Faith” 
-
-- Unlock Faith
-
-- Gain “Pious” social context 
-
-- +1 Soul
-
-### **Animal Form**
-
-Passive 
-
-- Gain “Wild Totem” 
-
-- Unlock Natural Connection
-
-- Gain “Outlander” social context 
-
-- +1 Soul
-
-### **Taming**
-
-Passive 
-
-- Gain “Bag of Treats” 
-
-- Unlock Creature Familiarity 
-
-- Gain “Animal Lover” social context
-
-- +1 Soul
-
-### Determine Characteristics 
-
-Write one or more characteristics for your character linked to each unique class point added. 
-
-Even if a character doesn’t have a characteristic for every quirk or personality trait, they can still act however the player likes. 
-
-Characteristics should just be the most visible or recognizable driving force behind the character’s decisions.
-
-**Example Characteristics:** 
-
-Matchstick likes to blow things up! (Elemental power) 
-
-John protects any helpless people that remind him of his daughter. (Heavy prowess)
-
-Windstrider believes that anyone with green eyes has been possessed by the fae (Nature Spirit knowledge) 
-
-**In encounters, the above characters will get bonus objectives like:**
-
-Blow up 2 enemies at once, because Matchstick likes to blow things up! 
-
-Protect the dryad because John protects any helpless people that remind him of his daughter. 
-
-Never turn your back on the green-eyed archer because Windstrider believes that anyone with green eyes has been possessed by the fae
+You will gain **Progression Points** from **Bonus Objectives**, and you need a certain threshold to unlock higher-level abilities. 

@@ -12,6 +12,25 @@ const ruleFiles = import.meta.glob(
     }
 );
 
+const preferredRuleOrder = [
+    "Core Rules.md",
+    "Character Creation.md",
+    "Extended Rules.md"
+];
+
+const orderedRuleFiles = Object.fromEntries([
+    ...preferredRuleOrder.flatMap(filename =>
+        Object.entries(ruleFiles).filter(([path]) =>
+            path.endsWith(`/${filename}`)
+        )
+    ),
+    ...Object.entries(ruleFiles).filter(([path]) =>
+        !preferredRuleOrder.some(filename =>
+            path.endsWith(`/${filename}`)
+        )
+    )
+]);
+
 const ruleImages = Object.fromEntries(
     Object.entries(
         import.meta.glob("../assets/rules/*.{png,jpg,jpeg,gif,webp}", {
@@ -26,7 +45,7 @@ function Rules() {
     return (
         <MarkdownPage
             title="Rules"
-            files={ruleFiles}
+            files={orderedRuleFiles}
             images={ruleImages}
         />
     );

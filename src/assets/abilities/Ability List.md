@@ -1415,7 +1415,7 @@ Choose 4 Spirit Animal abilities (requires 4 Creature Familiarity)
 
 The Spirit Animal flees into the wild
 
-If the Spirit Animal has a physical form and wishes to remain with the caster, it instead retreats nearby and continues travelling with the caster while it recovers
+If the Spirit Animal has a physical form and wishes to remain with the caster, it instead retreats nearby and continues traveling with the caster while it recovers
 
 ---
 
@@ -2076,15 +2076,9 @@ This ability breaks
 
 *Replaces effect*
 
-*Passive*
-
 Gain **Empowered x1**
 
 This ability cannot be reforged by **Heal**
-
-**Reforged**
-
-Lose **Empowered x1**
 
 ---
 
@@ -2105,10 +2099,6 @@ When the caster attempts to take a moment of calm and let their body recover
 **Whole**
 
 Reforge one ability
-
-**Reforged**
-
-Lose **Empowered x1**
 
 ---
 
@@ -2135,10 +2125,6 @@ Target gains 2 Action Tokens to their Action Pool
 **Broken**
 
 Gain **Tough x1**
-
-**Reforged**
-
-Lose **Tough x1**
 
 ---
 
@@ -2168,10 +2154,6 @@ Break **Heal**
 
 Gain **Tough x1**
 
-**Reforged**
-
-Lose **Tough x1**
-
 ---
 
 ## **Judgment**
@@ -2199,10 +2181,6 @@ On a success, target receives **immobilized**
 **Broken**
 
 Gain **Empowered x1**
-
-**Reforged**
-
-Lose **Empowered x1**
 
 ---
 
@@ -2253,10 +2231,6 @@ This must be the caster’s only Action this turn
 **Broken**
 
 Gain **Empowered x1**
-
-**Reforged**
-
-Lose **Empowered x1**
 
 ---
 
@@ -3593,7 +3567,7 @@ Passive
 
 Gain an artifact that stores the caster's life force
 
-Gain Darkness equal to the caster's Total Class Points each rest while the caster's artifact is intact
+Gain Darkness equal to the caster's Total Progression Points each rest while the caster's artifact is intact
 
 - - -
 
