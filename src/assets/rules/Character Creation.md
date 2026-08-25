@@ -1,7 +1,7 @@
 ﻿# Making a Character
 In Reforged RPG, players don't need to follow a defined class. 
 
-They can mix and match abilities to fit whatever vision they have for character. 
+They can mix and match abilities to fit whatever vision they have for their character. 
 
 Below are the abilities with the lowest requirements, many of which give Progression Points. 
 
@@ -69,9 +69,11 @@ Stylish Outfit
 
 ## Allocate 5 Experience Points 
 
-Select up to 5 of the starting abilities here, or choose some from the ability list. 
+Select up to 5 of the starting abilities here. 
 
 Each will cost 1 experience point.
+
+For many abilities, a player will need to first choose an ability that grants a Progression Point (Such as Shield below), then have access to the other abilities in that section. 
 
 When receiving a new item or ability, answer “How did the character get this?” 
 
@@ -121,7 +123,7 @@ When receiving a new item or ability, answer “How did the character get this?�
 > 
 > **Whole**
 > 
-> Gain **Lock Down**
+> Gain **Lockdown**
 > 
 > **Reforged**
 > 
@@ -175,11 +177,11 @@ When receiving a new item or ability, answer “How did the character get this?�
 > 
 > **Whole**
 > 
-> Gain **Lock Down**
+> Gain **Lockdown**
 > 
 > **Broken**
 > 
-> Gain **Lock Down** and **Tough x1**
+> Gain **Lockdown** and **Tough x1**
 > 
 > **Reforged**
 > 

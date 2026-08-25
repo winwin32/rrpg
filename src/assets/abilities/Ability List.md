@@ -524,7 +524,7 @@ Reforge **Clacking Bones**, **Restless Souls**, or **Evil Flesh**
 
 **Whole**
 
-Each minion gains **Lock Down**
+Each minion gains **Lockdown**
 
 **Reforged**
 
@@ -668,7 +668,7 @@ Self
 
 **Whole**
 
-Gain **Lock Down**
+Gain **Lockdown**
 
 **Reforged**
 
@@ -808,13 +808,13 @@ Self
 
 **Whole**
 
-Gain **Lock Down**
+Gain **Lockdown**
 
 **Broken**
 
 *Overwrites effect*
 
-Gain **Lock Down**
+Gain **Lockdown**
 
 Gain **Tough x1**
 
@@ -1192,11 +1192,11 @@ Self
 
 **Whole**
 
-While within an enemy’s **Lock Down**, Gain **Immobilized**
+While within an enemy’s **Lockdown**, Gain **Immobilized**
 
 Gain **Empowered x2**
 
-The enemy loses **Lock Down**
+The enemy loses **Lockdown**
 
 **Broken**
 
@@ -1515,7 +1515,7 @@ The Spirit Animal may immediately move 1 hex toward the caster
 
 The Spirit Animal becomes **Large**
 
-The Spirit Animal gains **Lock Down**
+The Spirit Animal gains **Lockdown**
 
 **Broken**
 
@@ -1804,7 +1804,7 @@ When the caster attempts to hunker down in a tough, reptilian shell
 
 **Whole**
 
-Gain **Lock Down**
+Gain **Lockdown**
 
 Receive **Tough x1** for each enemy targeting the caster
 
@@ -2284,7 +2284,7 @@ Choose an enemy
 
 Roll **Soul** vs target **Toughness**
 
-On a success, target loses **Lock Down** until the end of its next turn
+On a success, target loses **Lockdown** until the end of its next turn
 
 ---
 
