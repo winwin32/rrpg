@@ -15,15 +15,38 @@ import tooltipDictionary
 
 import Tooltip from "./Tooltip";
 
+const IGNORED_TOOLTIP_PHRASES = [
+    "Reforged"
+];
+
+function normalizeTooltipPhrase(value) {
+    return String(value)
+        .trim()
+        .toLowerCase()
+        .replace(/[’']/g, "")
+        .replace(/\s+/g, " ");
+}
+
+function isIgnoredTooltipPhrase(term) {
+    const normalizedTerm = normalizeTooltipPhrase(term);
+
+    return IGNORED_TOOLTIP_PHRASES.some(
+        ignoredPhrase =>
+            normalizeTooltipPhrase(ignoredPhrase) === normalizedTerm
+    );
+}
+
 function renderDictionaryTooltipText(text) {
 
     const terms =
         Object.keys(
             tooltipDictionary
-        ).sort(
-            (firstTerm, secondTerm) =>
-                secondTerm.length - firstTerm.length
-        );
+        )
+            .filter(term => !isIgnoredTooltipPhrase(term))
+            .sort(
+                (firstTerm, secondTerm) =>
+                    secondTerm.length - firstTerm.length
+            );
 
     if (terms.length === 0) {
         return text;
@@ -54,7 +77,7 @@ function renderDictionaryTooltipText(text) {
             const tooltip =
                 tooltipDictionary[key];
 
-            if (!tooltip) {
+            if (!tooltip || isIgnoredTooltipPhrase(part)) {
                 return (
                     <Fragment
                         key={index}

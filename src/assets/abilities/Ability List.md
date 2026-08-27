@@ -3569,6 +3569,14 @@ Gain an artifact that stores the caster's life force
 
 Gain Darkness equal to the caster's Total Progression Points each rest while the caster's artifact is intact
 
+## Adoption
+
+Passive
+
+**Whole**
+
+Gain 1 Magical Heritage
+
 - - -
 
 # Base Abilities 
@@ -3582,6 +3590,8 @@ When the caster attempts to cause harm to a target
 Range: 
 
 Adjacent 
+
+**Whole**
 
 If a target is Vulnerable kill that target
 
@@ -3607,6 +3617,8 @@ Range:
 
 Movement 
 
+**Whole**
+
 Move to a hex within range, avoiding obstacles
 
 
@@ -3623,6 +3635,14 @@ This ability functions as whole
 **Trigger**
 
 When the caster attempts to escape this dangerous situation 
+
+**Cost:**
+
+- No action token 
+
+- 1 Turn
+
+**Whole**
 
 If the caster are not adjacent to an enemy, they may initiate Fleeing for the party. 
 
@@ -3643,11 +3663,13 @@ This ability functions as whole
 
 ## Recover 
 
-Cost: 
+**Cost:**
 
 - No action token 
 
 - 1 Turn
+
+**Whole**
 
 Add 3 action tokens to Action Pool
 

@@ -568,6 +568,26 @@ To level up, characters need to complete the main objective of 3 encounters.
 
 All characters receive 2 experience points to spend every level up. They also receive their **Foreshadowed Ability** for free.
 
+If the character is missing requirements for a foreshadowed ability, it is held in reserve. 
+
+The player can continue to choose more foreshadowed abilities and whenever they do unlock that ability it will be granted.
+
 **Progression Points** represent specific experience with a skill or source of power. 
 
 You will gain **Progression Points** from **Bonus Objectives**, and you need a certain threshold to unlock higher-level abilities. 
+
+Upon each level up players can change their characteristics or Destiny. 
+
+**Death**
+
+If a character is Vulnerable and they are hit with an attack or some other form of damage, they are **Unconscious** and not able to act for the rest of the encounter. 
+
+Afterward, they must make a choice. 
+
+- Die permanently, giving one requirement free ability to new character 
+
+- Break one ability permanently, represented by some visible disability (lost eye or limb etc) 
+
+- Forego their next level up to gain the Undeath ability (Requires some party member or NPC necromancy)
+
+- Be disabled in some way (captured, turned to stone, trapped in the Spirit Plane), requiring them to control an NPC until they are rescued 

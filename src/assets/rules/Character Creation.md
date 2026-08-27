@@ -17,22 +17,30 @@ Begin with 5 Body, 5 Mind, 5 Soul and 5 movement
 **Choose 1:**
 
 - Gain +1 to Body 
+
 - Gain +1 to Mind 
+
 - Gain +1 to Soul  
 
 **Choose 1 Secondary Ability:**
 
 - Gain +1 to roll when using that ability 
 
-**Choose a “social context” that fits your background**
+**Choose a “social context”**
 
+- Choose one social context that fits the character's background 
+
+- Choose one or more that connects the character to other characters in the party
 
 ### Race and Culture (Free)
 
-Choose a “social context” that fits your race and culture 
+Choose a “social context” that fits the character's race and culture 
 
 If choosing a race other than human, gain 1 Magical Heritage 
 
+There are abilities that are unlocked via the Magical Heritage progression point, in the "Allocate 5 Experience Points" section. 
+
+Player's may or may not choose whichever ability fits their race now, and can have access to stronger racial abilities as they progress. 
 
 ### Equipment (Free)
 
@@ -1029,28 +1037,71 @@ When receiving a new item or ability, answer “How did the character get this?�
 > 
 > Sneak rolls will succeed on a near miss.
 
-## Determine Characteristics  
+Determine Characteristics 
 
-Write one or more characteristics for your character linked to each unique Progression Point added. 
+Write one or more one word adjectives describing your character, called Characteristics. 
 
-### **Example Characteristics:** 
+Then link each Characteristic to one of the character’s Progression Points. 
 
--  Matchstick likes to blow things up! (Elemental power) 
+All Progression Points need at least one Characteristic linked to them. 
 
--  John protects any helpless people that remind him of his daughter. (Heavy prowess)
+Even if a character doesn’t have a characteristic for every quirk or personality trait, they can still act however the player likes. 
 
--  Windstrider believes that anyone with green eyes has been possessed by the fae (Nature Spirit knowledge) 
+**Example Characteristics:** 
 
-### **Example Bonus Objectives for the above Characters:**
+Matchstick is explosive! (Arcane power) 
 
--  Blow up 2 enemies at once, because Matchstick likes to blow things up! 
+John is protective. (Heavy Weapon Training)
 
--  Protect the dryad because John protects any helpless people that remind him of his daughter. 
+Windstrider is suspicious. (Natural Connection) 
 
--  Never turn your back on the green eyed archer because Windstrider believes that anyone with green eyes has been possessed by the fae
+**In encounters, the above characters will get bonus objectives like:**
+
+Blow up 2 enemies at once, because Matchstick is explosive! 
+
+Protect the dryad because John is protective. 
+
+Never turn your back on the green-eyed archer because Windstrider is suspicious. 
 
 ## Choose Another Ability as a "Foreshadowed Ability"
 
 Choose one other ability. 
 
 Gain this ability upon next level up without spending an experience point. 
+
+**Destiny**
+Choose any ability that has a Progression Point requirement of 5. 
+
+Once you have all the requirements for that ability you will receive it without spending experience points. 
+
+Think of **Foreshadowed Abilities** as short term free abilities and **Destiny** as longer term free abilities. 
+
+They both will help shape the character to interact with their power in the narrative before they get it mechanically. 
+
+The character doesn’t not need the Progression Point unlocked to choose a Destiny associated with it. 
+
+Characters may only fulfill one **Destiny**, but it can be changed before it is fulfilled. 
+
+Linked to the character’s **Destiny** is **One Unique Thing**, something that sets them apart from any other character. 
+
+This isn’t an ability or power, just something interesting about how the character looks, acts or their past. 
+
+Choose **One Unique Thing** about the character. 
+
+Examples of **Destiny** and **One Unique Thing**:
+
+- **Destiny**, **Harvest of Souls**, a high level necromancy ability. 
+
+- **One Unique Thing**, Natasha’s hair has always been bone white since birth. 
+
+- **Destiny**, **Blood Frenzy**, a high level War-like race ability. 
+
+- **One Unique Thing**, Graardor doesn’t think gnomes actually exist, he thinks they’re just dwarves who were exiled for not liking beer. 
+
+- **Destiny**, **Flurry of Steel**, a high level Dual Wielding ability. 
+
+- **One Unique Thing**, Rohon was once trapped in ice many years ago and has finally been thawed. 
+
+This will be narratively tied to a character’s **Destiny**, but the specifics of how they connect do not need to be decided yet, or even need to seem related at all. 
+
+How these two meet will be part of gameplay and the story the Game Master and players tell together. 
