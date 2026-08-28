@@ -1037,7 +1037,9 @@ When receiving a new item or ability, answer “How did the character get this?�
 > 
 > Sneak rolls will succeed on a near miss.
 
-Determine Characteristics 
+- - - 
+
+## Determine Characteristics 
 
 Write one or more one word adjectives describing your character, called Characteristics. 
 
@@ -1063,13 +1065,16 @@ Protect the dryad because John is protective.
 
 Never turn your back on the green-eyed archer because Windstrider is suspicious. 
 
+- - - 
+
 ## Choose Another Ability as a "Foreshadowed Ability"
 
 Choose one other ability. 
 
 Gain this ability upon next level up without spending an experience point. 
 
-**Destiny**
+## Destiny
+
 Choose any ability that has a Progression Point requirement of 5. 
 
 Once you have all the requirements for that ability you will receive it without spending experience points. 
@@ -1090,13 +1095,19 @@ Choose **One Unique Thing** about the character.
 
 Examples of **Destiny** and **One Unique Thing**:
 
+**Natasha**
+
 - **Destiny**, **Harvest of Souls**, a high level necromancy ability. 
 
 - **One Unique Thing**, Natasha’s hair has always been bone white since birth. 
 
+**Graardor**
+
 - **Destiny**, **Blood Frenzy**, a high level War-like race ability. 
 
 - **One Unique Thing**, Graardor doesn’t think gnomes actually exist, he thinks they’re just dwarves who were exiled for not liking beer. 
+
+**Rohon**
 
 - **Destiny**, **Flurry of Steel**, a high level Dual Wielding ability. 
 
