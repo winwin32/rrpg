@@ -1093,7 +1093,7 @@ This isn’t an ability or power, just something interesting about how the chara
 
 Choose **One Unique Thing** about the character. 
 
-Examples of **Destiny** and **One Unique Thing**:
+### Examples of **Destiny** and **One Unique Thing**:
 
 **Natasha**
 
