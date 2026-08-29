@@ -26,11 +26,11 @@ Begin with 5 Body, 5 Mind, 5 Soul and 5 movement
 
 - Gain +1 to roll when using that ability 
 
-**Choose a “social context”**
+**Choose “social context”**
 
 - Choose one social context that fits the character's background 
 
-- Choose one or more that connects the character to other characters in the party
+- Choose one social context or more that connects the character to other characters in the party
 
 ### Race and Culture (Free)
 
@@ -1072,6 +1072,8 @@ Never turn your back on the green-eyed archer because Windstrider is suspicious.
 Choose one other ability. 
 
 Gain this ability upon next level up without spending an experience point. 
+
+- - - 
 
 ## Destiny
 
