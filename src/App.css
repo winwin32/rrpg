@@ -9,13 +9,250 @@ body {
     padding: 20px;
 }
 
+.game-layout {
+    display: grid;
+    grid-template-columns: 150px minmax(0, 1fr) 180px;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 12px;
+}
+
+.multiplayer-panel {
+    width: auto;
+    padding: 16px;
+    box-sizing: border-box;
+    text-align: left;
+    background: #242424;
+    border: 1px solid #444;
+    border-radius: 8px;
+}
+
+.ability-panel {
+    width: auto;
+    min-width: 0;
+    max-height: 650px;
+    padding: 16px;
+    box-sizing: border-box;
+    text-align: left;
+    background: #242424;
+    border: 1px solid #444;
+    border-radius: 8px;
+    overflow-wrap: anywhere;
+    overflow-y: auto;
+}
+
+.ability-panel h2 {
+    margin: 0 0 14px;
+    padding-bottom: 10px;
+    color: white;
+    font-size: 18px;
+    border-bottom: 1px solid #555;
+}
+
+.ability-entry {
+    padding-top: 2px;
+    color: #ddd;
+    font-size: 13px;
+}
+
+.ability-entry.ability-broken,
+.ability-entry.ability-broken h2,
+.ability-entry.ability-broken strong {
+    color: #e3a1a1;
+}
+
+.ability-entry.ability-reforged,
+.ability-entry.ability-reforged h2,
+.ability-entry.ability-reforged strong {
+    color: #a8d9b2;
+}
+
+.ability-entry + .ability-entry {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid #555;
+}
+
+.ability-entry h2 {
+    margin: 0;
+    padding-bottom: 0;
+    color: white;
+    font-size: 17px;
+    border-bottom: none;
+}
+
+.ability-heading-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.ability-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    color: white;
+    background: transparent;
+    border: 1px solid #666;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 18px;
+    line-height: 1;
+}
+
+.ability-toggle:hover {
+    background: #3b3b3b;
+}
+
+.ability-state-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    padding: 0;
+    color: white;
+    background: #8f3535;
+    border: 1px solid #c96a6a;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 1;
+}
+
+.ability-state-toggle:hover {
+    background: #b14444;
+}
+
+.ability-broken .ability-state-toggle {
+    background: #315f3b;
+    border-color: #5c9d68;
+}
+
+.ability-broken .ability-state-toggle:hover {
+    background: #3d784a;
+}
+
+.ability-reforged .ability-state-toggle {
+    color: #aaa;
+    background: transparent;
+    border-color: #666;
+}
+
+.ability-reforged .ability-state-toggle:hover {
+    background: #3b3b3b;
+}
+
+.ability-entry p {
+    margin: 0 0 10px;
+}
+
+.ability-entry strong {
+    color: white;
+}
+
+.empty-ability-list {
+    margin: 0;
+    color: #aaa;
+    font-size: 13px;
+}
+
+.multiplayer-panel h2 {
+    margin: 16px 0 10px;
+    color: white;
+    font-size: 18px;
+}
+
+.multiplayer-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin: 0;
+    color: #bbb;
+    font-size: 14px;
+}
+
+.connection-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #d66;
+}
+
+.connection-dot.connected {
+    background: #65d18a;
+}
+
+.player-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.player-list-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #444;
+}
+
+.player-list-item strong {
+    color: white;
+    overflow-wrap: anywhere;
+}
+
+.player-list-item span,
+.empty-player-list {
+    color: #aaa;
+    font-size: 13px;
+}
+
+.empty-player-list {
+    margin: 0;
+}
+
 h1 {
     margin-top: 0;
 }
 
 svg {
+    display: block;
+    width: 100%;
+    max-width: 900px;
+    height: auto;
     background: #111;
     border: 1px solid #444;
+}
+
+@media (max-width: 1100px) {
+    .game-layout {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .multiplayer-panel {
+        width: min(900px, 100%);
+        flex-basis: auto;
+    }
+
+    .ability-panel {
+        width: min(900px, 100%);
+    }
+
+    .player-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    }
 }
 
 .hex {
@@ -34,11 +271,25 @@ svg {
     stroke-width: 4;
 }
 
+.hex-path {
+    fill: rgba(96, 110, 124, 0.28);
+    
+    stroke-width: 2;
+    pointer-events: none;
+}
+
 .unit-name {
     fill: white;
     font-size: 11px;
     font-weight: bold;
     pointer-events: none;
+}
+
+.hex-distance {
+    fill: white;
+    font-family: inherit;
+    font-size: 18px;
+    font-weight: bold;
 }
 
 .unit-selection {
@@ -82,6 +333,12 @@ svg {
 .profile-modal h2 {
     margin-top: 0;
     margin-bottom: 25px;
+}
+
+.multiplayer-error {
+    margin: -10px 0 18px;
+    color: #ff9b9b;
+    font-size: 14px;
 }
 
 .profile-modal label {
@@ -579,6 +836,58 @@ svg {
 
 .ability-section p {
     line-height: 1.6;
+}
+
+.add-ability-button {
+    padding: 8px 12px;
+    color: white;
+    background: #315f3b;
+    border: 1px solid #5c9d68;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.ability-assignment-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+    margin-top: 16px;
+}
+
+.ability-assignment-controls select {
+    min-width: 150px;
+    padding: 8px;
+    color: white;
+    background: #1b1b1b;
+    border: 1px solid #555;
+    border-radius: 4px;
+}
+
+.ability-assignment-error {
+    margin: 0 0 20px;
+    color: #ff9b9b;
+}
+
+.add-ability-button:hover:not(:disabled) {
+    background: #3d784a;
+}
+
+.remove-ability-button {
+    background: #8f3535;
+    border-color: #c96a6a;
+}
+
+.remove-ability-button:hover:not(:disabled) {
+    background: #b14444;
+}
+
+.add-ability-button:disabled {
+    color: #aaa;
+    background: #292929;
+    border-color: #555;
+    cursor: not-allowed;
+    opacity: 0.8;
 }
 
 /* ========================= */
