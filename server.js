@@ -190,7 +190,8 @@ websocketServer.on("connection", socket => {
             message.type !== "move" &&
             message.type !== "add-ability" &&
             message.type !== "remove-ability" &&
-            message.type !== "update-ability-status"
+            message.type !== "update-ability-status" &&
+            message.type !== "reset-board"
         ) {
             return;
         }
@@ -267,6 +268,18 @@ websocketServer.on("connection", socket => {
                     }
                 ];
             }
+            saveBoardState();
+            sendState();
+            return;
+        }
+
+        // Handle reset board (Game Master only)
+        if (message.type === "reset-board") {
+            if (client.profile.role !== "game-master" || !Array.isArray(message.units)) {
+                return;
+            }
+
+            boardUnits = message.units;
             saveBoardState();
             sendState();
             return;

@@ -478,6 +478,35 @@ function Game() {
 
 
     // =========================
+    // RESET BOARD
+    // =========================
+
+    function resetBoard() {
+        if (
+            playerProfile?.role !== "game-master" ||
+            socket?.readyState !== WebSocket.OPEN
+        ) {
+            return;
+        }
+
+        if (window.confirm("Are you sure you want to reset the board? This will clear all unit positions and abilities.")) {
+            socket.send(
+                JSON.stringify({
+                    type: "reset-board",
+                    units: [
+                        ...initialUnits.map(unit => ({
+                            ...unit,
+                            abilities: []
+                        })),
+                        ...initialEnemies
+                    ]
+                })
+            );
+        }
+    }
+
+
+    // =========================
     // CREATE PROFILE
     // =========================
 
@@ -840,6 +869,16 @@ function Game() {
                             ? `${players.length} player${players.length === 1 ? "" : "s"} online`
                             : "Multiplayer offline"}
                     </div>
+
+                    {playerProfile?.role === "game-master" && (
+                        <button
+                            onClick={resetBoard}
+                            className="reset-board-button"
+                            title="Reset the board to initial state"
+                        >
+                            Reset Board
+                        </button>
+                    )}
 
                     {sortedPlayers.length === 0 ? (
                         <p className="empty-player-list">
