@@ -1,0 +1,91 @@
+{
+  "units": [
+    {
+      "id": "player-0",
+      "name": "Cleric",
+      "image": "/rrpg/src/assets/players/Cleric.jpg",
+      "col": 0,
+      "row": 0,
+      "type": "player",
+      "abilities": []
+    },
+    {
+      "id": "player-1",
+      "name": "Paladin",
+      "image": "/rrpg/src/assets/players/Paladin.jpg",
+      "col": 2,
+      "row": 0,
+      "type": "player",
+      "abilities": [
+        {
+          "name": "Heal",
+          "markdown": "## **Heal**\r\n\r\n*Requires 1 Faith*\r\n\r\n**Trigger**\r\n\r\nWhen the caster attempts to heal with divine power\r\n\r\n**Range**\r\n\r\n2 Hexes\r\n\r\n**Whole**\r\n\r\nChoose a target\r\n\r\nTarget reforges 3 abilities\r\n\r\nThis ability breaks\r\n\r\n**Broken**\r\n\r\n*Replaces effect*\r\n\r\nGain **Empowered x1**\r\n\r\nThis ability cannot be reforged by **Heal**\r\n\r\n---"
+        },
+        {
+          "name": "Meditate",
+          "markdown": "## **Meditate**\n\n*Requires 1 Faith*\r\n\r\n**Trigger**\r\n\r\nWhen the caster attempts to take a moment of calm and let their body recover\r\n\r\n**Cost**\r\n\r\n* 1 Action Token\r\n\r\n* 1 Turn\r\n\r\n**Whole**\r\n\r\nReforge one ability\r\n\r\n---"
+        },
+        {
+          "name": "Revelation",
+          "markdown": "## **Revelation**\n\n*Passive*\r\n\r\n*Requires 2 Faith*\r\n\r\n**Range**\r\n\r\n3 Hexes\r\n\r\n**Whole**\r\n\r\nChoose a person\r\n\r\nReveal one true Positive Motivator to the target\r\n\r\n---",
+          "status": "whole"
+        }
+      ]
+    },
+    {
+      "id": "player-2",
+      "name": "Rogue",
+      "image": "/rrpg/src/assets/players/Rogue.jpg",
+      "col": 1,
+      "row": 0,
+      "type": "player",
+      "abilities": [
+        {
+          "name": "Lightning Footwork",
+          "markdown": "## **Lightning Footwork**\n\n*Passive*\r\n\r\n*Requires 1 Light Weapons Training*\r\n\r\n**Range:**\r\n\r\nSelf\r\n\r\n**Whole**\r\n\r\nGain **Quick x2**\r\n\r\n**Reforged**\r\n\r\n*Replaces effect*\r\n\r\nThis ability does not function \r\n\r\n---"
+        },
+        {
+          "name": "Sharp Edge",
+          "markdown": "## **Sharp Edge**\n\n*Passive*\r\n\r\n*Requires 1 Light Weapons Training and Coup de Grâce*\r\n\r\n**Range:**\r\n\r\nSelf\r\n\r\n**Whole**\r\n\r\nGain **Empowered x2**\r\n\r\n**Reforged**\r\n\r\n*Replaces effect*\r\n\r\nThis ability does not function \r\n\r\n---",
+          "status": "whole"
+        }
+      ]
+    },
+    {
+      "id": "player-3",
+      "name": "Wizard",
+      "image": "/rrpg/src/assets/players/Wizard.jpg",
+      "col": 3,
+      "row": 0,
+      "type": "player",
+      "abilities": []
+    },
+    {
+      "id": "enemy-0",
+      "name": "goblin",
+      "image": "/rrpg/src/assets/enemies/goblin.png",
+      "col": 3,
+      "row": 3,
+      "type": "enemy",
+      "abilities": []
+    },
+    {
+      "id": "enemy-1",
+      "name": "orc",
+      "image": "/rrpg/src/assets/enemies/orc.png",
+      "col": 5,
+      "row": 4,
+      "type": "enemy",
+      "abilities": []
+    },
+    {
+      "id": "enemy-2",
+      "name": "skeleton",
+      "image": "/rrpg/src/assets/enemies/skeleton.png",
+      "col": 7,
+      "row": 5,
+      "type": "enemy",
+      "abilities": []
+    }
+  ]
+}

@@ -4,28 +4,28 @@ Specific experience with a skill or source of power.
 
 **Examples:**
 
-Shield Training 
+Shield Training
 
 
-Heavy Weapon Training 
+Heavy Weapons Training
 
 
-Light Weapon Training
+Light Weapons Training
 
 
-Dual Weapons Training 
+Dual Weapons Training
 
 
-Long Ranged Weapons Training 
+Long Ranged Weapons Training
 
 
-Arcane Energy   
+Arcane Energy  
 
 
-Dark Power  
+Dark Power 
 
 
-Magical Secrets 
+Magical Secrets
 
 
 Dramatic Flair 
@@ -37,4 +37,4 @@ Faith
 Natural Connection
 
 
-Creature Familiarity 
+Creature Familiarity

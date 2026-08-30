@@ -4,11 +4,11 @@
 
 ## **False Image**
 
-*Requires 1 Magical Secrets*
+*Requires 1 Magical Secrets (Illusion Mastery)*
 
 **Trigger**
 
-When the caster attempts to create a magicial illusion 
+When the caster attempts to create a magical illusion 
 
 **Range**
 
@@ -46,7 +46,7 @@ Dispel all current illusions
 
 *Passive*
 
-*Requires 2 Magical Secrets*
+*Requires 2 Magical Secrets (Illusion Mastery)*
 
 **Whole**
 
@@ -66,7 +66,7 @@ Dispel all current illusions
 
 *Passive*
 
-*Requires 3 Magical Secrets*
+*Requires 3 Magical Secrets (Illusion Mastery)*
 
 **Whole**
 
@@ -86,7 +86,7 @@ Dispel all current illusions
 
 *Passive*
 
-*Requires 3 Magical Secrets*
+*Requires 3 Magical Secrets (Illusion Mastery)*
 
 **Whole**
 
@@ -102,7 +102,7 @@ Dispel all current illusions
 
 *Passive*
 
-*Requires 4 Magical Secrets, Echo, Copycat*
+*Requires 4 Magical Secrets (Illusion Mastery), Echo, Copycat*
 
 **Whole**
 
@@ -116,7 +116,7 @@ Dispel all current illusions
 
 ## **Dominate**
 
-*Requires 5 Magical Secrets, Memory Fog, Deja Vu and Enflame*
+*Requires 5 Magical Secrets (Illusion Mastery), Memory Fog, Deja Vu and Enflame*
 
 **Trigger**
 
@@ -158,7 +158,7 @@ If the caster is controlling a target, control immediately ends
 
 ## **Vanish**
 
-*Requires 2 Magical Secrets*
+*Requires 2 Magical Secrets (Illusion Mastery)*
 
 **Trigger**
 
@@ -192,7 +192,7 @@ Dispel all current illusions
 
 ## **Clone**
 
-*Requires 4 Magical Secrets, Behind the Mask*
+*Requires 4 Magical Secrets (Illusion Mastery), Behind the Mask*
 
 **Trigger**
 
@@ -236,7 +236,7 @@ Attacks targeting adjacent allies may be shifted to this minion
 
 ## **Deja Vu**
 
-*Requires 3 Magical Secrets*
+*Requires 3 Magical Secrets (Illusion Mastery)*
 
 **Trigger**
 
@@ -264,7 +264,7 @@ Dispel all current illusions
 
 ## **Enflame**
 
-*Requires 3 Magical Secrets*
+*Requires 3 Magical Secrets (Illusion Mastery)*
 
 **Trigger**
 
@@ -294,7 +294,7 @@ Dispel all current illusions
 
 *Passive*
 
-*Requires 3 Magical Secrets*
+*Requires 3 Magical Secrets (Illusion Mastery)*
 
 **Whole**
 
@@ -308,7 +308,7 @@ Reduce current Threat by 1
 
 ## **Blink**
 
-*Requires 2 Magical Secrets*
+*Requires 2 Magical Secrets (Illusion Mastery)*
 
 **Trigger**
 
@@ -332,7 +332,7 @@ Dispel all current illusions
 
 ## **Clacking Bones**
 
-*Requires 1 Dark Power*
+*Requires 1 Dark Power (Necromancy Mastery)*
 
 **Trigger**
 
@@ -352,7 +352,7 @@ Break this ability
 
 **Reforged**
 
-Summon one **Skeleton** minion for every 3 **Dark Power** the caster has, rounded down
+Summon one **Skeleton** minion for every 3 **Dark Power (Necromancy Mastery)** the caster has, rounded down
 
 Each Skeleton gains **Boneburst**
 
@@ -362,7 +362,7 @@ Break this ability
 
 ## **Restless Soul**
 
-*Requires 1 Dark Power*
+*Requires 1 Dark Power (Necromancy Mastery)*
 
 **Trigger**
 
@@ -382,7 +382,7 @@ Break this ability
 
 **Reforged**
 
-Summon one **Ghost** minion for every 3 **Dark Power** the caster has, rounded down
+Summon one **Ghost** minion for every 3 **Dark Power (Necromancy Mastery)** the caster has, rounded down
 
 Each Ghost gains **Foul Vigor**
 
@@ -392,7 +392,7 @@ Break this ability
 
 ## **Evil Flesh**
 
-*Requires 1 Dark Power*
+*Requires 1 Dark Power (Necromancy Mastery)*
 
 **Trigger**
 
@@ -412,7 +412,7 @@ Break this ability
 
 **Reforged**
 
-Summon one **Zombie** minion for every 3 **Dark Power** the caster has, rounded down
+Summon one **Zombie** minion for every 3 **Dark Power (Necromancy Mastery)** the caster has, rounded down
 
 Each Zombie gains **Body Block**
 
@@ -488,7 +488,7 @@ This ability cannot be reforged
 
 *Passive*
 
-*Requires 3 Dark Power*
+*Requires 3 Dark Power (Necromancy Mastery)*
 
 **Whole**
 
@@ -504,7 +504,7 @@ Reforge **Clacking Bones**, **Restless Souls**, or **Evil Flesh**
 
 *Passive*
 
-*Requires 4 Dark Power*
+*Requires 4 Dark Power (Necromancy Mastery)*
 
 **Whole**
 
@@ -520,7 +520,7 @@ Reforge **Clacking Bones**, **Restless Souls**, or **Evil Flesh**
 
 *Passive*
 
-*Requires 4 Dark Power*
+*Requires 4 Dark Power (Necromancy Mastery)*
 
 **Whole**
 
@@ -536,7 +536,7 @@ Reforge **Clacking Bones**, **Restless Souls**, or **Evil Flesh**
 
 *Passive*
 
-*Requires 5 Dark Power*
+*Requires 5 Dark Power (Necromancy Mastery)*
 
 **Whole**
 
@@ -550,7 +550,7 @@ Reforge **Clacking Bones**, **Restless Souls**, or **Evil Flesh**
 
 ## **Micromanage**
 
-*Requires 3 Dark Power*
+*Requires 3 Dark Power (Necromancy Mastery)*
 
 **Trigger**
 
@@ -574,7 +574,7 @@ Reforge **Clacking Bones**, **Restless Souls**, or **Evil Flesh**
 
 ## **Unholy Frenzy**
 
-*Requires 5 Dark Power*
+*Requires 5 Dark Power (Necromancy Mastery)*
 
 **Trigger**
 
@@ -600,7 +600,7 @@ Reforge **Clacking Bones**, **Restless Souls**, or **Evil Flesh**
 
 ## **Hollow Heart**
 
-*Requires 3 Dark Power*
+*Requires 3 Dark Power (Necromancy Mastery)*
 
 **Trigger**
 
@@ -634,7 +634,7 @@ Reforge **Clacking Bones**, **Restless Souls**, or **Evil Flesh**
 
 ## **Block**
 
-*Requires 1 Shield Training*
+*Requires 1 Shield Training (Shield Mastery)*
 
 **Trigger**
 
@@ -656,7 +656,7 @@ Gain **Glancing Blow x1**
 
 ## **Stand Firm**
 
-*Requires 1 Shield Training*
+*Requires 1 Shield Training (Shield Mastery)*
 
 **Trigger**
 
@@ -680,7 +680,7 @@ Gain **Glancing Blow x1**
 
 *Passive*
 
-*Requires 3 Shield Training*
+*Requires 3 Shield Training (Shield Mastery)*
 
 **Range:**
 
@@ -700,7 +700,7 @@ Gain **Glancing Blow x1**
 
 *Passive*
 
-*Requires 2 Shield Training*
+*Requires 2 Shield Training (Shield Mastery)*
 
 **Range:**
 
@@ -720,7 +720,7 @@ Gain **Glancing Blow x1**
 
 *Passive*
 
-*Requires 2 Shield Training*
+*Requires 2 Shield Training (Shield Mastery)*
 
 **Range:**
 
@@ -740,7 +740,7 @@ Gain **Glancing Blow x1**
 
 *Passive*
 
-*Requires 5 Shield Training*
+*Requires 5 Shield Training (Shield Mastery)*
 
 **Range:**
 
@@ -752,7 +752,7 @@ This ability has no effect while whole
 
 **Broken**
 
-Reforge abilities equal to the caster’s Shield Training
+Reforge abilities equal to the caster’s Shield Training (Shield Mastery)
 
 **Reforged**
 
@@ -768,7 +768,7 @@ This ability cannot be reforged
 
 ## **Battle Stance**
 
-*Requires 1 Heavy Weapons Training*
+*Requires 1 Heavy Weapons Training (Heavy Mastery)*
 
 **Trigger**
 
@@ -796,7 +796,7 @@ This ability functions as **Broken**
 
 ## **Hold Your Ground**
 
-*Requires 1 Heavy Weapons Training*
+*Requires 1 Heavy Weapons Training (Heavy Mastery)*
 
 **Trigger**
 
@@ -826,7 +826,7 @@ This ability functions as **Broken**
 
 ## **Reckless Swipes**
 
-*Requires 2 Heavy Weapons Training*
+*Requires 2 Heavy Weapons Training (Heavy Mastery)*
 
 **Trigger**
 
@@ -852,7 +852,7 @@ Functions as **Whole**
 
 ## **Shove**
 
-*Requires 3 Heavy Weapons Training*
+*Requires 3 Heavy Weapons Training (Heavy Mastery)*
 
 **Trigger**
 
@@ -890,7 +890,7 @@ This ability functions as **Broken**
 
 *Passive*
 
-*Requires 4 Heavy Weapons Training*
+*Requires 4 Heavy Weapons Training (Heavy Mastery)*
 
 **Range:**
 
@@ -906,7 +906,7 @@ Whenever an ally shifts an attack to the caster, gain **Extra Attack x1**
 
 *Passive*
 
-*Requires 5 Heavy Weapons Training*
+*Requires 5 Heavy Weapons Training (Heavy Mastery)*
 
 **Range:**
 
@@ -928,7 +928,7 @@ Gain **Empowered x1** for each Broken ability
 
 *Passive*
 
-*Requires 1 Light Weapons Training*
+*Requires 1 Light Weapons Training (Light Mastery)*
 
 **Range:**
 
@@ -950,7 +950,7 @@ This ability does not function
 
 *Passive*
 
-*Requires 1 Light Weapons Training and Coup de Grâce*
+*Requires 1 Light Weapons Training (Light Mastery) and Coup de Grâce*
 
 **Range:**
 
@@ -970,7 +970,7 @@ This ability does not function
 
 ## **Coup de Grâce**
 
-*Requires 5 Light Weapons Training*
+*Requires 5 Light Weapons Training (Light Mastery)*
 
 **Trigger**
 
@@ -1004,7 +1004,7 @@ This ability does not function
 
 *Passive*
 
-*Requires 2 Light Weapons Training*
+*Requires 2 Light Weapons Training (Light Mastery)*
 
 **Range:**
 
@@ -1026,7 +1026,7 @@ This ability does not function
 
 *Passive*
 
-*Requires 4 Light Weapons Training*
+*Requires 4 Light Weapons Training (Light Mastery)*
 
 **Range:**
 
@@ -1050,7 +1050,7 @@ This ability does not function
 
 *Passive*
 
-*Requires 3 Light Weapons Training and Lightning Footwork*
+*Requires 3 Light Weapons Training (Light Mastery) and Lightning Footwork*
 
 **Range:**
 
@@ -1074,7 +1074,7 @@ This ability does not function
 
 ## **Flurry of Steel**
 
-*Requires 5 Dual Weapons Training*
+*Requires 5 Dual Weapons Training (Dual Wielding Mastery)*
 
 **Trigger**
 
@@ -1110,7 +1110,7 @@ Lose **Immobilized**
 
 *Passive*
 
-*Requires 1 Dual Weapons Training*
+*Requires 1 Dual Weapons Training (Dual Wielding Mastery)*
 
 **Range:**
 
@@ -1134,7 +1134,7 @@ Lose **Immobilized**
 
 *Passive*
 
-*Requires 1 Dual Weapons Training*
+*Requires 1 Dual Weapons Training (Dual Wielding Mastery)*
 
 **Range:**
 
@@ -1158,7 +1158,7 @@ Lose **Immobilized**
 
 *Passive*
 
-*Requires 2 Dual Weapons Training*
+*Requires 2 Dual Weapons Training (Dual Wielding Mastery)*
 
 **Range:**
 
@@ -1184,7 +1184,7 @@ Lose **Immobilized**
 
 *Passive*
 
-*Requires 3 Dual Weapons Training*
+*Requires 3 Dual Weapons Training (Dual Wielding Mastery)*
 
 **Range:**
 
@@ -1216,7 +1216,7 @@ Lose **Immobilized**
 
 ## **Preemptive Strike**
 
-*Requires 2 Long Ranged Weapons Training*
+*Requires 2 Long Ranged Weapons Training (Long Ranged Mastery)*
 
 **Trigger**
 
@@ -1244,7 +1244,7 @@ Lose **Dazed x1**
 
 *Passive*
 
-*Requires 1 Long Ranged Weapons Training*
+*Requires 1 Long Ranged Weapons Training (Long Ranged Mastery)*
 
 **Whole**
 
@@ -1267,7 +1267,7 @@ Lose **Dazed x1**
 
 *Passive*
 
-*Requires 3 Long Ranged Weapons Training and Skirmisher*
+*Requires 3 Long Ranged Weapons Training (Long Ranged Mastery) and Skirmisher*
 
 **Range:**
 
@@ -1289,7 +1289,7 @@ Lose **Dazed x1**
 
 ## **Line Up the Shot**
 
-*Requires 4 Long Ranged Weapons Training and Personal Space*
+*Requires 4 Long Ranged Weapons Training (Long Ranged Mastery) and Personal Space*
 
 **Trigger**
 
@@ -1317,7 +1317,7 @@ Lose **Dazed x1**
 
 ## **Sitting Ducks**
 
-*Requires 5 Long Ranged Weapons Training and Skirmisher*
+*Requires 5 Long Ranged Weapons Training (Long Ranged Mastery) and Skirmisher*
 
 **Trigger**
 
@@ -1353,7 +1353,7 @@ Lose **Dazed x1**
 
 *Passive*
 
-*Requires 1 Long Ranged Weapons Training*
+*Requires 1 Long Ranged Weapons Training (Long Ranged Mastery)*
 
 **Range:**
 
@@ -1379,7 +1379,7 @@ Lose **Dazed x1**
 
 ## **Spirit Animal**
 
-*Requires 1 Creature Familiarity*
+*Requires 1 Creature Familiarity (Taming Mastery)*
 
 **Trigger**
 
@@ -1401,15 +1401,15 @@ This ability cannot be used while the Spirit Animal is active
 
 If the Spirit Animal is defeated, this ability breaks
 
-Choose 2 Spirit Animal abilities (requires 2 Creature Familiarity) 
+Choose 2 Spirit Animal abilities (requires 2 Creature Familiarity (Taming Mastery)) 
 
 **Upgrade**
 
-Choose 3 Spirit Animal abilities (requires 3 Creature Familiarity) 
+Choose 3 Spirit Animal abilities (requires 3 Creature Familiarity (Taming Mastery)) 
 
 **Upgrade**
 
-Choose 4 Spirit Animal abilities (requires 4 Creature Familiarity) 
+Choose 4 Spirit Animal abilities (requires 4 Creature Familiarity (Taming Mastery)) 
 
 **Broken**
 
@@ -1557,7 +1557,7 @@ Dismount
 
 ## **Amphibian**
 
-*Requires 1 Natural Connection*
+*Requires 1 Natural Connection (Animal Form Mastery)*
 
 **Trigger**
 
@@ -1583,7 +1583,7 @@ May gain Savage x3 to reforge this ability
 
 ## **Leap**
 
-*Requires 3 Natural Connection and Amphibian*
+*Requires 3 Natural Connection (Animal Form Mastery) and Amphibian*
 
 **Trigger**
 
@@ -1605,7 +1605,7 @@ Increase range by 1 hex
 
 ## **Tongue**
 
-*Requires 3 Natural Connection and Amphibian*
+*Requires 3 Natural Connection (Animal Form Mastery) and Amphibian*
 
 **Trigger**
 
@@ -1637,7 +1637,7 @@ Increase range by 1 hex
 
 *Passive*
 
-*Requires 3 Natural Connection and Amphibian*
+*Requires 3 Natural Connection (Animal Form Mastery) and Amphibian*
 
 **Whole**
 This ability has no effect while whole
@@ -1654,7 +1654,7 @@ On a success, target receives **immobilized**
 
 ## **Bird**
 
-*Requires 1 Natural Connection*
+*Requires 1 Natural Connection (Animal Form Mastery)*
 
 **Trigger**
 
@@ -1682,7 +1682,7 @@ May gain Savage x3 to reforge this ability
 
 ## **Fly**
 
-*Requires 3 Natural Connection and Bird*
+*Requires 3 Natural Connection (Animal Form Mastery) and Bird*
 
 **Trigger**
 
@@ -1710,7 +1710,7 @@ Gain **Empowered x1**
 
 ## **Rake**
 
-*Requires 3 Natural Connection and Bird*
+*Requires 3 Natural Connection (Animal Form Mastery) and Bird*
 
 **Trigger**
 
@@ -1740,7 +1740,7 @@ Gain **Empowered x1**
 
 *Passive*
 
-*Requires 1 Natural Connection and Bird*
+*Requires 1 Natural Connection (Animal Form Mastery) and Bird*
 
 **Range**
 
@@ -1762,7 +1762,7 @@ Gain **Empowered x1**
 
 ## **Reptile**
 
-*Requires 1 Natural Connection*
+*Requires 1 Natural Connection (Animal Form Mastery)*
 
 **Trigger**
 
@@ -1790,7 +1790,7 @@ May gain Savage x3 to reforge this ability
 
 ## **Shell**
 
-*Requires 3 Natural Connection and Reptile*
+*Requires 3 Natural Connection (Animal Form Mastery) and Reptile*
 
 **Trigger**
 
@@ -1816,7 +1816,7 @@ Gain **Tough x1**
 
 ## **Regeneration**
 
-*Requires 1 Natural Connection and Reptile*
+*Requires 1 Natural Connection (Animal Form Mastery) and Reptile*
 
 **Trigger**
 
@@ -1836,7 +1836,7 @@ Reforge 2 abilities
 
 ## **Fangs**
 
-*Requires 3 Natural Connection and Reptile*
+*Requires 3 Natural Connection (Animal Form Mastery) and Reptile*
 
 **Trigger**
 
@@ -1866,7 +1866,7 @@ Gain **Tough x1**
 
 ## **Mammal**
 
-*Requires 1 Natural Connection*
+*Requires 1 Natural Connection (Animal Form Mastery)*
 
 **Trigger**
 
@@ -1890,7 +1890,7 @@ Return to the caster’s original form
 
 ## **Climb**
 
-*Requires 3 Natural Connection and Mammal*
+*Requires 3 Natural Connection (Animal Form Mastery) and Mammal*
 
 **Trigger**
 
@@ -1918,7 +1918,7 @@ Gain **Quick x1**
 
 ## **Charge**
 
-*Requires 1 Natural Connection and Mammal*
+*Requires 1 Natural Connection (Animal Form Mastery) and Mammal*
 
 **Trigger**
 
@@ -1950,7 +1950,7 @@ Gain **Quick x1**
 
 *Passive*
 
-*Requires 3 Natural Connection and Mammal*
+*Requires 3 Natural Connection (Animal Form Mastery) and Mammal*
 
 **Whole**
 
@@ -1964,7 +1964,7 @@ Gain **Quick x1**
 
 ## **Arachnid**
 
-*Requires 1 Natural Connection*
+*Requires 1 Natural Connection (Animal Form Mastery)*
 
 **Trigger**
 
@@ -1994,7 +1994,7 @@ May gain Savage x3 to reforge this ability
 
 *Passive*
 
-*Requires 1 Natural Connection and Arachnid*
+*Requires 1 Natural Connection (Animal Form Mastery) and Arachnid*
 
 **Whole**
 
@@ -2004,7 +2004,7 @@ Move along any flat surface regardless of orientation
 
 ## **Venom**
 
-*Requires 3 Natural Connection and Arachnid*
+*Requires 3 Natural Connection (Animal Form Mastery) and Arachnid*
 
 **Trigger**
 
@@ -2030,7 +2030,7 @@ If the target has **Immobilized**, the target loses its next Attack
 
 ## **Webs**
 
-*Requires 3 Natural Connection and Arachnid*
+*Requires 3 Natural Connection (Animal Form Mastery) and Arachnid*
 
 **Trigger**
 
@@ -2054,7 +2054,7 @@ On a success, target receives **immobilized**
 
 ## **Heal**
 
-*Requires 1 Faith*
+*Requires 1 Faith (Justice and Mercy Mastery)*
 
 **Trigger**
 
@@ -2084,7 +2084,7 @@ This ability cannot be reforged by **Heal**
 
 ## **Meditate**
 
-*Requires 1 Faith*
+*Requires 1 Faith (Justice and Mercy Mastery)*
 
 **Trigger**
 
@@ -2104,7 +2104,7 @@ Reforge one ability
 
 ## **Divine Inspiration**
 
-*Requires 3 Faith, and Heal*
+*Requires 3 Faith (Justice and Mercy Mastery), and Heal*
 
 **Trigger**
 
@@ -2130,7 +2130,7 @@ Gain **Tough x1**
 
 ## **Celestial Fervor**
 
-*Requires 5 Faith, Divine Inspiration and Heal*
+*Requires 5 Faith (Justice and Mercy Mastery), Divine Inspiration and Heal*
 
 **Trigger**
 
@@ -2158,7 +2158,7 @@ Gain **Tough x1**
 
 ## **Judgment**
 
-*Requires 2 Faith and Heal*
+*Requires 2 Faith (Justice and Mercy Mastery) and Heal*
 
 **Trigger**
 
@@ -2202,7 +2202,7 @@ Target loses its next Attack
 
 ## **Blood of the Martyr**
 
-*Requires 5 Faith, Judgement and Heal*
+*Requires 5 Faith (Justice and Mercy Mastery), Judgement and Heal*
 
 **Trigger**
 
@@ -2238,7 +2238,7 @@ Gain **Empowered x1**
 
 *Passive*
 
-*Requires 2 Faith, and Heal*
+*Requires 2 Faith (Justice and Mercy Mastery), and Heal*
 
 **Whole**
 
@@ -2248,7 +2248,7 @@ Whenever **Heal** is used, the target receives **Tough x1**
 
 ## **Blessed Blade**
 
-*Requires 3 Faith*
+*Requires 3 Faith (Justice and Mercy Mastery)*
 
 **Trigger**
 
@@ -2268,7 +2268,7 @@ Target receives **Empowered x2**
 
 ## **Blinding Radiance**
 
-*Requires 3 Faith*
+*Requires 3 Faith (Justice and Mercy Mastery)*
 
 **Trigger**
 
@@ -2292,7 +2292,7 @@ On a success, target loses **Lockdown** until the end of its next turn
 
 *Passive*
 
-*Requires 2 Faith*
+*Requires 2 Faith (Justice and Mercy Mastery)*
 
 **Range**
 
@@ -2312,7 +2312,7 @@ Reveal one true Positive Motivator to the target
 
 Passive 
 
-*Requires at least 1 Dramatic Flair to purchase*
+*Requires at least 1 Dramatic Flair (Performance Mastery)*
 
 **Whole**
 
@@ -2324,7 +2324,7 @@ Lose all **Crescendo** if one of the caster’s abilities is **Broken**
 
 ## **Combat Cantata**
 
-*Requires 1 Dramatic Flair and The Show Must Go On*
+*Requires 1 Dramatic Flair (Performance Mastery) and The Show Must Go On*
 
 **Trigger**
 
@@ -2344,7 +2344,7 @@ Each target receives **Empowered** equal to the caster’s **Crescendo**
 
 ## **Resolute Round**
 
-*Requires 1 Dramatic Flair and The Show Must Go On*
+*Requires 1 Dramatic Flair (Performance Mastery) and The Show Must Go On*
 
 **Trigger**
 
@@ -2364,7 +2364,7 @@ Each target receives **Tough** equal to the caster’s **Crescendo**
 
 ## **Speedy Serenade**
 
-*Requires 1 Dramatic Flair and The Show Must Go On*
+*Requires 1 Dramatic Flair (Performance Mastery) and The Show Must Go On*
 
 **Trigger**
 
@@ -2386,7 +2386,7 @@ Each target receives **Quick** equal to the caster’s **Crescendo**
 
 *Passive*
 
-*Requires 2 Dramatic Flair*
+*Requires 2 Dramatic Flair (Performance Mastery)*
 
 **Whole**
 
@@ -2396,7 +2396,7 @@ Persuasion rolls will succeed on a near miss
 
 ## **Energetic Aria**
 
-*Requires 3 Dramatic Flair, The Show Must Go On and Speedy Serenade*
+*Requires 3 Dramatic Flair (Performance Mastery), The Show Must Go On and Speedy Serenade*
 
 **Trigger**
 
@@ -2416,7 +2416,7 @@ Each target gains 1 Action Token for every 3 **Crescendo** the caster has, round
 
 ## **Cathartic Climax**
 
-*Requires 3 Dramatic Flair, The Show Must Go On and Resolute Round*
+*Requires 3 Dramatic Flair (Performance Mastery), The Show Must Go On and Resolute Round*
 
 **Trigger**
 
@@ -2440,7 +2440,7 @@ Lose all **Crescendo**
 
 *Passive*
 
-*Requires 5 Dramatic Flair, The Show Must Go On and Combat Cantata*
+*Requires 5 Dramatic Flair (Performance Mastery), The Show Must Go On and Combat Cantata*
 
 **Range**
 
@@ -2466,7 +2466,7 @@ Then break this ability
 
 *Passive*
 
-*Requires 1 Arcane Energy*
+*Requires 1 Arcane Energy (The Elements Mastery)*
 
 **Whole**
 
@@ -2487,7 +2487,7 @@ Lose **Arcane Chaos x1**
 
 ## **Fireball**
 
-*Requires 5 arcane energy and summon fire elemental*
+*Requires 5 Arcane Energy (The Elements Mastery) and summon fire elemental*
 
 **Trigger**
 
@@ -2507,7 +2507,7 @@ Range:
 
 Attack an enemy
 
-Then attack up to **Arcane Energy - 3** targets adjacent to that target, friend or foe
+Then attack up to **Arcane Energy (The Elements Mastery) - 3** targets adjacent to that target, friend or foe
 
 If the caster has at least 1 **Arcane Chaos**, (before resolving the attacks above) roll 1d10, if the result is lower than or equal to **Arcane Chaos**, the caster is instead the target of the spell
 
@@ -2515,7 +2515,7 @@ If the caster has at least 1 **Arcane Chaos**, (before resolving the attacks abo
 
 ## **Summon Fire Elemental**
 
-*Requires 1 Arcane Energy*
+*Requires 1 Arcane Energy (The Elements Mastery)*
 
 **Trigger**
 
@@ -2561,7 +2561,7 @@ Lose **Arcane Chaos x1**
 
 ## **Flame Jets**
 
-*Requires 1 Arcane Energy*
+*Requires 1 Arcane Energy (The Elements Mastery)*
 
 **Trigger**
 
@@ -2589,7 +2589,7 @@ Lose **Arcane Chaos x1**
 
 ## **Smokescreen**
 
-*Requires 3 Arcane Energy*
+*Requires 3 Arcane Energy (The Elements Mastery)*
 
 **Trigger**
 
@@ -2615,7 +2615,7 @@ Lose **Arcane Chaos x1**
 
 ## **Warm Up**
 
-*Requires 3 Arcane Energy*
+*Requires 3 Arcane Energy (The Elements Mastery)*
 
 **Trigger**
 
@@ -2645,7 +2645,7 @@ Lose **Arcane Chaos x1**
 
 ## **Blizzard**
 
-*Requires 5 arcane energy and Summon Water Elemental*
+*Requires 5 Arcane Energy (The Elements Mastery) and Summon Water Elemental*
 
 **Trigger**
 
@@ -2665,7 +2665,7 @@ Range:
 
 Attack an enemy
 
-Then attack up to **Arcane Energy - 3** targets adjacent to that target, friend or foe
+Then attack up to **Arcane Energy (The Elements Mastery) - 3** targets adjacent to that target, friend or foe
 
 If the caster has at least 1 **Arcane Chaos**, (before resolving the attacks above) roll 1d10, if the result is lower than or equal to **Arcane Chaos**, the caster is instead the target of the spell
 
@@ -2673,7 +2673,7 @@ If the caster has at least 1 **Arcane Chaos**, (before resolving the attacks abo
 
 ## **Summon Water Elemental**
 
-*Requires 1 Arcane Energy*
+*Requires 1 Arcane Energy (The Elements Mastery)*
 
 **Trigger**
 
@@ -2723,7 +2723,7 @@ Lose **Arcane Chaos x1**
 
 *Passive*
 
-*Requires 1 Arcane Energy*
+*Requires 1 Arcane Energy (The Elements Mastery)*
 
 **Whole**
 
@@ -2741,7 +2741,7 @@ Lose **Arcane Chaos x1**
 
 ## **Ice Slick**
 
-*Requires 3 Arcane Energy*
+*Requires 3 Arcane Energy (The Elements Mastery)*
 
 **Trigger**
 
@@ -2769,7 +2769,7 @@ Lose **Arcane Chaos x1**
 
 ## **Refreshing Mist**
 
-*Requires 3 Arcane Energy*
+*Requires 3 Arcane Energy (The Elements Mastery)*
 
 **Trigger**
 
@@ -2803,7 +2803,7 @@ Lose **Arcane Chaos x1**
 
 When the caster attempts to launch a large cyclone
 
-*Requires 5 arcane energy and Summon Air Elemental*
+*Requires 5 Arcane Energy (The Elements Mastery) and Summon Air Elemental*
 
 **Cost** 
 
@@ -2819,7 +2819,7 @@ Range:
 
 Attack an enemy
 
-Then attack up to **Arcane Energy - 3** targets adjacent to that target, friend or foe
+Then attack up to **Arcane Energy (The Elements Mastery) - 3** targets adjacent to that target, friend or foe
 
 If the caster has at least 1 **Arcane Chaos**, (before resolving the attacks above) roll 1d10, if the result is lower than or equal to **Arcane Chaos**, the caster is instead the target of the spell
 
@@ -2827,7 +2827,7 @@ If the caster has at least 1 **Arcane Chaos**, (before resolving the attacks abo
 
 ## **Summon Air Elemental**
 
-*Requires 1 Arcane Energy*
+*Requires 1 Arcane Energy (The Elements Mastery)*
 
 **Trigger**
 
@@ -2877,7 +2877,7 @@ Lose **Arcane Chaos x1**
 
 ## **Flight**
 
-*Requires 1 Arcane Energy*
+*Requires 1 Arcane Energy (The Elements Mastery)*
 
 **Trigger**
 
@@ -2903,7 +2903,7 @@ Lose **Arcane Chaos x1**
 
 ## **Gust**
 
-*Requires 3 Arcane Energy*
+*Requires 3 Arcane Energy (The Elements Mastery)*
 
 **Trigger**
 
@@ -2935,7 +2935,7 @@ Lose **Arcane Chaos x1**
 
 ## **Vacuum**
 
-*Requires 3 Arcane Energy*
+*Requires 3 Arcane Energy (The Elements Mastery)*
 
 **Trigger**
 
@@ -2969,7 +2969,7 @@ Lose **Arcane Chaos x1**
 
 ## **Fleet Footing**
 
-*Requires 3 Arcane Energy*
+*Requires 3 Arcane Energy (The Elements Mastery)*
 
 **Trigger**
 
@@ -2999,7 +2999,7 @@ Lose **Arcane Chaos x1**
 
 ## **Earthquake**
 
-*Requires 5 arcane energy and summon earth elemental*
+*Requires 5 Arcane Energy (The Elements Mastery) and summon earth elemental*
 
 **Trigger**
 
@@ -3019,7 +3019,7 @@ Range:
 
 Attack an enemy
 
-Then attack up to **Arcane Energy - 3** targets adjacent to that target, friend or foe
+Then attack up to **Arcane Energy (The Elements Mastery) - 3** targets adjacent to that target, friend or foe
 
 If the caster has at least 1 **Arcane Chaos**, (before resolving the attacks above) roll 1d10, if the result is lower than or equal to **Arcane Chaos**, the caster is instead the target of the spell
 
@@ -3027,7 +3027,7 @@ If the caster has at least 1 **Arcane Chaos**, (before resolving the attacks abo
 
 ## **Summon Earth Elemental**
 
-*Requires 1 Arcane Energy*
+*Requires 1 Arcane Energy (The Elements Mastery)*
 
 **Trigger**
 
@@ -3075,7 +3075,7 @@ Lose **Arcane Chaos x1**
 
 *Passive*
 
-*Requires 1 Arcane Energy*
+*Requires 1 Arcane Energy (The Elements Mastery)*
 
 **Whole**
 
@@ -3097,7 +3097,7 @@ Lose **Arcane Chaos x1**
 
 ## **Wall**
 
-*Requires 3 Arcane Energy*
+*Requires 3 Arcane Energy (The Elements Mastery)*
 
 **Trigger**
 
@@ -3131,7 +3131,7 @@ Lose **Arcane Chaos x1**
 
 ## **Stone Skin**
 
-*Requires 3 Arcane Energy*
+*Requires 3 Arcane Energy (The Elements Mastery)*
 
 **Trigger**
 
