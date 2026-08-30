@@ -25,7 +25,7 @@ function App() {
                 <Routes>
                     <Route
                         path="/"
-                        element={<Rules />}
+                        element={<Game />}
                     />
 
                     <Route
