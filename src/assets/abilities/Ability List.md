@@ -3567,7 +3567,7 @@ Passive
 
 Gain an artifact that stores the caster's life force
 
-Gain Darkness equal to the caster's Total Progression Points each rest while the caster's artifact is intact
+Gain Darkness equal to the caster's Total Mastery each rest while the caster's artifact is intact
 
 ## Adoption
 

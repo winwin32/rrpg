@@ -1,4 +1,4 @@
-**Progression Points**
+**Mastery**
 
 Specific experience with a skill or source of power. 
 

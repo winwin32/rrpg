@@ -14,7 +14,7 @@ Honeycomb
 
 Large
 
-Progression Points 
+Mastery 
 
 Hex 
 
@@ -104,7 +104,7 @@ An **objective** is something the party wants to accomplish, and there can be mo
 
 A **bonus objective** is something an individual party member wants to accomplish other than the main objective while in this encounter. 
 
-Bonus objectives always award **Progression Points** (See Character Progression for more details) 
+Bonus objectives always award **Mastery** (See Character Progression for more details) 
 
 ### Example Bonus Objectives:
 
@@ -572,9 +572,9 @@ If the character is missing requirements for a foreshadowed ability, it is held 
 
 The player can continue to choose more foreshadowed abilities and whenever they do unlock that ability it will be granted.
 
-**Progression Points** represent specific experience with a skill or source of power. 
+**Mastery** represent specific experience with a skill or source of power. 
 
-You will gain **Progression Points** from **Bonus Objectives**, and you need a certain threshold to unlock higher-level abilities. 
+You will gain **Mastery** from **Bonus Objectives**, and you need a certain threshold to unlock higher-level abilities. 
 
 Upon each level up players can change their characteristics or Destiny. 
 

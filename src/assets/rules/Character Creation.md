@@ -3,9 +3,46 @@ In Reforged RPG, players don't need to follow a defined class.
 
 They can mix and match abilities to fit whatever vision they have for their character. 
 
-Below are the abilities with the lowest requirements, many of which give Progression Points. 
+Below are the abilities with the lowest requirements, many of which give Mastery. 
 
-These starting abilities, along with Progression Points, will unlock stronger abilities later on. 
+**These are the types of Mastery Available:**
+
+Shield Training
+
+
+Heavy Weapons Training
+
+
+Light Weapons Training
+
+
+Dual Weapons Training
+
+
+Long Ranged Weapons Training
+
+
+Arcane Energy  
+
+
+Dark Power 
+
+
+Magical Secrets
+
+
+Dramatic Flair 
+
+
+Faith
+
+
+Natural Connection
+
+
+Creature Familiarity
+
+These starting abilities, along with Mastery, will unlock stronger abilities later on. 
 
 - - -
 
@@ -1043,9 +1080,9 @@ When receiving a new item or ability, answer “How did the character get this?�
 
 Write one or more one word adjectives describing your character, called Characteristics. 
 
-Then link each Characteristic to one of the character’s Progression Points. 
+Then link each Characteristic to one of the character’s Mastery. 
 
-All Progression Points need at least one Characteristic linked to them. 
+All Mastery need at least one Characteristic linked to them. 
 
 Even if a character doesn’t have a characteristic for every quirk or personality trait, they can still act however the player likes. 
 
