@@ -19,23 +19,23 @@ function getStoredProfile() {
 }
 
 const requirementGroups = [
-    { category: "The Elements", requirements: ["Arcane Energy"] },
-    { category: "Taming", requirements: ["Creature Familiarity"] },
-    { category: "Necromancy", requirements: ["Dark Power"] },
-    { category: "Performance", requirements: ["Dramatic Flair"] },
-    { category: "Dual Wielding", requirements: ["Dual Weapons Training"] },
-    { category: "Justice and Mercy", requirements: ["Faith"] },
-    { category: "Heavy", requirements: ["Heavy Weapons Training"] },
-    { category: "Light", requirements: ["Light Weapons Training"] },
-    { category: "Long Ranged", requirements: ["Long Ranged Weapons Training"] },
-    { category: "Craftsfolk", requirements: ["Magical Heritage"] },
-    { category: "Fae-Touched", requirements: ["Magical Heritage"] },
-    { category: "War-like", requirements: ["Magical Heritage"] },
-    { category: "Diminutive", requirements: ["Magical Heritage"] },
+    { category: "The Elements", requirements: [] },
+    { category: "Taming", requirements: [] },
+    { category: "Necromancy", requirements: [] },
+    { category: "Performance", requirements: [] },
+    { category: "Dual Wielding", requirements: [] },
+    { category: "Justice and Mercy", requirements: [] },
+    { category: "Heavy", requirements: [] },
+    { category: "Light", requirements: [] },
+    { category: "Long Ranged", requirements: [] },
+    { category: "Craftsfolk", requirements: [] },
+    { category: "Fae-Touched", requirements: [] },
+    { category: "War-like", requirements: [] },
+    { category: "Diminutive", requirements: [] },
     { category: "Undead", requirements: [] },
-    { category: "Illusions", requirements: ["Magical Secrets"] },
-    { category: "Animal Form", requirements: ["Natural Connection"] },
-    { category: "Shield", requirements: ["Shield Training"] }
+    { category: "Illusions", requirements: [] },
+    { category: "Animal Form", requirements: [] },
+    { category: "Shield", requirements: [] }
 ];
 
 const abilityFiles = import.meta.glob(

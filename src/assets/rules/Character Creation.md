@@ -73,12 +73,6 @@ Begin with 5 Body, 5 Mind, 5 Soul and 5 movement
 
 Choose a “social context” that fits the character's race and culture 
 
-If choosing a race other than human, gain 1 Magical Heritage 
-
-There are abilities that are unlocked via the Magical Heritage progression point, in the "Allocate 5 Experience Points" section. 
-
-Player's may or may not choose whichever ability fits their race now, and can have access to stronger racial abilities as they progress. 
-
 ### Equipment (Free)
 
 - 1 torch  
@@ -121,6 +115,16 @@ Each will cost 1 experience point.
 For many abilities, a player will need to first choose an ability that grants a Progression Point (Such as Shield below), then have access to the other abilities in that section. 
 
 When receiving a new item or ability, answer “How did the character get this?” 
+
+- - -
+
+> ## Magical Race
+> 
+> Passive
+> 
+> **Whole**
+> 
+> Gain 1 Magical Heritage
 
 - - -
 
@@ -1082,7 +1086,7 @@ Write one or more one word adjectives describing your character, called Characte
 
 Then link each Characteristic to one of the character’s Mastery. 
 
-All Mastery need at least one Characteristic linked to them. 
+Each type of Mastery needs at least one Characteristic linked to them. 
 
 Even if a character doesn’t have a characteristic for every quirk or personality trait, they can still act however the player likes. 
 

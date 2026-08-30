@@ -2483,7 +2483,6 @@ Gain **Arcane Chaos x1**
 Lose **Arcane Chaos x1**
 
 ---
-## Fire
 
 ## **Fireball**
 
@@ -2641,8 +2640,6 @@ Lose **Arcane Chaos x1**
 
 ---
 
-## Water
-
 ## **Blizzard**
 
 *Requires 5 Arcane Energy (The Elements Mastery) and Summon Water Elemental*
@@ -2794,8 +2791,6 @@ Gain **Arcane Chaos x1**
 Lose **Arcane Chaos x1**
 
 ---
-
-## Air
 
 ## **Cyclone**
 
@@ -2994,8 +2989,6 @@ Gain **Arcane Chaos x1**
 Lose **Arcane Chaos x1**
 
 ---
-
-## Earth
 
 ## **Earthquake**
 
