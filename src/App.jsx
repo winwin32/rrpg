@@ -10,10 +10,12 @@ function App() {
     return (
         <div className="app">
             <nav className="main-nav">
-                <NavLink to="/">Rules</NavLink>
-
-                <NavLink to="/game">
+                <NavLink to="/">
                     Game
+                </NavLink>
+
+                <NavLink to="/rules">
+                    Rules
                 </NavLink>
 
                 <NavLink to="/abilities">
