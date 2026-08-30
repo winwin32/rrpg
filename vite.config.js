@@ -9,4 +9,12 @@ export default defineConfig({
     react(),
     babel({ presets: [reactCompilerPreset()] })
   ],
+  server: {
+    proxy: {
+      '/ws': {
+        target: 'ws://localhost:3001',
+        ws: true
+      }
+    }
+  }
 })

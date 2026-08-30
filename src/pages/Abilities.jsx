@@ -1,5 +1,22 @@
 import { useMemo, useState } from "react";
+import { useEffect } from "react";
 import ReactMarkdown from "react-markdown";
+
+const PROFILE_SESSION_KEY = "rrpg-profile-session";
+
+function getStoredProfile() {
+    try {
+        const storedProfile = sessionStorage.getItem(
+            PROFILE_SESSION_KEY
+        );
+
+        return storedProfile
+            ? JSON.parse(storedProfile)
+            : null;
+    } catch {
+        return null;
+    }
+}
 
 const requirementGroups = [
     { category: "The Elements", requirements: ["Arcane Energy"] },
@@ -95,6 +112,17 @@ function getRequirementNumber(ability) {
 
 function Abilities() {
 
+    const [profile] = useState(getStoredProfile);
+
+    const [socket, setSocket] =
+        useState(null);
+
+    const [tokenAbilities, setTokenAbilities] =
+        useState({});
+
+    const [abilityError, setAbilityError] =
+        useState("");
+
     const [selectedCategory, setSelectedCategory] =
         useState("All");
 
@@ -103,6 +131,95 @@ function Abilities() {
 
     const [exactRequirementNumber, setExactRequirementNumber] =
         useState("");
+
+    const canAddAbilities =
+        profile?.role === "player" &&
+        Boolean(profile.unitId);
+
+    useEffect(() => {
+        if (!profile) {
+            return undefined;
+        }
+
+        const websocketUrl =
+            import.meta.env.VITE_WS_URL ||
+            `${window.location.protocol === "https:" ? "wss" : "ws"}://${window.location.host}/ws`;
+        const abilitySocket = new WebSocket(websocketUrl);
+
+        abilitySocket.addEventListener("open", () => {
+            setSocket(abilitySocket);
+            abilitySocket.send(
+                JSON.stringify({
+                    type: "join",
+                    profile
+                })
+            );
+        });
+
+        abilitySocket.addEventListener("message", event => {
+            let message;
+
+            try {
+                message = JSON.parse(event.data);
+            } catch {
+                return;
+            }
+
+            if (message.type === "error") {
+                setAbilityError(message.message || "Unable to add ability");
+                return;
+            }
+
+            if (message.type !== "state" || !Array.isArray(message.units)) {
+                return;
+            }
+
+            setTokenAbilities(
+                Object.fromEntries(
+                    message.units
+                        .filter(unit => unit.type === "player")
+                        .map(unit => [
+                            unit.id,
+                            Array.isArray(unit.abilities)
+                                ? unit.abilities.map(ability => ability.name)
+                                : []
+                        ])
+                )
+            );
+        });
+
+        return () => {
+            abilitySocket.close();
+            setSocket(null);
+        };
+    }, [profile]);
+
+    function updateTokenAbility(ability, shouldRemove) {
+        if (
+            !canAddAbilities ||
+            socket?.readyState !== WebSocket.OPEN
+        ) {
+            return;
+        }
+
+        socket.send(
+            JSON.stringify({
+                type: shouldRemove
+                    ? "remove-ability"
+                    : "add-ability",
+                targetUnitId: profile.unitId,
+                abilityName: ability.title,
+                ...(!shouldRemove && {
+                    ability: {
+                        name: ability.title,
+                        markdown: `## **${ability.title}**\n\n${ability.content}`,
+                        status: "whole"
+                    }
+                })
+            })
+        );
+        setAbilityError("");
+    }
 
 
     // =========================
@@ -297,13 +414,25 @@ function Abilities() {
 
             <div className="abilities-list">
 
+                {abilityError && (
+                    <p className="ability-assignment-error">
+                        {abilityError}
+                    </p>
+                )}
+
                 {filteredAbilities.length === 0 ? (
                     <p>
                         No abilities match this filter.
                     </p>
                 ) : (
                     filteredAbilities.map(
-                        (ability, index) => (
+                        (ability, index) => {
+                            const abilityAlreadyAdded =
+                                tokenAbilities[profile?.unitId]?.includes(
+                                    ability.title
+                                );
+
+                            return (
                             <section
                                 className="ability-section"
                                 key={
@@ -317,8 +446,33 @@ function Abilities() {
                                 >
                                     {`## ${ability.title}\n\n${ability.content}`}
                                 </ReactMarkdown>
+
+                                <div className="ability-assignment-controls">
+                                    <button
+                                    type="button"
+                                    className={
+                                        abilityAlreadyAdded
+                                            ? "add-ability-button remove-ability-button"
+                                            : "add-ability-button"
+                                    }
+                                    disabled={
+                                        !canAddAbilities
+                                    }
+                                    onClick={() =>
+                                        updateTokenAbility(
+                                            ability,
+                                            abilityAlreadyAdded
+                                        )
+                                    }
+                                >
+                                    {abilityAlreadyAdded
+                                        ? "Remove ability"
+                                        : "Add ability"}
+                                    </button>
+                                </div>
                             </section>
-                        )
+                            );
+                        }
                     )
                 )}
 

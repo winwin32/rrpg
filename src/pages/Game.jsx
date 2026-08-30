@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "../App.css";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 // =========================
 // BOARD SETTINGS
@@ -10,7 +12,36 @@ const ROWS = 12;
 
 const HEX_SIZE = 35;
 const UNIT_IMAGE_SIZE = 27;
+const GAME_MASTER_VALUE = "__game-master__";
+const PROFILE_SESSION_KEY = "rrpg-profile-session";
+const MAP_MARGIN = 10;
 
+const MAP_WIDTH =
+    50 +
+    (COLS - 1) * HEX_SIZE * Math.sqrt(3) +
+    (ROWS % 2 ? HEX_SIZE * Math.sqrt(3) / 2 : 0) +
+    HEX_SIZE * Math.sqrt(3) / 2 +
+    MAP_MARGIN;
+
+const MAP_HEIGHT =
+    50 +
+    (ROWS - 1) * HEX_SIZE * 1.5 +
+    HEX_SIZE +
+    MAP_MARGIN;
+
+function getStoredProfile() {
+    try {
+        const storedProfile = sessionStorage.getItem(
+            PROFILE_SESSION_KEY
+        );
+
+        return storedProfile
+            ? JSON.parse(storedProfile)
+            : null;
+    } catch {
+        return null;
+    }
+}
 
 // =========================
 // LOAD PLAYER IMAGES
@@ -63,7 +94,8 @@ const initialUnits = Object.entries(playerImages).map(
             image,
             col,
             row,
-            type: "player"
+            type: "player",
+            abilities: []
         };
     }
 );
@@ -98,6 +130,38 @@ const initialEnemies = Object.entries(enemyImages).map(
         };
     }
 );
+
+function getUnitsForJoin(currentUnits) {
+    return currentUnits.map(unit => {
+        const initialUnit = initialUnits.find(
+            candidate => candidate.id === unit.id
+        );
+
+        return {
+            ...unit,
+            abilities: Array.isArray(unit.abilities) &&
+                unit.abilities.length > 0
+                ? unit.abilities
+                : initialUnit?.abilities || []
+        };
+    });
+}
+
+function getAbilityStatus(ability) {
+    return ability.status || "whole";
+}
+
+function getNextAbilityStatus(status) {
+    if (status === "whole") {
+        return "broken";
+    }
+
+    if (status === "broken") {
+        return "reforged";
+    }
+
+    return "whole";
+}
 
 
 // =========================
@@ -146,6 +210,66 @@ function unitHexPoints(x, y) {
     return points.join(" ");
 }
 
+function offsetToCube(col, row) {
+    const q =
+        col - (row - (row & 1)) / 2;
+
+    return {
+        q,
+        r: row,
+        s: -q - row
+    };
+}
+
+function cubeToOffset(cube) {
+    return {
+        col: cube.q + (cube.r - (cube.r & 1)) / 2,
+        row: cube.r
+    };
+}
+
+function roundCube(cube) {
+    let q = Math.round(cube.q);
+    let r = Math.round(cube.r);
+    let s = Math.round(cube.s);
+
+    const qDifference = Math.abs(q - cube.q);
+    const rDifference = Math.abs(r - cube.r);
+    const sDifference = Math.abs(s - cube.s);
+
+    if (qDifference > rDifference && qDifference > sDifference) {
+        q = -r - s;
+    } else if (rDifference > sDifference) {
+        r = -q - s;
+    } else {
+        s = -q - r;
+    }
+
+    return { q, r, s };
+}
+
+function getHexLine(firstCol, firstRow, secondCol, secondRow) {
+    const firstCube = offsetToCube(firstCol, firstRow);
+    const secondCube = offsetToCube(secondCol, secondRow);
+    const distance = Math.max(
+        Math.abs(firstCube.q - secondCube.q),
+        Math.abs(firstCube.r - secondCube.r),
+        Math.abs(firstCube.s - secondCube.s)
+    );
+
+    return Array.from({ length: Math.max(distance - 1, 0) })
+        .map((_, index) => {
+            const progress = (index + 1) / distance;
+            const cube = roundCube({
+                q: firstCube.q + (secondCube.q - firstCube.q) * progress,
+                r: firstCube.r + (secondCube.r - firstCube.r) * progress,
+                s: firstCube.s + (secondCube.s - firstCube.s) * progress
+            });
+
+            return cubeToOffset(cube);
+        });
+}
+
 
 // =========================
 // GAME
@@ -153,18 +277,36 @@ function unitHexPoints(x, y) {
 
 function Game() {
 
+    const [storedProfile] = useState(getStoredProfile);
+
+    const [socket, setSocket] =
+        useState(null);
+
+    const [connectionStatus, setConnectionStatus] =
+        useState("connecting");
+
+    const [players, setPlayers] =
+        useState([]);
+
+    const [multiplayerError, setMultiplayerError] =
+        useState("");
+
     // =========================
     // PLAYER PROFILE
     // =========================
 
     const [playerProfile, setPlayerProfile] =
-        useState(null);
+        useState(storedProfile);
 
     const [profileName, setProfileName] =
-        useState("");
+        useState(storedProfile?.name || "");
 
     const [profileImage, setProfileImage] =
-        useState("");
+        useState(
+            storedProfile?.role === "game-master"
+                ? GAME_MASTER_VALUE
+                : storedProfile?.image || ""
+        );
 
 
     // =========================
@@ -178,7 +320,89 @@ function Game() {
         ]);
 
     const [selectedUnit, setSelectedUnit] =
+        useState(storedProfile?.unitId || null);
+
+    const [expandedAbilities, setExpandedAbilities] =
+        useState({});
+
+    const [hoveredHex, setHoveredHex] =
         useState(null);
+
+    useEffect(() => {
+        const websocketUrl =
+            import.meta.env.VITE_WS_URL ||
+            `${window.location.protocol === "https:" ? "wss" : "ws"}://${window.location.host}/ws`;
+
+        const socket = new WebSocket(websocketUrl);
+
+        socket.addEventListener("open", () => {
+            setSocket(socket);
+            setConnectionStatus("connected");
+        });
+
+        socket.addEventListener("message", event => {
+            let message;
+
+            try {
+                message = JSON.parse(event.data);
+            } catch {
+                return;
+            }
+
+            if (message.type !== "state") {
+                if (message.type === "error") {
+                    setMultiplayerError(message.message || "Multiplayer error");
+                    setProfileImage("");
+                    setPlayerProfile(null);
+                    sessionStorage.removeItem(PROFILE_SESSION_KEY);
+                }
+                return;
+            }
+
+            setMultiplayerError("");
+
+            if (Array.isArray(message.units)) {
+                setUnits(message.units);
+            }
+
+            setPlayers(
+                Array.isArray(message.players)
+                    ? message.players
+                    : []
+            );
+        });
+
+        socket.addEventListener("close", () => {
+            setConnectionStatus("offline");
+        });
+
+        socket.addEventListener("error", () => {
+            setConnectionStatus("offline");
+        });
+
+        return () => {
+            socket.close();
+            setSocket(null);
+        };
+    }, []);
+
+    useEffect(() => {
+        if (!socket || !playerProfile) {
+            return;
+        }
+
+        socket.send(
+            JSON.stringify({
+                type: "join",
+                profile: playerProfile,
+                units: getUnitsForJoin([
+                    ...initialUnits,
+                    ...initialEnemies
+                ])
+            })
+        );
+
+    }, [socket, playerProfile]);
 
 
     // =========================
@@ -209,6 +433,49 @@ function Game() {
         };
     }
 
+    function getHexDistance(firstCol, firstRow, secondCol, secondRow) {
+        const firstQ =
+            firstCol - (firstRow - (firstRow & 1)) / 2;
+        const secondQ =
+            secondCol - (secondRow - (secondRow & 1)) / 2;
+
+        const firstCube = {
+            q: firstQ,
+            r: firstRow,
+            s: -firstQ - firstRow
+        };
+        const secondCube = {
+            q: secondQ,
+            r: secondRow,
+            s: -secondQ - secondRow
+        };
+
+        return Math.max(
+            Math.abs(firstCube.q - secondCube.q),
+            Math.abs(firstCube.r - secondCube.r),
+            Math.abs(firstCube.s - secondCube.s)
+        );
+    }
+
+    function updateAbilityStatus(ability) {
+        if (
+            playerProfile?.role !== "player" ||
+            !playerProfile.unitId ||
+            socket?.readyState !== WebSocket.OPEN
+        ) {
+            return;
+        }
+
+        socket.send(
+            JSON.stringify({
+                type: "update-ability-status",
+                targetUnitId: playerProfile.unitId,
+                abilityName: ability.name,
+                status: getNextAbilityStatus(getAbilityStatus(ability))
+            })
+        );
+    }
+
 
     // =========================
     // CREATE PROFILE
@@ -224,9 +491,26 @@ function Game() {
             return;
         }
 
+        if (profileImage === GAME_MASTER_VALUE) {
+            const profile = {
+                name: profileName.trim(),
+                image: "",
+                imageName: "Game Master",
+                role: "game-master"
+            };
+
+            setPlayerProfile(profile);
+            setSelectedUnit(null);
+            sessionStorage.setItem(
+                PROFILE_SESSION_KEY,
+                JSON.stringify(profile)
+            );
+            return;
+        }
+
         const selectedImage =
             Object.entries(playerImages).find(
-                ([path, image]) =>
+                ([, image]) =>
                     image === profileImage
             );
 
@@ -245,30 +529,80 @@ function Game() {
                 ""
             );
 
-        const profile = {
-            name: profileName.trim(),
-            image: profileImage,
-            imageName
-        };
-
-        setPlayerProfile(profile);
-
-
-        // Find the unit corresponding
-        // to the selected player image
-
         const ownedUnit = units.find(
             unit =>
                 unit.type === "player" &&
                 unit.image === profileImage
         );
 
-        if (ownedUnit) {
-            setSelectedUnit(
-                ownedUnit.id
+        if (!ownedUnit) {
+            return;
+        }
+
+        const profile = {
+            name: profileName.trim(),
+            image: profileImage,
+            imageName,
+            role: "player",
+            unitId: ownedUnit.id
+        };
+
+        setPlayerProfile(profile);
+        sessionStorage.setItem(
+            PROFILE_SESSION_KEY,
+            JSON.stringify(profile)
+        );
+
+
+        // Find the unit corresponding
+        // to the selected player image
+
+        setSelectedUnit(ownedUnit.id);
+    }
+
+    const claimedUnitIds = new Set(
+        players.map(player => player.unitId)
+    );
+
+    const availablePlayerImages = Object.entries(
+        playerImages
+    ).filter(([, image], index) =>
+        !claimedUnitIds.has(`player-${index}`) ||
+        image === playerProfile?.image
+    );
+
+    const gameMasterClaimed = players.some(
+        player => player.role === "game-master"
+    );
+
+    const sortedPlayers = [...players].sort(
+        (firstPlayer, secondPlayer) => {
+            const firstIsGameMaster =
+                firstPlayer.role === "game-master";
+            const secondIsGameMaster =
+                secondPlayer.role === "game-master";
+
+            if (firstIsGameMaster !== secondIsGameMaster) {
+                return firstIsGameMaster ? -1 : 1;
+            }
+
+            return firstPlayer.name.localeCompare(
+                secondPlayer.name,
+                undefined,
+                { sensitivity: "base" }
             );
         }
-    }
+    );
+
+    const selectedToken = units.find(
+        unit => unit.id === selectedUnit
+    );
+
+    const displayedAbilities =
+        playerProfile?.role !== "game-master" &&
+        selectedToken?.type === "player"
+            ? selectedToken.abilities || []
+            : [];
 
 
     // =========================
@@ -291,11 +625,12 @@ function Game() {
 
         if (clickedUnit) {
 
-            if (
+            if (playerProfile?.role === "game-master") {
+                setSelectedUnit(clickedUnit.id);
+            } else if (
                 playerProfile &&
                 clickedUnit.type === "player" &&
-                clickedUnit.image ===
-                    playerProfile.image
+                clickedUnit.image === playerProfile.image
             ) {
 
                 setSelectedUnit(
@@ -330,11 +665,14 @@ function Game() {
         // Make absolutely sure this is
         // the player's own unit
 
+        if (!selected) {
+            return;
+        }
+
         if (
-            !selected ||
-            selected.type !== "player" ||
-            selected.image !==
-                playerProfile.image
+            playerProfile.role !== "game-master" &&
+            (selected.type !== "player" ||
+                selected.image !== playerProfile.image)
         ) {
             return;
         }
@@ -342,16 +680,17 @@ function Game() {
 
         // Move the player's unit
 
-        setUnits(
-            units.map(unit =>
-                unit.id === selectedUnit
-                    ? {
-                          ...unit,
-                          col,
-                          row
-                      }
-                    : unit
-            )
+        if (socket?.readyState !== WebSocket.OPEN) {
+            return;
+        }
+
+        socket.send(
+            JSON.stringify({
+                type: "move",
+                unitId: selectedUnit,
+                col,
+                row
+            })
         );
     }
 
@@ -367,7 +706,6 @@ function Game() {
                 Reforged RPG
             </h1>
 
-
             {/* ========================= */}
             {/* PROFILE MODAL              */}
             {/* ========================= */}
@@ -381,6 +719,12 @@ function Game() {
                         <h2>
                             Create Your Profile
                         </h2>
+
+                        {multiplayerError && (
+                            <p className="multiplayer-error">
+                                {multiplayerError}
+                            </p>
+                        )}
 
 
                         <label>
@@ -416,9 +760,13 @@ function Game() {
                                 Choose your character
                             </option>
 
-                            {Object.entries(
-                                playerImages
-                            ).map(
+                            {!gameMasterClaimed && (
+                                <option value={GAME_MASTER_VALUE}>
+                                    Game Master
+                                </option>
+                            )}
+
+                            {availablePlayerImages.map(
                                 ([path, image]) => {
 
                                     const filename =
@@ -448,7 +796,8 @@ function Game() {
 
                         {/* Preview */}
 
-                        {profileImage && (
+                        {profileImage &&
+                            profileImage !== GAME_MASTER_VALUE && (
 
                             <img
                                 src={profileImage}
@@ -482,11 +831,37 @@ function Game() {
             {/* GAME BOARD                 */}
             {/* ========================= */}
 
-            <svg
-                width="900"
-                height="650"
-                viewBox="0 0 900 650"
-            >
+            <div className="game-layout">
+
+                <aside className="multiplayer-panel">
+                    <div className="multiplayer-status">
+                        <span className={`connection-dot ${connectionStatus}`} />
+                        {connectionStatus === "connected"
+                            ? `${players.length} player${players.length === 1 ? "" : "s"} online`
+                            : "Multiplayer offline"}
+                    </div>
+
+                    {sortedPlayers.length === 0 ? (
+                        <p className="empty-player-list">
+                            No players online
+                        </p>
+                    ) : (
+                        <ul className="player-list">
+                            {sortedPlayers.map(player => (
+                                <li key={player.id} className="player-list-item">
+                                    <strong>{player.name}</strong>
+                                    <span>{player.imageName}</span>
+                                </li>
+                            ))}
+                        </ul>
+                    )}
+                </aside>
+
+                <svg
+                    width="800"
+                    height="700"
+                    viewBox={`0 0 ${MAP_WIDTH} ${MAP_HEIGHT}`}
+                >
 
                 {/* ========================= */}
                 {/* IMAGE CLIPPING DEFINITIONS */}
@@ -580,6 +955,12 @@ function Game() {
                                         row
                                     )
                                 }
+                                onMouseEnter={() =>
+                                    setHoveredHex({ col, row })
+                                }
+                                onMouseLeave={() =>
+                                    setHoveredHex(null)
+                                }
                                 style={{
                                     cursor:
                                         "pointer"
@@ -588,6 +969,76 @@ function Game() {
                         );
                     })
                 )}
+
+                {hoveredHex && selectedUnit !== null && (() => {
+                    const selected = units.find(
+                        unit => unit.id === selectedUnit
+                    );
+
+                    if (!selected) {
+                        return null;
+                    }
+
+                    return getHexLine(
+                        selected.col,
+                        selected.row,
+                        hoveredHex.col,
+                        hoveredHex.row
+                    ).map(hex => {
+                        const {
+                            x,
+                            y
+                        } = getHexPosition(
+                            hex.col,
+                            hex.row
+                        );
+
+                        return (
+                            <polygon
+                                key={`path-${hex.col}-${hex.row}`}
+                                points={hexPoints(x, y)}
+                                className="hex-path"
+                                pointerEvents="none"
+                            />
+                        );
+                    });
+                })()}
+
+                {hoveredHex && selectedUnit !== null && (() => {
+                    const selected = units.find(
+                        unit => unit.id === selectedUnit
+                    );
+
+                    if (!selected) {
+                        return null;
+                    }
+
+                    const {
+                        x,
+                        y
+                    } = getHexPosition(
+                        hoveredHex.col,
+                        hoveredHex.row
+                    );
+                    const distance = getHexDistance(
+                        selected.col,
+                        selected.row,
+                        hoveredHex.col,
+                        hoveredHex.row
+                    );
+
+                    return (
+                        <text
+                            x={x}
+                            y={y + 6}
+                            textAnchor="middle"
+                            className="hex-distance"
+                            pointerEvents="none"
+                        >
+                            {distance}
+                        </text>
+                    );
+                })()}
 
 
                 {/* ========================= */}
@@ -716,7 +1167,93 @@ function Game() {
                     );
                 })}
 
-            </svg>
+                </svg>
+
+                <aside className="ability-panel">
+                    <h2>Abilities</h2>
+
+                    {displayedAbilities.length === 0 ? (
+                        <p className="empty-ability-list">
+                            No abilities available
+                        </p>
+                    ) : (
+                        displayedAbilities.map(ability => (
+                            (() => {
+                                const abilityLines =
+                                    ability.markdown.split(/\r?\n/);
+                                const abilityDetails =
+                                    abilityLines.slice(1).join("\n").trim();
+                                const isExpanded =
+                                    expandedAbilities[ability.name] === true;
+
+                                return (
+                                    <section
+                                        key={ability.name}
+                                        className={`ability-entry ability-${getAbilityStatus(ability)}`}
+                                    >
+                                        <div className="ability-heading-row">
+                                            <h2>{ability.name}</h2>
+
+                                            <button
+                                                type="button"
+                                                className="ability-state-toggle"
+                                                title={
+                                                    getAbilityStatus(ability) === "whole"
+                                                        ? "Break"
+                                                        : getAbilityStatus(ability) === "broken"
+                                                            ? "Reforge"
+                                                            : "Whole"
+                                                }
+                                                aria-label={
+                                                    getAbilityStatus(ability) === "whole"
+                                                        ? `Break ${ability.name}`
+                                                        : getAbilityStatus(ability) === "broken"
+                                                            ? `Reforge ${ability.name}`
+                                                            : `Make ${ability.name} whole`
+                                                }
+                                                onClick={() =>
+                                                    updateAbilityStatus(ability)
+                                                }
+                                            >
+                                                {getAbilityStatus(ability) === "whole"
+                                                    ? "X"
+                                                    : getAbilityStatus(ability) === "broken"
+                                                        ? "O"
+                                                        : "-"}
+                                            </button>
+
+                                            <button
+                                                type="button"
+                                                className="ability-toggle"
+                                                aria-label={`${isExpanded ? "Collapse" : "Expand"} ${ability.name}`}
+                                                aria-expanded={isExpanded}
+                                                onClick={() =>
+                                                    setExpandedAbilities(
+                                                        current => ({
+                                                            ...current,
+                                                            [ability.name]: !isExpanded
+                                                        })
+                                                    )
+                                                }
+                                            >
+                                                {isExpanded ? "v" : ">"}
+                                            </button>
+                                        </div>
+
+                                        {isExpanded && (
+                                            <ReactMarkdown
+                                                remarkPlugins={[remarkGfm]}
+                                            >
+                                                {abilityDetails}
+                                            </ReactMarkdown>
+                                        )}
+                                    </section>
+                                );
+                            })()
+                        ))
+                    )}
+                </aside>
+            </div>
 
         </div>
     );
