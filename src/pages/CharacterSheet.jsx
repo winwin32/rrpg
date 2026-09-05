@@ -175,9 +175,11 @@ function CharacterSheet() {
     const [connectionError, setConnectionError] = useState("");
     const [sheetStarted, setSheetStarted] = useState(false);
     const [gmDataStatus, setGmDataStatus] = useState("");
+    const [dataStatus, setDataStatus] = useState("");
     const reconnectTimeoutRef = useRef(null);
     const importFileRef = useRef(null);
     const playerImportFileRef = useRef(null);
+    const playerImportPendingRef = useRef(false);
 
     const canEdit = profile?.role === "player" &&
         Boolean(profile.unitId);
@@ -256,6 +258,10 @@ function CharacterSheet() {
                     message.type === "character-data-saved"
                 ) {
                     pendingSheetRef.current = null;
+                    if (playerImportPendingRef.current) {
+                        playerImportPendingRef.current = false;
+                        setDataStatus("Imported");
+                    }
                     return;
                 }
 
@@ -406,6 +412,8 @@ function CharacterSheet() {
 
                 setCharacterSheet(importedSheet);
                 setSheetStarted(true);
+                playerImportPendingRef.current = true;
+                setDataStatus("Importing...");
                 sendCharacterData(
                     importedSheet,
                     Array.isArray(data.abilities) ? data.abilities : []
@@ -443,6 +451,7 @@ function CharacterSheet() {
             `${profile.name.replace(/[^a-z0-9]+/gi, "-") || "character"}.json`,
             data
         );
+        setDataStatus("Exported");
     }
 
     function exportAllCharacterData() {
@@ -680,6 +689,7 @@ function CharacterSheet() {
                     hidden
                     onChange={importCharacterFile}
                 />
+                {dataStatus && <span>{dataStatus}</span>}
             </div>
 
             {connectionError && (
