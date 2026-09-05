@@ -191,6 +191,7 @@ websocketServer.on("connection", socket => {
             message.type !== "add-ability" &&
             message.type !== "remove-ability" &&
             message.type !== "update-ability-status" &&
+            message.type !== "update-character-sheet" &&
             message.type !== "reset-board"
         ) {
             return;
@@ -269,6 +270,34 @@ websocketServer.on("connection", socket => {
                 ];
             }
             saveBoardState();
+            sendState();
+            return;
+        }
+
+        if (message.type === "update-character-sheet") {
+            if (
+                client.profile.role !== "player" ||
+                message.targetUnitId !== client.profile.unitId ||
+                !message.characterSheet ||
+                typeof message.characterSheet !== "object" ||
+                Array.isArray(message.characterSheet)
+            ) {
+                return;
+            }
+
+            const targetUnit = boardUnits.find(
+                unit => unit.id === message.targetUnitId
+            );
+
+            if (!targetUnit || targetUnit.type !== "player") {
+                return;
+            }
+
+            targetUnit.characterSheet = message.characterSheet;
+            saveBoardState();
+            socket.send(JSON.stringify({
+                type: "character-sheet-saved"
+            }));
             sendState();
             return;
         }

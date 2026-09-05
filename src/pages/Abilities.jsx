@@ -19,6 +19,16 @@ function getStoredProfile() {
 }
 
 const requirementGroups = [
+    {
+        category: "Base Abilities",
+        label: "Primary Abilities",
+        requirements: []
+    },
+    {
+        category: "Secondary Abilities",
+        label: "Secondary Abilities",
+        requirements: []
+    },
     { category: "The Elements", requirements: [] },
     { category: "Taming", requirements: [] },
     { category: "Necromancy", requirements: [] },
@@ -36,6 +46,40 @@ const requirementGroups = [
     { category: "Illusions", requirements: [] },
     { category: "Animal Form", requirements: [] },
     { category: "Shield", requirements: [] }
+];
+
+const filterSections = [
+    {
+        label: "Base Abilities",
+        categories: ["Base Abilities", "Secondary Abilities"]
+    },
+    {
+        label: "Race Abilities",
+        categories: [
+            "Craftsfolk",
+            "Diminutive",
+            "War-like",
+            "Fae-Touched",
+            "Undead"
+        ]
+    },
+    {
+        label: "Class Abilities",
+        categories: [
+            "The Elements",
+            "Taming",
+            "Necromancy",
+            "Performance",
+            "Dual Wielding",
+            "Justice and Mercy",
+            "Heavy",
+            "Light",
+            "Long Ranged",
+            "Illusions",
+            "Animal Form",
+            "Shield"
+        ]
+    }
 ];
 
 const abilityFiles = import.meta.glob(
@@ -284,7 +328,7 @@ function Abilities() {
                         group => group.requirements
                     )
                     : selectedRequirement === "All"
-                        ? selectedGroup.requirements
+                        ? selectedGroup?.requirements || []
                         : [selectedRequirement];
 
             const exactNumber = Number(exactRequirementNumber);
@@ -299,8 +343,14 @@ function Abilities() {
                         return false;
                     }
 
-                    if (selectedCategory !== "All" &&
-                        selectedGroup.requirements.length === 0) {
+                    if (
+                        exactRequirementNumber &&
+                        getRequirementNumber(ability) !== exactNumber
+                    ) {
+                        return false;
+                    }
+
+                    if (requirements.length === 0) {
                         return true;
                     }
 
@@ -342,38 +392,40 @@ function Abilities() {
             {/* ========================= */}
 
             <div className="ability-filters">
-                <button
-                    className={
-                        selectedCategory === "All"
-                            ? "ability-filter active"
-                            : "ability-filter"
-                    }
-                    onClick={() => {
-                        setSelectedCategory("All");
-                        setSelectedRequirement("All");
-                    }}
-                >
-                    All
-                </button>
+                {filterSections.map(section => (
+                    <section
+                        className="ability-filter-section"
+                        key={section.label}
+                    >
+                        <h2>{section.label}</h2>
 
-                {requirementGroups.map(group => (
-                    <div className="ability-filter-group" key={group.category}>
-                        <button
-                            className={
-                                selectedCategory === group.category &&
-                                selectedRequirement === "All"
-                                    ? "ability-filter active"
-                                    : "ability-filter"
-                            }
-                            onClick={() => {
-                                setSelectedCategory(group.category);
-                                setSelectedRequirement("All");
-                            }}
-                        >
-                            {group.category}
-                        </button>
+                        <div className="ability-filter-group">
+                            {section.categories.map(category => {
+                                const group = requirementGroups.find(
+                                    entry => entry.category === category
+                                );
 
-                        {group.requirements.map(requirement => (
+                                return (
+                                    <div
+                                        key={group.category}
+                                        className="ability-filter-category"
+                                    >
+                                        <button
+                                            className={
+                                                selectedCategory === group.category &&
+                                                selectedRequirement === "All"
+                                                    ? "ability-filter active"
+                                                    : "ability-filter"
+                                            }
+                                            onClick={() => {
+                                                setSelectedCategory(group.category);
+                                                setSelectedRequirement("All");
+                                            }}
+                                        >
+                                            {group.label || group.category}
+                                        </button>
+
+                                        {group.requirements.map(requirement => (
                             <button
                                 className={
                                     selectedCategory === group.category &&
@@ -389,8 +441,12 @@ function Abilities() {
                             >
                                 {requirement}
                             </button>
-                        ))}
-                    </div>
+                                        ))}
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    </section>
                 ))}
 
                 <label className="ability-requirement-input">

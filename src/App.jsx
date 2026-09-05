@@ -3,6 +3,7 @@ import { NavLink, Routes, Route } from "react-router-dom";
 import Game from "./pages/Game";
 import Rules from "./pages/Rules";
 import Abilities from "./pages/Abilities";
+import CharacterSheet from "./pages/CharacterSheet";
 
 import "./App.css";
 
@@ -20,6 +21,10 @@ function App() {
 
                 <NavLink to="/abilities">
                     Abilities
+                </NavLink>
+
+                <NavLink to="/character-sheet">
+                    Character Sheet
                 </NavLink>
             </nav>
 
@@ -43,6 +48,11 @@ function App() {
                     <Route
                         path="/abilities"
                         element={<Abilities />}
+                    />
+
+                    <Route
+                        path="/character-sheet"
+                        element={<CharacterSheet />}
                     />
                 </Routes>
             </main>
