@@ -11,6 +11,7 @@ import { WebSocketServer } from "ws";
 
 const PORT = Number(process.env.PORT || 3001);
 const STATE_FILE = new URL("./board-state.json", import.meta.url);
+const CHARACTER_DATA_FILE = new URL("./character-data.json", import.meta.url);
 const clients = new Map();
 
 function loadBoardState() {
@@ -39,7 +40,16 @@ function saveBoardState() {
 
     writeFileSync(
         temporaryStateFile,
-        JSON.stringify({ units: boardUnits }, null, 2),
+        JSON.stringify({
+            units: boardUnits.map(unit => ({
+                id: unit.id,
+                name: unit.name,
+                image: unit.image,
+                col: unit.col,
+                row: unit.row,
+                type: unit.type
+            }))
+        }, null, 2),
         "utf8"
     );
 
@@ -55,7 +65,66 @@ function saveBoardState() {
     }
 }
 
+function loadCharacterData() {
+    try {
+        const savedData = JSON.parse(
+            readFileSync(CHARACTER_DATA_FILE, "utf8")
+        );
+
+        return savedData && typeof savedData === "object"
+            ? savedData
+            : {};
+    } catch {
+        return {};
+    }
+}
+
+function saveCharacterData() {
+    writeFileSync(
+        CHARACTER_DATA_FILE,
+        JSON.stringify(characterData, null, 2),
+        "utf8"
+    );
+}
+
+function mergeCharacterDataFromUnits(units) {
+    if (!Array.isArray(units)) {
+        return;
+    }
+
+    units.forEach(unit => {
+        if (!characterData[unit.id]) {
+            characterData[unit.id] = {};
+        }
+
+        if (
+            !Array.isArray(characterData[unit.id].abilities) &&
+            Array.isArray(unit.abilities)
+        ) {
+            characterData[unit.id].abilities = unit.abilities;
+        }
+
+        if (
+            !characterData[unit.id].characterSheet &&
+            unit.characterSheet
+        ) {
+            characterData[unit.id].characterSheet = unit.characterSheet;
+        }
+    });
+}
+
+function getUnitsWithCharacterData() {
+    return boardUnits?.map(unit => ({
+        ...unit,
+        ...(characterData[unit.id] || {})
+    }));
+}
+
 let boardUnits = loadBoardState();
+const characterData = loadCharacterData();
+mergeCharacterDataFromUnits(boardUnits);
+saveCharacterData();
+saveBoardState();
 let nextPlayerId = 1;
 
 const httpServer = createServer((request, response) => {
@@ -71,7 +140,7 @@ const websocketServer = new WebSocketServer({
 function sendState() {
     const message = JSON.stringify({
         type: "state",
-        units: boardUnits,
+        units: getUnitsWithCharacterData(),
         players: Array.from(clients.values())
             .filter(client => client.profile)
             .map(client => client.profile)
@@ -89,23 +158,24 @@ function isValidPosition(value) {
 }
 
 function mergeTokenAbilities(incomingUnits) {
-    if (!Array.isArray(boardUnits) || !Array.isArray(incomingUnits)) {
+    if (!Array.isArray(incomingUnits)) {
         return;
     }
 
     incomingUnits.forEach(incomingUnit => {
-        const savedUnit = boardUnits.find(
-            unit => unit.id === incomingUnit.id
-        );
+        if (!characterData[incomingUnit.id]) {
+            characterData[incomingUnit.id] = {};
+        }
 
         if (
-            savedUnit &&
-            !Array.isArray(savedUnit.abilities) &&
+            !Array.isArray(characterData[incomingUnit.id].abilities) &&
             Array.isArray(incomingUnit.abilities)
         ) {
-            savedUnit.abilities = incomingUnit.abilities;
+            characterData[incomingUnit.id].abilities = incomingUnit.abilities;
         }
     });
+
+    saveCharacterData();
 }
 
 websocketServer.on("connection", socket => {
@@ -118,7 +188,7 @@ websocketServer.on("connection", socket => {
 
     socket.send(JSON.stringify({
         type: "state",
-        units: boardUnits,
+        units: getUnitsWithCharacterData(),
         players: Array.from(clients.values())
             .filter(connectedClient => connectedClient.profile)
             .map(connectedClient => connectedClient.profile)
@@ -179,7 +249,9 @@ websocketServer.on("connection", socket => {
 
             if (!boardUnits && Array.isArray(message.units)) {
                 boardUnits = message.units;
+                mergeCharacterDataFromUnits(boardUnits);
                 saveBoardState();
+                saveCharacterData();
             } else {
                 mergeTokenAbilities(message.units);
                 saveBoardState();
@@ -253,16 +325,17 @@ websocketServer.on("connection", socket => {
                 return;
             }
 
-            const abilities = Array.isArray(targetUnit.abilities)
-                ? targetUnit.abilities
+            const unitData = characterData[targetUnit.id] || {};
+            const abilities = Array.isArray(unitData.abilities)
+                ? unitData.abilities
                 : [];
 
             if (message.type === "remove-ability") {
-                targetUnit.abilities = abilities.filter(
+                unitData.abilities = abilities.filter(
                     ability => ability.name !== message.abilityName
                 );
             } else if (message.type === "update-ability-status") {
-                targetUnit.abilities = abilities.map(ability =>
+                unitData.abilities = abilities.map(ability =>
                     ability.name === message.abilityName
                         ? { ...ability, status: message.status }
                         : ability
@@ -274,7 +347,7 @@ websocketServer.on("connection", socket => {
                     return;
                 }
 
-                targetUnit.abilities = [
+                unitData.abilities = [
                     ...abilities,
                     {
                         name: message.ability.name,
@@ -283,7 +356,8 @@ websocketServer.on("connection", socket => {
                     }
                 ];
             }
-            saveBoardState();
+            characterData[targetUnit.id] = unitData;
+            saveCharacterData();
             sendState();
             return;
         }
@@ -307,8 +381,11 @@ websocketServer.on("connection", socket => {
                 return;
             }
 
-            targetUnit.characterSheet = message.characterSheet;
-            saveBoardState();
+            characterData[targetUnit.id] = {
+                ...(characterData[targetUnit.id] || {}),
+                characterSheet: message.characterSheet
+            };
+            saveCharacterData();
             socket.send(JSON.stringify({
                 type: "character-sheet-saved"
             }));
@@ -322,7 +399,14 @@ websocketServer.on("connection", socket => {
                 return;
             }
 
-            boardUnits = message.units;
+            boardUnits = message.units.map(unit => ({
+                id: unit.id,
+                name: unit.name,
+                image: unit.image,
+                col: unit.col,
+                row: unit.row,
+                type: unit.type
+            }));
             saveBoardState();
             sendState();
             return;

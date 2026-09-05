@@ -939,10 +939,38 @@ svg {
     font-size: 13px;
 }
 
+.character-sheet-field-grid label {
+    align-items: flex-start;
+    padding: 6px 8px;
+    border: 1px solid #555;
+    border-radius: 4px;
+}
+
+.character-sheet-select-row {
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 14px;
+}
+
+.character-sheet-characteristic-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(180px, 240px);
+    gap: 8px;
+}
+
 .character-sheet-section input {
     box-sizing: border-box;
     width: 100%;
     padding: 8px;
+    color: white;
+    background: #1e1e1e;
+    border: 1px solid #555;
+    border-radius: 4px;
+}
+
+.character-sheet-section select {
+    box-sizing: border-box;
+    padding: 6px 8px;
     color: white;
     background: #1e1e1e;
     border: 1px solid #555;

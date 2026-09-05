@@ -17,18 +17,33 @@ const masteryFields = [
     "Creature Familiarity"
 ];
 
+const secondaryAbilities = [
+    "Sneak",
+    "Familiarity",
+    "Demonstrate",
+    "Inquire",
+    "Expound",
+    "Persuade",
+    "Navigate",
+    "Scout",
+    "Forage"
+];
+
 const defaultCharacterSheet = {
     body: 5,
     mind: 5,
     soul: 5,
     movement: 5,
     toughness: 0,
+    backgroundStat: "Body",
+    backgroundSecondaryAbility: "Sneak",
     mastery: Object.fromEntries(
         masteryFields.map(field => [field, 0])
     ),
     socialContexts: [""],
-    characteristics: [""],
-    foreshadowing: "",
+    characteristics: [{ text: "", mastery: "" }],
+    foreshadowedAbility: "",
+    oneUniqueThing: "",
     destiny: "",
     equipment: ""
 };
@@ -52,8 +67,23 @@ function createDefaultSheet() {
         ...defaultCharacterSheet,
         mastery: { ...defaultCharacterSheet.mastery },
         socialContexts: [""],
-        characteristics: [""]
+        characteristics: [{ text: "", mastery: "" }]
     };
+}
+
+function normalizeCharacteristics(characteristics) {
+    if (!Array.isArray(characteristics) || characteristics.length === 0) {
+        return [{ text: "", mastery: "" }];
+    }
+
+    return characteristics.map(characteristic =>
+        typeof characteristic === "string"
+            ? { text: characteristic, mastery: "" }
+            : {
+                text: characteristic?.text || "",
+                mastery: characteristic?.mastery || ""
+            }
+    );
 }
 
 function CharacterSheet() {
@@ -139,23 +169,27 @@ function CharacterSheet() {
                 setPlayerUnit(playerUnit || null);
 
                 if (playerUnit?.characterSheet) {
+                    const savedSheet = playerUnit.characterSheet;
+
                     setCharacterSheet({
                         ...createDefaultSheet(),
-                        ...playerUnit.characterSheet,
+                        ...savedSheet,
+                        foreshadowedAbility:
+                            savedSheet.foreshadowedAbility ||
+                            savedSheet.foreshadowing ||
+                            "",
                         mastery: {
                             ...createDefaultSheet().mastery,
-                            ...(playerUnit.characterSheet.mastery || {})
+                            ...(savedSheet.mastery || {})
                         },
                         socialContexts: Array.isArray(
-                            playerUnit.characterSheet.socialContexts
-                        ) && playerUnit.characterSheet.socialContexts.length > 0
-                            ? playerUnit.characterSheet.socialContexts
+                            savedSheet.socialContexts
+                        ) && savedSheet.socialContexts.length > 0
+                            ? savedSheet.socialContexts
                             : [""],
-                        characteristics: Array.isArray(
-                            playerUnit.characterSheet.characteristics
-                        ) && playerUnit.characterSheet.characteristics.length > 0
-                            ? playerUnit.characterSheet.characteristics
-                            : [""]
+                        characteristics: normalizeCharacteristics(
+                            savedSheet.characteristics
+                        )
                     });
                 }
 
@@ -254,10 +288,27 @@ function CharacterSheet() {
         });
     }
 
+    function updateCharacteristic(index, field, value) {
+        updateSheet({
+            ...characterSheet,
+            characteristics: characterSheet.characteristics.map(
+                (characteristic, characteristicIndex) =>
+                    characteristicIndex === index
+                        ? { ...characteristic, [field]: value }
+                        : characteristic
+            )
+        });
+    }
+
     function addLine(field) {
         updateSheet({
             ...characterSheet,
-            [field]: [...characterSheet[field], ""]
+            [field]: [
+                ...characterSheet[field],
+                field === "characteristics"
+                    ? { text: "", mastery: "" }
+                    : ""
+            ]
         });
     }
 
@@ -309,6 +360,44 @@ function CharacterSheet() {
             {connectionError && (
                 <p className="character-sheet-error">{connectionError}</p>
             )}
+
+            <div className="character-sheet-section">
+                <h2>Background</h2>
+                <label className="character-sheet-select-row">
+                    Background stat
+                    <select
+                        value={characterSheet.backgroundStat}
+                        onChange={event =>
+                            updateSheet({
+                                ...characterSheet,
+                                backgroundStat: event.target.value
+                            })
+                        }
+                    >
+                        <option value="Body">+1 Body</option>
+                        <option value="Mind">+1 Mind</option>
+                        <option value="Soul">+1 Soul</option>
+                    </select>
+                </label>
+                <label className="character-sheet-select-row">
+                    +1 to Secondary Ability
+                    <select
+                        value={characterSheet.backgroundSecondaryAbility}
+                        onChange={event =>
+                            updateSheet({
+                                ...characterSheet,
+                                backgroundSecondaryAbility: event.target.value
+                            })
+                        }
+                    >
+                        {secondaryAbilities.map(ability => (
+                            <option key={ability} value={ability}>
+                                {ability}
+                            </option>
+                        ))}
+                    </select>
+                </label>
+            </div>
 
             <div className="character-sheet-section">
                 <div className="character-sheet-field-grid">
@@ -379,16 +468,30 @@ function CharacterSheet() {
 
             <div className="character-sheet-section">
                 <h2>Characteristics</h2>
-                {characterSheet.characteristics.map((line, index) => (
-                    <input
-                        className="character-sheet-text-input"
-                        key={`characteristic-${index}`}
-                        type="text"
-                        value={line}
-                        onChange={event =>
-                            updateLine("characteristics", index, event.target.value)
-                        }
-                    />
+                {characterSheet.characteristics.map((characteristic, index) => (
+                    <div className="character-sheet-characteristic-row" key={`characteristic-${index}`}>
+                        <input
+                            className="character-sheet-text-input"
+                            type="text"
+                            value={characteristic.text}
+                            onChange={event =>
+                                updateCharacteristic(index, "text", event.target.value)
+                            }
+                        />
+                        <select
+                            value={characteristic.mastery}
+                            onChange={event =>
+                                updateCharacteristic(index, "mastery", event.target.value)
+                            }
+                        >
+                            <option value="">Choose mastery</option>
+                            {masteryFields.map(mastery => (
+                                <option key={mastery} value={mastery}>
+                                    {mastery}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
                 ))}
                 <button type="button" onClick={() => addLine("characteristics")}>
                     +
@@ -396,7 +499,8 @@ function CharacterSheet() {
             </div>
 
             {[
-                ["Foreshadowing", "foreshadowing"],
+                ["Foreshadowed Ability", "foreshadowedAbility"],
+                ["One Unique Thing", "oneUniqueThing"],
                 ["Destiny", "destiny"],
                 ["Equipment", "equipment"]
             ].map(([label, field]) => (

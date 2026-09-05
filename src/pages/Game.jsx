@@ -489,7 +489,7 @@ function Game() {
             return;
         }
 
-        if (window.confirm("Are you sure you want to reset the board? This will clear all unit positions and abilities.")) {
+        if (window.confirm("Are you sure you want to reset the board? This will clear all unit positions.")) {
             socket.send(
                 JSON.stringify({
                     type: "reset-board",
