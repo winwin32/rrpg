@@ -145,6 +145,20 @@ websocketServer.on("connection", socket => {
                 return;
             }
 
+            const existingConnection = Array.from(clients.entries()).find(
+                ([connectedSocket, connectedClient]) =>
+                    connectedSocket !== socket &&
+                    (isGameMaster
+                        ? connectedClient.profile?.role === "game-master"
+                        : connectedClient.profile?.unitId === message.profile.unitId)
+            );
+
+            if (existingConnection) {
+                const [existingSocket] = existingConnection;
+                clients.delete(existingSocket);
+                existingSocket.close();
+            }
+
             const claimedByAnotherPlayer = Array.from(clients.values()).some(
                 connectedClient =>
                     connectedClient !== client &&
