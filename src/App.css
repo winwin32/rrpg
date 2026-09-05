@@ -41,6 +41,17 @@ body {
     overflow-y: auto;
 }
 
+.ability-panels-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+}
+
+.ability-panels-stack .ability-panel {
+    max-height: 320px;
+}
+
 .ability-panel h2 {
     margin: 0 0 14px;
     padding-bottom: 10px;

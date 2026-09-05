@@ -335,11 +335,24 @@ websocketServer.on("connection", socket => {
                     ability => ability.name !== message.abilityName
                 );
             } else if (message.type === "update-ability-status") {
-                unitData.abilities = abilities.map(ability =>
+                const hasAbility = abilities.some(
+                    ability => ability.name === message.abilityName
+                );
+
+                unitData.abilities = hasAbility
+                    ? abilities.map(ability =>
                     ability.name === message.abilityName
                         ? { ...ability, status: message.status }
                         : ability
-                );
+                    )
+                    : [
+                        ...abilities,
+                        {
+                            name: message.abilityName,
+                            category: "Base Abilities",
+                            status: message.status
+                        }
+                    ];
             } else {
                 if (abilities.some(ability =>
                     ability.name === message.ability.name

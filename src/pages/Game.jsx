@@ -178,6 +178,59 @@ const secondaryAbilityNames = baseAbilityNames.filter(
     name => !primaryAbilityNames.includes(name)
 );
 
+const abilityFiles = import.meta.glob(
+    "../assets/abilities/Ability List.md",
+    {
+        eager: true,
+        query: "?raw",
+        import: "default"
+    }
+);
+
+function parsePrimaryAbilities(markdown) {
+    const abilities = [];
+    let category = "";
+    let currentAbility = null;
+
+    markdown.split("\n").forEach(line => {
+        const categoryMatch = line.match(/^#\s+([^#].*?)\s*$/);
+        const abilityMatch = line.match(/^##\s+(.+?)\s*$/);
+
+        if (categoryMatch) {
+            category = categoryMatch[1].trim();
+            return;
+        }
+
+        if (abilityMatch) {
+            if (currentAbility) {
+                currentAbility.content = currentAbility.content.join("\n").trim();
+                abilities.push(currentAbility);
+            }
+
+            currentAbility = {
+                name: abilityMatch[1].replace(/\*\*/g, "").trim(),
+                category,
+                content: []
+            };
+            return;
+        }
+
+        if (currentAbility) {
+            currentAbility.content.push(line);
+        }
+    });
+
+    if (currentAbility) {
+        currentAbility.content = currentAbility.content.join("\n").trim();
+        abilities.push(currentAbility);
+    }
+
+    return abilities.filter(ability => ability.category === "Base Abilities");
+}
+
+const primaryAbilityDefinitions = Object.values(abilityFiles)
+    .flatMap(parsePrimaryAbilities);
+
 function isSecondaryAbility(ability) {
     return ability.category === "Secondary Abilities" ||
         secondaryAbilityNames.includes(ability.name);
@@ -187,6 +240,20 @@ function isBaseAbility(ability) {
     return ["Base Abilities", "Secondary Abilities"].includes(
         ability.category
     ) || baseAbilityNames.includes(ability.name);
+}
+
+function getPrimaryAbilities(unit) {
+    const savedAbilities = new Map(
+        (Array.isArray(unit.abilities) ? unit.abilities : [])
+            .map(ability => [ability.name, ability])
+    );
+
+    return primaryAbilityDefinitions.map(ability => ({
+        name: ability.name,
+        category: ability.category,
+        status: savedAbilities.get(ability.name)?.status || "whole",
+        markdown: `## ${ability.name}\n\n${ability.content}`
+    }));
 }
 
 function getAbilityBarSegments(unit) {
@@ -730,7 +797,9 @@ function Game() {
             )
             : [];
 
-    const baseAbilities = displayedAbilities.filter(isBaseAbility);
+    const baseAbilities = selectedToken?.type === "player"
+        ? getPrimaryAbilities(selectedToken)
+        : [];
     const classAbilities = displayedAbilities.filter(
         ability => !isBaseAbility(ability)
     );
@@ -1406,20 +1475,22 @@ function Game() {
 
                 </svg>
 
-                {[ ["Class Abilities", classAbilities], ["Base Abilities", baseAbilities] ].map(
-                    ([label, abilities]) => (
-                        <aside className="ability-panel" key={label}>
-                            <h2>{label}</h2>
-                            {abilities.length === 0 ? (
-                                <p className="empty-ability-list">
-                                    No abilities available
-                                </p>
-                            ) : (
-                                abilities.map(renderAbilityEntry)
-                            )}
-                        </aside>
-                    )
-                )}
+                <div className="ability-panels-stack">
+                    {[ ["Class Abilities", classAbilities], ["Base Abilities", baseAbilities] ].map(
+                        ([label, abilities]) => (
+                            <aside className="ability-panel" key={label}>
+                                <h2>{label}</h2>
+                                {abilities.length === 0 ? (
+                                    <p className="empty-ability-list">
+                                        No abilities available
+                                    </p>
+                                ) : (
+                                    abilities.map(renderAbilityEntry)
+                                )}
+                            </aside>
+                        )
+                    )}
+                </div>
             </div>
 
         </div>

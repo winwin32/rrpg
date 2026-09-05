@@ -358,31 +358,6 @@ function CharacterSheet() {
         setSaveStatus("Saving...");
     }
 
-    function updateAbilityStatus(ability) {
-        const activeSocket = socketRef.current;
-
-        if (
-            !canEdit ||
-            activeSocket?.readyState !== WebSocket.OPEN
-        ) {
-            return;
-        }
-
-        const status = ability.status || "whole";
-        const nextStatus = status === "whole"
-            ? "broken"
-            : status === "broken"
-                ? "reforged"
-                : "whole";
-
-        activeSocket.send(JSON.stringify({
-            type: "update-ability-status",
-            targetUnitId: profile.unitId,
-            abilityName: ability.name,
-            status: nextStatus
-        }));
-    }
-
     function getAbilityStatus(ability) {
         return ability.status || "whole";
     }
@@ -449,24 +424,6 @@ function CharacterSheet() {
             >
                 <div className="ability-heading-row">
                     <h2>{ability.name}</h2>
-                    <button
-                        type="button"
-                        className="ability-state-toggle"
-                        title={
-                            status === "whole"
-                                ? "Break"
-                                : status === "broken"
-                                    ? "Reforge"
-                                    : "Whole"
-                        }
-                        onClick={() => updateAbilityStatus(ability)}
-                    >
-                        {status === "whole"
-                            ? "X"
-                            : status === "broken"
-                                ? "O"
-                                : "-"}
-                    </button>
                 </div>
                 <ReactMarkdown remarkPlugins={[remarkGfm]}>
                     {abilityDetails}
@@ -700,8 +657,8 @@ function CharacterSheet() {
             ))}
 
             {[
-                ["Base Abilities", baseAbilities],
-                ["Class Abilities", classAbilities]
+                ["Class Abilities", classAbilities],
+                ["Base Abilities", baseAbilities]
             ].map(([label, base]) => {
                 const abilities = Array.isArray(base)
                     ? base
