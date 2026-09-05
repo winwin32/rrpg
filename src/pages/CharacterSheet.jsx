@@ -177,6 +177,7 @@ function CharacterSheet() {
     const [gmDataStatus, setGmDataStatus] = useState("");
     const reconnectTimeoutRef = useRef(null);
     const importFileRef = useRef(null);
+    const playerImportFileRef = useRef(null);
 
     const canEdit = profile?.role === "player" &&
         Boolean(profile.unitId);
@@ -410,6 +411,48 @@ function CharacterSheet() {
         }
     }
 
+    function importCharacterFile(event) {
+        const file = event.target.files?.[0];
+        if (!file) {
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.addEventListener("load", () => {
+            try {
+                const data = JSON.parse(reader.result);
+
+                if (!data?.characterSheet) {
+                    setConnectionError("This file does not contain character data.");
+                    return;
+                }
+
+                const importedSheet = {
+                    ...createDefaultSheet(),
+                    ...data.characterSheet,
+                    mastery: {
+                        ...createDefaultSheet().mastery,
+                        ...(data.characterSheet.mastery || {})
+                    },
+                    characteristics: normalizeCharacteristics(
+                        data.characterSheet.characteristics
+                    )
+                };
+
+                setCharacterSheet(importedSheet);
+                setSheetStarted(true);
+                sendCharacterData(
+                    importedSheet,
+                    Array.isArray(data.abilities) ? data.abilities : []
+                );
+            } catch {
+                setConnectionError("The character data file could not be imported.");
+            }
+        });
+        reader.readAsText(file);
+        event.target.value = "";
+    }
+
     function downloadJson(filename, data) {
         const blob = new Blob(
             [JSON.stringify(data, null, 2)],
@@ -573,7 +616,7 @@ function CharacterSheet() {
                         type="button"
                         onClick={() => importFileRef.current?.click()}
                     >
-                        Import character data
+                        Import Character Data
                     </button>
                     <input
                         ref={importFileRef}
@@ -649,8 +692,22 @@ function CharacterSheet() {
                     type="button"
                     onClick={exportCharacter}
                 >
-                    Download character data
+                    Export Character Data
                 </button>
+                <button
+                    className="character-sheet-save-button"
+                    type="button"
+                    onClick={() => playerImportFileRef.current?.click()}
+                >
+                    Import Character Data
+                </button>
+                <input
+                    ref={playerImportFileRef}
+                    type="file"
+                    accept="application/json,.json"
+                    hidden
+                    onChange={importCharacterFile}
+                />
             </div>
 
             {connectionError && (
