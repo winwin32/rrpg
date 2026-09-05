@@ -173,7 +173,6 @@ function CharacterSheet() {
     const [playerUnit, setPlayerUnit] = useState(null);
     const [sheetLoaded, setSheetLoaded] = useState(() => !profile);
     const [connectionError, setConnectionError] = useState("");
-    const [saveStatus, setSaveStatus] = useState("");
     const [sheetStarted, setSheetStarted] = useState(false);
     const [gmDataStatus, setGmDataStatus] = useState("");
     const reconnectTimeoutRef = useRef(null);
@@ -233,7 +232,6 @@ function CharacterSheet() {
                         targetUnitId: profile.unitId,
                         characterSheet: pendingSheetRef.current
                     }));
-                    setSaveStatus("Saving...");
                 }
             });
 
@@ -257,7 +255,6 @@ function CharacterSheet() {
                     message.type === "character-data-saved"
                 ) {
                     pendingSheetRef.current = null;
-                    setSaveStatus("Saved");
                     return;
                 }
 
@@ -338,7 +335,6 @@ function CharacterSheet() {
 
     function updateSheet(nextSheet) {
         setCharacterSheet(nextSheet);
-        setSaveStatus("Unsaved changes");
         pendingSheetRef.current = nextSheet;
 
         const activeSocket = socketRef.current;
@@ -357,30 +353,10 @@ function CharacterSheet() {
         }));
     }
 
-    function saveSheet() {
-        const activeSocket = socketRef.current;
-
-        if (
-            !canEdit ||
-            activeSocket?.readyState !== WebSocket.OPEN
-        ) {
-            setSaveStatus("Unable to save while offline");
-            return;
-        }
-
-        activeSocket.send(JSON.stringify({
-            type: "update-character-sheet",
-            targetUnitId: profile.unitId,
-            characterSheet
-        }));
-        setSaveStatus("Saving...");
-    }
-
     function sendCharacterData(sheet, abilities) {
         const activeSocket = socketRef.current;
 
         if (!canEdit || activeSocket?.readyState !== WebSocket.OPEN) {
-            setSaveStatus("Unable to save while offline");
             return;
         }
 
@@ -390,7 +366,6 @@ function CharacterSheet() {
             characterSheet: sheet,
             abilities
         }));
-        setSaveStatus("Saving...");
     }
 
     function startNewSheet() {
@@ -669,14 +644,6 @@ function CharacterSheet() {
             </div>
 
             <div className="character-sheet-save-bar">
-                <button
-                    className="character-sheet-save-button"
-                    type="button"
-                    onClick={saveSheet}
-                >
-                    Save
-                </button>
-                {saveStatus && <span>{saveStatus}</span>}
                 <button
                     className="character-sheet-save-button"
                     type="button"
