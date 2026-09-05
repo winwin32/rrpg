@@ -11,7 +11,7 @@ body {
 
 .game-layout {
     display: grid;
-    grid-template-columns: 150px minmax(0, 1fr) 180px;
+    grid-template-columns: 150px minmax(0, 1fr) 180px 180px;
     align-items: flex-start;
     justify-content: center;
     gap: 12px;
@@ -146,6 +146,22 @@ body {
 
 .ability-reforged .ability-state-toggle:hover {
     background: #3b3b3b;
+}
+
+.unit-ability-bar-background {
+    fill: #333;
+}
+
+.unit-ability-bar-whole {
+    fill: #42b866;
+}
+
+.unit-ability-bar-reforged {
+    fill: #4d8edb;
+}
+
+.unit-ability-bar-broken {
+    fill: #d65353;
 }
 
 .ability-entry p {
@@ -1015,6 +1031,10 @@ svg {
     border: 1px solid #555;
     border-radius: 4px;
     font: inherit;
+}
+
+.character-sheet-equipment {
+    min-height: 180px;
 }
 
 .character-sheet-section button {

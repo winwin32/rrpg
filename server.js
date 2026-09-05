@@ -352,6 +352,9 @@ websocketServer.on("connection", socket => {
                     {
                         name: message.ability.name,
                         markdown: message.ability.markdown,
+                        category: typeof message.ability.category === "string"
+                            ? message.ability.category
+                            : "",
                         status: "whole"
                     }
                 ];

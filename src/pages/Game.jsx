@@ -151,6 +151,93 @@ function getAbilityStatus(ability) {
     return ability.status || "whole";
 }
 
+const baseAbilityNames = [
+    "Attack",
+    "Move",
+    "Flee",
+    "Recover",
+    "Sneak",
+    "Familiarity",
+    "Demonstrate",
+    "Inquire",
+    "Expound",
+    "Persuade",
+    "Navigate",
+    "Scout",
+    "Forage"
+];
+
+const primaryAbilityNames = [
+    "Attack",
+    "Move",
+    "Flee",
+    "Recover"
+];
+
+const secondaryAbilityNames = baseAbilityNames.filter(
+    name => !primaryAbilityNames.includes(name)
+);
+
+function isSecondaryAbility(ability) {
+    return ability.category === "Secondary Abilities" ||
+        secondaryAbilityNames.includes(ability.name);
+}
+
+function isBaseAbility(ability) {
+    return ["Base Abilities", "Secondary Abilities"].includes(
+        ability.category
+    ) || baseAbilityNames.includes(ability.name);
+}
+
+function getAbilityBarSegments(unit) {
+    const storedAbilities = Array.isArray(unit.abilities)
+        ? unit.abilities.filter(ability => !isSecondaryAbility(ability))
+        : [];
+    const storedPrimaryNames = new Set(
+        storedAbilities
+            .filter(ability => primaryAbilityNames.includes(ability.name))
+            .map(ability => ability.name)
+    );
+    const missingPrimaryCount = primaryAbilityNames.filter(
+        name => !storedPrimaryNames.has(name)
+    ).length;
+    const statusCounts = storedAbilities.reduce(
+        (counts, ability) => {
+            counts[getAbilityStatus(ability)] += 1;
+            return counts;
+        },
+        { whole: missingPrimaryCount, reforged: 0, broken: 0 }
+    );
+    const total = statusCounts.whole +
+        statusCounts.reforged +
+        statusCounts.broken;
+
+    if (total === 0) {
+        return [];
+    }
+
+    const segments = [
+        { status: "whole", count: statusCounts.whole },
+        { status: "reforged", count: statusCounts.reforged },
+        { status: "broken", count: statusCounts.broken }
+    ].filter(segment => segment.count > 0)
+        .map(segment => ({
+            ...segment,
+            width: segment.count / total * 100
+        }));
+
+    let offset = 0;
+
+    return segments.map(segment => {
+        const positionedSegment = {
+            ...segment,
+            offset
+        };
+        offset += segment.width;
+        return positionedSegment;
+    });
+}
+
 function getNextAbilityStatus(status) {
     if (status === "whole") {
         return "broken";
@@ -641,6 +728,67 @@ function Game() {
             ? selectedToken.abilities || []
             : [];
 
+    const baseAbilities = displayedAbilities.filter(isBaseAbility);
+    const classAbilities = displayedAbilities.filter(
+        ability => !isBaseAbility(ability)
+    );
+
+    function renderAbilityEntry(ability) {
+        const abilityLines = ability.markdown.split(/\r?\n/);
+        const abilityDetails = abilityLines.slice(1).join("\n").trim();
+        const isExpanded = expandedAbilities[ability.name] === true;
+
+        return (
+            <section
+                key={ability.name}
+                className={`ability-entry ability-${getAbilityStatus(ability)}`}
+            >
+                <div className="ability-heading-row">
+                    <h2>{ability.name}</h2>
+                    {!isSecondaryAbility(ability) && (
+                        <button
+                            type="button"
+                            className="ability-state-toggle"
+                            title={
+                                getAbilityStatus(ability) === "whole"
+                                    ? "Break"
+                                    : getAbilityStatus(ability) === "broken"
+                                        ? "Reforge"
+                                        : "Whole"
+                            }
+                            onClick={() => updateAbilityStatus(ability)}
+                        >
+                            {getAbilityStatus(ability) === "whole"
+                                ? "X"
+                                : getAbilityStatus(ability) === "broken"
+                                    ? "O"
+                                    : "-"}
+                        </button>
+                    )}
+                    <button
+                        type="button"
+                        className="ability-toggle"
+                        aria-label={`${isExpanded ? "Collapse" : "Expand"} ${ability.name}`}
+                        aria-expanded={isExpanded}
+                        onClick={() =>
+                            setExpandedAbilities(current => ({
+                                ...current,
+                                [ability.name]: !isExpanded
+                            }))
+                        }
+                    >
+                        {isExpanded ? "v" : ">"}
+                    </button>
+                </div>
+                {isExpanded && (
+                    <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                        {abilityDetails}
+                    </ReactMarkdown>
+                )}
+            </section>
+        );
+    }
+
 
     // =========================
     // HANDLE HEX CLICK
@@ -1119,7 +1267,6 @@ function Game() {
                             unit.row
                         );
 
-
                     return (
                         <polygon
                             key={`selected-${unit.id}`}
@@ -1149,6 +1296,9 @@ function Game() {
                             unit.row
                         );
 
+                    const abilityBarSegments =
+                        getAbilityBarSegments(unit);
+
 
                     return (
                         <g
@@ -1167,6 +1317,36 @@ function Game() {
                                     "pointer"
                             }}
                         >
+
+                            {abilityBarSegments.length > 0 && (
+                                <g
+                                    className="unit-ability-bar"
+                                    aria-label="Ability status"
+                                >
+                                    <rect
+                                        x={x - UNIT_IMAGE_SIZE}
+                                        y={y - UNIT_IMAGE_SIZE - 7}
+                                        width={UNIT_IMAGE_SIZE * 2}
+                                        height="5"
+                                        className="unit-ability-bar-background"
+                                    />
+                                    {abilityBarSegments.map(segment => (
+                                        <rect
+                                            key={segment.status}
+                                            x={
+                                                x - UNIT_IMAGE_SIZE +
+                                                UNIT_IMAGE_SIZE * 2 * segment.offset / 100
+                                            }
+                                            y={y - UNIT_IMAGE_SIZE - 7}
+                                            width={
+                                                UNIT_IMAGE_SIZE * 2 * segment.width / 100
+                                            }
+                                            height="5"
+                                            className={`unit-ability-bar-${segment.status}`}
+                                        />
+                                    ))}
+                                </g>
+                            )}
 
                             {/* ================= */}
                             {/* PLAYER IMAGE       */}
@@ -1224,90 +1404,20 @@ function Game() {
 
                 </svg>
 
-                <aside className="ability-panel">
-                    <h2>Abilities</h2>
-
-                    {displayedAbilities.length === 0 ? (
-                        <p className="empty-ability-list">
-                            No abilities available
-                        </p>
-                    ) : (
-                        displayedAbilities.map(ability => (
-                            (() => {
-                                const abilityLines =
-                                    ability.markdown.split(/\r?\n/);
-                                const abilityDetails =
-                                    abilityLines.slice(1).join("\n").trim();
-                                const isExpanded =
-                                    expandedAbilities[ability.name] === true;
-
-                                return (
-                                    <section
-                                        key={ability.name}
-                                        className={`ability-entry ability-${getAbilityStatus(ability)}`}
-                                    >
-                                        <div className="ability-heading-row">
-                                            <h2>{ability.name}</h2>
-
-                                            <button
-                                                type="button"
-                                                className="ability-state-toggle"
-                                                title={
-                                                    getAbilityStatus(ability) === "whole"
-                                                        ? "Break"
-                                                        : getAbilityStatus(ability) === "broken"
-                                                            ? "Reforge"
-                                                            : "Whole"
-                                                }
-                                                aria-label={
-                                                    getAbilityStatus(ability) === "whole"
-                                                        ? `Break ${ability.name}`
-                                                        : getAbilityStatus(ability) === "broken"
-                                                            ? `Reforge ${ability.name}`
-                                                            : `Make ${ability.name} whole`
-                                                }
-                                                onClick={() =>
-                                                    updateAbilityStatus(ability)
-                                                }
-                                            >
-                                                {getAbilityStatus(ability) === "whole"
-                                                    ? "X"
-                                                    : getAbilityStatus(ability) === "broken"
-                                                        ? "O"
-                                                        : "-"}
-                                            </button>
-
-                                            <button
-                                                type="button"
-                                                className="ability-toggle"
-                                                aria-label={`${isExpanded ? "Collapse" : "Expand"} ${ability.name}`}
-                                                aria-expanded={isExpanded}
-                                                onClick={() =>
-                                                    setExpandedAbilities(
-                                                        current => ({
-                                                            ...current,
-                                                            [ability.name]: !isExpanded
-                                                        })
-                                                    )
-                                                }
-                                            >
-                                                {isExpanded ? "v" : ">"}
-                                            </button>
-                                        </div>
-
-                                        {isExpanded && (
-                                            <ReactMarkdown
-                                                remarkPlugins={[remarkGfm]}
-                                            >
-                                                {abilityDetails}
-                                            </ReactMarkdown>
-                                        )}
-                                    </section>
-                                );
-                            })()
-                        ))
-                    )}
-                </aside>
+                {[ ["Base Abilities", baseAbilities], ["Class Abilities", classAbilities] ].map(
+                    ([label, abilities]) => (
+                        <aside className="ability-panel" key={label}>
+                            <h2>{label}</h2>
+                            {abilities.length === 0 ? (
+                                <p className="empty-ability-list">
+                                    No abilities available
+                                </p>
+                            ) : (
+                                abilities.map(renderAbilityEntry)
+                            )}
+                        </aside>
+                    )
+                )}
             </div>
 
         </div>

@@ -31,6 +31,14 @@ const secondaryAbilities = [
     "Forage"
 ];
 
+const baseAbilityNames = [
+    "Attack",
+    "Move",
+    "Flee",
+    "Recover",
+    ...secondaryAbilities
+];
+
 const defaultCharacterSheet = {
     body: 5,
     mind: 5,
@@ -47,7 +55,8 @@ const defaultCharacterSheet = {
     foreshadowedAbility: "",
     oneUniqueThing: "",
     destiny: "",
-    equipment: ""
+    equipment: "",
+    additionalDetails: ""
 };
 
 function getStoredProfile() {
@@ -86,6 +95,12 @@ function normalizeCharacteristics(characteristics) {
                 mastery: characteristic?.mastery || ""
             }
     );
+}
+
+function isBaseAbility(ability) {
+    return ["Base Abilities", "Secondary Abilities"].includes(
+        ability.category
+    ) || baseAbilityNames.includes(ability.name);
 }
 
 function CharacterSheet() {
@@ -343,6 +358,44 @@ function CharacterSheet() {
         });
     }
 
+    function renderSavedAbility(ability) {
+        const abilityLines = ability.markdown.split(/\r?\n/);
+        const abilityDetails = abilityLines.slice(1).join("\n").trim();
+        const status = getAbilityStatus(ability);
+
+        return (
+            <section
+                key={ability.name}
+                className={`ability-entry ability-${status}`}
+            >
+                <div className="ability-heading-row">
+                    <h2>{ability.name}</h2>
+                    <button
+                        type="button"
+                        className="ability-state-toggle"
+                        title={
+                            status === "whole"
+                                ? "Break"
+                                : status === "broken"
+                                    ? "Reforge"
+                                    : "Whole"
+                        }
+                        onClick={() => updateAbilityStatus(ability)}
+                    >
+                        {status === "whole"
+                            ? "X"
+                            : status === "broken"
+                                ? "O"
+                                : "-"}
+                    </button>
+                </div>
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                    {abilityDetails}
+                </ReactMarkdown>
+            </section>
+        );
+    }
+
     if (!profile || !canEdit) {
         return (
             <div className="character-sheet-page">
@@ -535,11 +588,12 @@ function CharacterSheet() {
                 ["Foreshadowed Ability", "foreshadowedAbility"],
                 ["One Unique Thing", "oneUniqueThing"],
                 ["Destiny", "destiny"],
-                ["Equipment", "equipment"]
+                ["Equipment", "equipment"],
+                ["Additional Details", "additionalDetails"]
             ].map(([label, field]) => (
                 <div className="character-sheet-section" key={field}>
                     <h2>{label}</h2>
-                    {field === "equipment" ? (
+                    {field === "equipment" || field === "additionalDetails" ? (
                         <textarea
                             className="character-sheet-equipment"
                             value={characterSheet[field]}
@@ -566,50 +620,27 @@ function CharacterSheet() {
                 </div>
             ))}
 
-            <div className="character-sheet-section character-sheet-abilities-section">
-                <h2>Abilities</h2>
-                {!Array.isArray(playerUnit?.abilities) || playerUnit.abilities.length === 0 ? (
-                    <p className="empty-ability-list">No abilities available</p>
-                ) : (
-                    playerUnit.abilities.map(ability => {
-                        const abilityLines = ability.markdown.split(/\r?\n/);
-                        const abilityDetails = abilityLines.slice(1).join("\n").trim();
-                        const status = getAbilityStatus(ability);
+            {[
+                ["Base Abilities", true],
+                ["Class Abilities", false]
+            ].map(([label, base]) => {
+                const abilities = Array.isArray(playerUnit?.abilities)
+                    ? playerUnit.abilities.filter(ability =>
+                        isBaseAbility(ability) === base
+                    )
+                    : [];
 
-                        return (
-                            <section
-                                key={ability.name}
-                                className={`ability-entry ability-${status}`}
-                            >
-                                <div className="ability-heading-row">
-                                    <h2>{ability.name}</h2>
-                                    <button
-                                        type="button"
-                                        className="ability-state-toggle"
-                                        title={
-                                            status === "whole"
-                                                ? "Break"
-                                                : status === "broken"
-                                                    ? "Reforge"
-                                                    : "Whole"
-                                        }
-                                        onClick={() => updateAbilityStatus(ability)}
-                                    >
-                                        {status === "whole"
-                                            ? "X"
-                                            : status === "broken"
-                                                ? "O"
-                                                : "-"}
-                                    </button>
-                                </div>
-                                <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                                    {abilityDetails}
-                                </ReactMarkdown>
-                            </section>
-                        );
-                    })
-                )}
-            </div>
+                return (
+                    <div className="character-sheet-section character-sheet-abilities-section" key={label}>
+                        <h2>{label}</h2>
+                        {abilities.length === 0 ? (
+                            <p className="empty-ability-list">No abilities available</p>
+                        ) : (
+                            abilities.map(renderSavedAbility)
+                        )}
+                    </div>
+                );
+            })}
         </div>
     );
 }

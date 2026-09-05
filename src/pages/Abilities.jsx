@@ -82,6 +82,11 @@ const filterSections = [
     }
 ];
 
+const baseAbilityCategories = [
+    "Base Abilities",
+    "Secondary Abilities"
+];
+
 const abilityFiles = import.meta.glob(
     "../assets/abilities/Ability List.md",//"../assets/abilities/**/*.md",
     {
@@ -151,6 +156,10 @@ function getRequirementNumber(ability) {
     return requirementMatch
         ? Number(requirementMatch[1])
         : 0;
+}
+
+function isBaseAbility(ability) {
+    return baseAbilityCategories.includes(ability.category);
 }
 
 
@@ -257,6 +266,7 @@ function Abilities() {
                     ability: {
                         name: ability.title,
                         markdown: `## **${ability.title}**\n\n${ability.content}`,
+                            category: ability.category,
                         status: "whole"
                     }
                 })
@@ -503,29 +513,29 @@ function Abilities() {
                                     {`## ${ability.title}\n\n${ability.content}`}
                                 </ReactMarkdown>
 
-                                <div className="ability-assignment-controls">
-                                    <button
-                                    type="button"
-                                    className={
-                                        abilityAlreadyAdded
-                                            ? "add-ability-button remove-ability-button"
-                                            : "add-ability-button"
-                                    }
-                                    disabled={
-                                        !canAddAbilities
-                                    }
-                                    onClick={() =>
-                                        updateTokenAbility(
-                                            ability,
-                                            abilityAlreadyAdded
-                                        )
-                                    }
-                                >
-                                    {abilityAlreadyAdded
-                                        ? "Remove ability"
-                                        : "Add ability"}
-                                    </button>
-                                </div>
+                                {!isBaseAbility(ability) && (
+                                    <div className="ability-assignment-controls">
+                                        <button
+                                            type="button"
+                                            className={
+                                                abilityAlreadyAdded
+                                                    ? "add-ability-button remove-ability-button"
+                                                    : "add-ability-button"
+                                            }
+                                            disabled={!canAddAbilities}
+                                            onClick={() =>
+                                                updateTokenAbility(
+                                                    ability,
+                                                    abilityAlreadyAdded
+                                                )
+                                            }
+                                        >
+                                            {abilityAlreadyAdded
+                                                ? "Remove ability"
+                                                : "Add ability"}
+                                        </button>
+                                    </div>
+                                )}
                             </section>
                             );
                         }
