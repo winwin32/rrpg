@@ -3,6 +3,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
 const PROFILE_SESSION_KEY = "rrpg-profile-session";
+const LOCAL_CHARACTER_DATA_KEY = "rrpg-character-data";
 
 const masteryFields = [
     "Shield Training",
@@ -173,7 +174,10 @@ function CharacterSheet() {
     const [sheetLoaded, setSheetLoaded] = useState(() => !profile);
     const [connectionError, setConnectionError] = useState("");
     const [saveStatus, setSaveStatus] = useState("");
+    const [sheetStarted, setSheetStarted] = useState(false);
+    const [gmDataStatus, setGmDataStatus] = useState("");
     const reconnectTimeoutRef = useRef(null);
+    const importFileRef = useRef(null);
 
     const canEdit = profile?.role === "player" &&
         Boolean(profile.unitId);
@@ -248,9 +252,23 @@ function CharacterSheet() {
                     return;
                 }
 
-                if (message.type === "character-sheet-saved") {
+                if (
+                    message.type === "character-sheet-saved" ||
+                    message.type === "character-data-saved"
+                ) {
                     pendingSheetRef.current = null;
                     setSaveStatus("Saved");
+                    return;
+                }
+
+                if (message.type === "character-data-export") {
+                    downloadJson("rrpg-character-data-all.json", message.data);
+                    setGmDataStatus("Exported");
+                    return;
+                }
+
+                if (message.type === "character-data-imported") {
+                    setGmDataStatus("Imported");
                     return;
                 }
 
@@ -358,6 +376,127 @@ function CharacterSheet() {
         setSaveStatus("Saving...");
     }
 
+    function sendCharacterData(sheet, abilities) {
+        const activeSocket = socketRef.current;
+
+        if (!canEdit || activeSocket?.readyState !== WebSocket.OPEN) {
+            setSaveStatus("Unable to save while offline");
+            return;
+        }
+
+        activeSocket.send(JSON.stringify({
+            type: "update-character-data",
+            targetUnitId: profile.unitId,
+            characterSheet: sheet,
+            abilities
+        }));
+        setSaveStatus("Saving...");
+    }
+
+    function startNewSheet() {
+        const sheet = createDefaultSheet();
+        setCharacterSheet(sheet);
+        setSheetStarted(true);
+        sendCharacterData(sheet, []);
+    }
+
+    function importLocalCharacter() {
+        try {
+            const savedData = JSON.parse(
+                localStorage.getItem(LOCAL_CHARACTER_DATA_KEY)
+            );
+
+            if (!savedData?.characterSheet) {
+                setConnectionError("No local character data was found.");
+                return;
+            }
+
+            const importedSheet = {
+                ...createDefaultSheet(),
+                ...savedData.characterSheet,
+                mastery: {
+                    ...createDefaultSheet().mastery,
+                    ...(savedData.characterSheet.mastery || {})
+                },
+                characteristics: normalizeCharacteristics(
+                    savedData.characterSheet.characteristics
+                )
+            };
+            setCharacterSheet(importedSheet);
+            setSheetStarted(true);
+            sendCharacterData(
+                importedSheet,
+                Array.isArray(savedData.abilities)
+                    ? savedData.abilities
+                    : []
+            );
+        } catch {
+            setConnectionError("The local character data could not be imported.");
+        }
+    }
+
+    function downloadJson(filename, data) {
+        const blob = new Blob(
+            [JSON.stringify(data, null, 2)],
+            { type: "application/json" }
+        );
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = filename;
+        link.click();
+        URL.revokeObjectURL(link.href);
+    }
+
+    function exportCharacter() {
+        const data = {
+            version: 1,
+            profileName: profile.name,
+            unitId: profile.unitId,
+            characterSheet,
+            abilities: savedAbilities
+        };
+        localStorage.setItem(LOCAL_CHARACTER_DATA_KEY, JSON.stringify(data));
+        downloadJson(
+            `${profile.name.replace(/[^a-z0-9]+/gi, "-") || "character"}.json`,
+            data
+        );
+    }
+
+    function exportAllCharacterData() {
+        const activeSocket = socketRef.current;
+
+        if (activeSocket?.readyState !== WebSocket.OPEN) {
+            setGmDataStatus("Unable to export while offline");
+            return;
+        }
+
+        activeSocket.send(JSON.stringify({ type: "export-character-data" }));
+        setGmDataStatus("Exporting...");
+    }
+
+    function importAllCharacterData(event) {
+        const file = event.target.files?.[0];
+        if (!file) {
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.addEventListener("load", () => {
+            try {
+                const data = JSON.parse(reader.result);
+                socketRef.current?.send(JSON.stringify({
+                    type: "import-character-data",
+                    data
+                }));
+                setGmDataStatus("Importing...");
+            } catch {
+                setGmDataStatus("Invalid character data file");
+            }
+        });
+        reader.readAsText(file);
+        event.target.value = "";
+    }
+
     function getAbilityStatus(ability) {
         return ability.status || "whole";
     }
@@ -432,7 +571,7 @@ function CharacterSheet() {
         );
     }
 
-    if (!profile || !canEdit) {
+    if (!profile) {
         return (
             <div className="character-sheet-page">
                 <h1>Character Sheet</h1>
@@ -441,11 +580,74 @@ function CharacterSheet() {
         );
     }
 
+    if (profile.role === "game-master") {
+        return (
+            <div className="character-sheet-page">
+                <h1>Character Sheet Data</h1>
+                <p>Manage backups for all player profiles.</p>
+                <div className="character-sheet-save-bar">
+                    <button
+                        className="character-sheet-save-button"
+                        type="button"
+                        onClick={exportAllCharacterData}
+                    >
+                        Export all character data
+                    </button>
+                    <button
+                        className="character-sheet-save-button"
+                        type="button"
+                        onClick={() => importFileRef.current?.click()}
+                    >
+                        Import character data
+                    </button>
+                    <input
+                        ref={importFileRef}
+                        type="file"
+                        accept="application/json,.json"
+                        hidden
+                        onChange={importAllCharacterData}
+                    />
+                    {gmDataStatus && <span>{gmDataStatus}</span>}
+                </div>
+            </div>
+        );
+    }
+
     if (!sheetLoaded) {
         return (
             <div className="character-sheet-page">
                 <h1>Character Sheet</h1>
-                <p>Loading character sheet...</p>
+                <p>Loading character data...</p>
+            </div>
+        );
+    }
+
+    const hasSavedCharacterData = Boolean(
+        playerUnit?.characterSheet ||
+        (Array.isArray(playerUnit?.abilities) && playerUnit.abilities.length > 0)
+    );
+
+    if (!sheetStarted && !hasSavedCharacterData) {
+        return (
+            <div className="character-sheet-page character-sheet-splash">
+                <h1>Character Sheet</h1>
+                <p>No saved character data was found.</p>
+                <div className="character-sheet-splash-actions">
+                    <button
+                        className="character-sheet-save-button"
+                        type="button"
+                        onClick={startNewSheet}
+                    >
+                        Start new character sheet
+                    </button>
+                    <button
+                        className="character-sheet-save-button"
+                        type="button"
+                        onClick={importLocalCharacter}
+                    >
+                        Import from local storage
+                    </button>
+                </div>
             </div>
         );
     }
@@ -475,6 +677,13 @@ function CharacterSheet() {
                     Save
                 </button>
                 {saveStatus && <span>{saveStatus}</span>}
+                <button
+                    className="character-sheet-save-button"
+                    type="button"
+                    onClick={exportCharacter}
+                >
+                    Download character data
+                </button>
             </div>
 
             {connectionError && (

@@ -934,6 +934,21 @@ svg {
     background: #101010;
 }
 
+.character-sheet-splash {
+    min-height: 320px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.character-sheet-splash-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
 .character-sheet-section {
     display: flex;
     flex-direction: column;

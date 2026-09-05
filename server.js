@@ -268,6 +268,14 @@ websocketServer.on("connection", socket => {
                 role: isGameMaster ? "game-master" : "player"
             };
 
+            if (!isGameMaster) {
+                characterData[client.profile.unitId] = {
+                    ...(characterData[client.profile.unitId] || {}),
+                    profile: client.profile
+                };
+                saveCharacterData();
+            }
+
             sendState();
             return;
         }
@@ -278,6 +286,9 @@ websocketServer.on("connection", socket => {
             message.type !== "remove-ability" &&
             message.type !== "update-ability-status" &&
             message.type !== "update-character-sheet" &&
+            message.type !== "update-character-data" &&
+            message.type !== "export-character-data" &&
+            message.type !== "import-character-data" &&
             message.type !== "reset-board"
         ) {
             return;
@@ -286,12 +297,72 @@ websocketServer.on("connection", socket => {
         if (!client.profile || !Array.isArray(boardUnits)) {
             if (
                 message.type === "move" ||
+                message.type === "export-character-data" ||
+                message.type === "import-character-data" ||
                 !client.profile ||
-                client.profile.role !== "player" ||
+                !["player", "game-master"].includes(client.profile.role) ||
                 !Array.isArray(boardUnits)
             ) {
                 return;
             }
+        }
+
+        if (message.type === "export-character-data") {
+            if (client.profile.role !== "game-master") {
+                return;
+            }
+
+            socket.send(JSON.stringify({
+                type: "character-data-export",
+                data: {
+                    version: 1,
+                    profiles: Object.fromEntries(
+                        Object.entries(characterData).map(([unitId, data]) => [
+                            unitId,
+                            {
+                                profile: data.profile || null,
+                                characterSheet: data.characterSheet || null,
+                                abilities: Array.isArray(data.abilities)
+                                    ? data.abilities
+                                    : []
+                            }
+                        ])
+                    )
+                }
+            }));
+            return;
+        }
+
+        if (message.type === "import-character-data") {
+            if (
+                client.profile.role !== "game-master" ||
+                !message.data?.profiles ||
+                typeof message.data.profiles !== "object" ||
+                Array.isArray(message.data.profiles)
+            ) {
+                return;
+            }
+
+            Object.entries(message.data.profiles).forEach(([unitId, data]) => {
+                if (!data || typeof data !== "object") {
+                    return;
+                }
+
+                characterData[unitId] = {
+                    profile: data.profile || null,
+                    characterSheet: data.characterSheet || null,
+                    abilities: Array.isArray(data.abilities)
+                        ? data.abilities
+                        : []
+                };
+            });
+
+            saveCharacterData();
+            sendState();
+            socket.send(JSON.stringify({
+                type: "character-data-imported"
+            }));
+            return;
         }
 
         if (
@@ -375,6 +446,31 @@ websocketServer.on("connection", socket => {
             characterData[targetUnit.id] = unitData;
             saveCharacterData();
             sendState();
+            return;
+        }
+
+        if (message.type === "update-character-data") {
+            if (
+                client.profile.role !== "player" ||
+                message.targetUnitId !== client.profile.unitId ||
+                !message.characterSheet ||
+                typeof message.characterSheet !== "object" ||
+                !Array.isArray(message.abilities)
+            ) {
+                return;
+            }
+
+            characterData[client.profile.unitId] = {
+                ...(characterData[client.profile.unitId] || {}),
+                profile: client.profile,
+                characterSheet: message.characterSheet,
+                abilities: message.abilities
+            };
+            saveCharacterData();
+            sendState();
+            socket.send(JSON.stringify({
+                type: "character-data-saved"
+            }));
             return;
         }
 
