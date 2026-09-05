@@ -39,6 +39,15 @@ const baseAbilityNames = [
     ...secondaryAbilities
 ];
 
+const abilityFiles = import.meta.glob(
+    "../assets/abilities/Ability List.md",
+    {
+        eager: true,
+        query: "?raw",
+        import: "default"
+    }
+);
+
 const defaultCharacterSheet = {
     body: 5,
     mind: 5,
@@ -97,6 +106,56 @@ function normalizeCharacteristics(characteristics) {
     );
 }
 
+function parseBaseAbilities(markdown) {
+    const abilities = [];
+    let category = "";
+    let currentAbility = null;
+
+    markdown.split("\n").forEach(line => {
+        const categoryMatch = line.match(/^#\s+([^#].*?)\s*$/);
+        const abilityMatch = line.match(/^##\s+(.+?)\s*$/);
+
+        if (categoryMatch) {
+            category = categoryMatch[1].trim();
+            return;
+        }
+
+        if (abilityMatch) {
+            if (currentAbility) {
+                currentAbility.content = currentAbility.content
+                    .join("\n")
+                    .trim();
+                abilities.push(currentAbility);
+            }
+
+            currentAbility = {
+                name: abilityMatch[1].replace(/\*\*/g, "").trim(),
+                category,
+                content: []
+            };
+            return;
+        }
+
+        if (currentAbility) {
+            currentAbility.content.push(line);
+        }
+    });
+
+    if (currentAbility) {
+        currentAbility.content = currentAbility.content.join("\n").trim();
+        abilities.push(currentAbility);
+    }
+
+    return abilities.filter(ability =>
+        ["Base Abilities", "Secondary Abilities"].includes(
+            ability.category
+        )
+    );
+}
+
+const baseAbilityDefinitions = Object.values(abilityFiles)
+    .flatMap(parseBaseAbilities);
+
 function isBaseAbility(ability) {
     return ["Base Abilities", "Secondary Abilities"].includes(
         ability.category
@@ -118,6 +177,26 @@ function CharacterSheet() {
 
     const canEdit = profile?.role === "player" &&
         Boolean(profile.unitId);
+
+    const savedAbilities = Array.isArray(playerUnit?.abilities)
+        ? playerUnit.abilities
+        : [];
+    const savedAbilitiesByName = new Map(
+        savedAbilities.map(ability => [ability.name, ability])
+    );
+    const baseAbilities = baseAbilityDefinitions.map(ability => {
+        const savedAbility = savedAbilitiesByName.get(ability.name);
+
+        return {
+            name: ability.name,
+            category: ability.category,
+            status: savedAbility?.status || "whole",
+            markdown: `## ${ability.name}\n\n${ability.content}`
+        };
+    });
+    const classAbilities = savedAbilities.filter(
+        ability => !isBaseAbility(ability)
+    );
 
     useEffect(() => {
         if (!profile) {
@@ -621,13 +700,11 @@ function CharacterSheet() {
             ))}
 
             {[
-                ["Base Abilities", true],
-                ["Class Abilities", false]
+                ["Base Abilities", baseAbilities],
+                ["Class Abilities", classAbilities]
             ].map(([label, base]) => {
-                const abilities = Array.isArray(playerUnit?.abilities)
-                    ? playerUnit.abilities.filter(ability =>
-                        isBaseAbility(ability) === base
-                    )
+                const abilities = Array.isArray(base)
+                    ? base
                     : [];
 
                 return (

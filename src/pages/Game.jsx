@@ -725,7 +725,9 @@ function Game() {
     const displayedAbilities =
         playerProfile?.role !== "game-master" &&
         selectedToken?.type === "player"
-            ? selectedToken.abilities || []
+            ? (selectedToken.abilities || []).filter(
+                ability => !isSecondaryAbility(ability)
+            )
             : [];
 
     const baseAbilities = displayedAbilities.filter(isBaseAbility);
@@ -1404,7 +1406,7 @@ function Game() {
 
                 </svg>
 
-                {[ ["Base Abilities", baseAbilities], ["Class Abilities", classAbilities] ].map(
+                {[ ["Class Abilities", classAbilities], ["Base Abilities", baseAbilities] ].map(
                     ([label, abilities]) => (
                         <aside className="ability-panel" key={label}>
                             <h2>{label}</h2>
