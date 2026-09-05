@@ -923,6 +923,22 @@ svg {
     font-size: 16px;
 }
 
+.character-sheet-top-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 16px;
+}
+
+.character-sheet-top-grid .character-sheet-section {
+    margin-bottom: 24px;
+}
+
+.character-sheet-stat-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
 .character-sheet-field-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -950,6 +966,11 @@ svg {
     align-items: flex-start;
     justify-content: flex-start;
     gap: 14px;
+}
+
+.character-sheet-select-row select {
+    flex: 1;
+    min-width: 0;
 }
 
 .character-sheet-characteristic-row {
@@ -1012,6 +1033,31 @@ svg {
 
 .character-sheet-error {
     color: #f0a0a0;
+}
+
+.character-sheet-abilities-section {
+    text-align: left;
+}
+
+.character-sheet-abilities-section .ability-entry {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid #555;
+}
+
+.character-sheet-abilities-section .ability-entry h2 {
+    font-size: 17px;
+}
+
+@media (max-width: 700px) {
+    .character-sheet-top-grid {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+    .character-sheet-characteristic-row {
+        grid-template-columns: 1fr;
+    }
 }
 
 .ability-requirement-input input {

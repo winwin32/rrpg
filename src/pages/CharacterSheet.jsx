@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from "react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 const PROFILE_SESSION_KEY = "rrpg-profile-session";
 
@@ -262,6 +264,35 @@ function CharacterSheet() {
         setSaveStatus("Saving...");
     }
 
+    function updateAbilityStatus(ability) {
+        const activeSocket = socketRef.current;
+
+        if (
+            !canEdit ||
+            activeSocket?.readyState !== WebSocket.OPEN
+        ) {
+            return;
+        }
+
+        const status = ability.status || "whole";
+        const nextStatus = status === "whole"
+            ? "broken"
+            : status === "broken"
+                ? "reforged"
+                : "whole";
+
+        activeSocket.send(JSON.stringify({
+            type: "update-ability-status",
+            targetUnitId: profile.unitId,
+            abilityName: ability.name,
+            status: nextStatus
+        }));
+    }
+
+    function getAbilityStatus(ability) {
+        return ability.status || "whole";
+    }
+
     function updateIntegerField(field, value) {
         updateSheet({
             ...characterSheet,
@@ -361,46 +392,47 @@ function CharacterSheet() {
                 <p className="character-sheet-error">{connectionError}</p>
             )}
 
-            <div className="character-sheet-section">
-                <h2>Background</h2>
-                <label className="character-sheet-select-row">
-                    Background stat
-                    <select
-                        value={characterSheet.backgroundStat}
-                        onChange={event =>
-                            updateSheet({
-                                ...characterSheet,
-                                backgroundStat: event.target.value
-                            })
-                        }
-                    >
-                        <option value="Body">+1 Body</option>
-                        <option value="Mind">+1 Mind</option>
-                        <option value="Soul">+1 Soul</option>
-                    </select>
-                </label>
-                <label className="character-sheet-select-row">
-                    +1 to Secondary Ability
-                    <select
-                        value={characterSheet.backgroundSecondaryAbility}
-                        onChange={event =>
-                            updateSheet({
-                                ...characterSheet,
-                                backgroundSecondaryAbility: event.target.value
-                            })
-                        }
-                    >
-                        {secondaryAbilities.map(ability => (
-                            <option key={ability} value={ability}>
-                                {ability}
-                            </option>
-                        ))}
-                    </select>
-                </label>
-            </div>
+            <div className="character-sheet-top-grid">
+                <div className="character-sheet-section">
+                    <h2>Background</h2>
+                    <label className="character-sheet-select-row">
+                        +1 to stat
+                        <select
+                            value={characterSheet.backgroundStat}
+                            onChange={event =>
+                                updateSheet({
+                                    ...characterSheet,
+                                    backgroundStat: event.target.value
+                                })
+                            }
+                        >
+                            <option value="Body">+1 Body</option>
+                            <option value="Mind">+1 Mind</option>
+                            <option value="Soul">+1 Soul</option>
+                        </select>
+                    </label>
+                    <label className="character-sheet-select-row">
+                        +1 to Secondary Ability
+                        <select
+                            value={characterSheet.backgroundSecondaryAbility}
+                            onChange={event =>
+                                updateSheet({
+                                    ...characterSheet,
+                                    backgroundSecondaryAbility: event.target.value
+                                })
+                            }
+                        >
+                            {secondaryAbilities.map(ability => (
+                                <option key={ability} value={ability}>
+                                    {ability}
+                                </option>
+                            ))}
+                        </select>
+                    </label>
+                </div>
 
-            <div className="character-sheet-section">
-                <div className="character-sheet-field-grid">
+                <div className="character-sheet-section">
+                    <div className="character-sheet-stat-list">
                     {[
                         ["Body", "body"],
                         ["Mind", "mind"],
@@ -423,6 +455,7 @@ function CharacterSheet() {
                             />
                         </label>
                     ))}
+                    </div>
                 </div>
             </div>
 
@@ -532,6 +565,51 @@ function CharacterSheet() {
                     )}
                 </div>
             ))}
+
+            <div className="character-sheet-section character-sheet-abilities-section">
+                <h2>Abilities</h2>
+                {!Array.isArray(playerUnit?.abilities) || playerUnit.abilities.length === 0 ? (
+                    <p className="empty-ability-list">No abilities available</p>
+                ) : (
+                    playerUnit.abilities.map(ability => {
+                        const abilityLines = ability.markdown.split(/\r?\n/);
+                        const abilityDetails = abilityLines.slice(1).join("\n").trim();
+                        const status = getAbilityStatus(ability);
+
+                        return (
+                            <section
+                                key={ability.name}
+                                className={`ability-entry ability-${status}`}
+                            >
+                                <div className="ability-heading-row">
+                                    <h2>{ability.name}</h2>
+                                    <button
+                                        type="button"
+                                        className="ability-state-toggle"
+                                        title={
+                                            status === "whole"
+                                                ? "Break"
+                                                : status === "broken"
+                                                    ? "Reforge"
+                                                    : "Whole"
+                                        }
+                                        onClick={() => updateAbilityStatus(ability)}
+                                    >
+                                        {status === "whole"
+                                            ? "X"
+                                            : status === "broken"
+                                                ? "O"
+                                                : "-"}
+                                    </button>
+                                </div>
+                                <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                                    {abilityDetails}
+                                </ReactMarkdown>
+                            </section>
+                        );
+                    })
+                )}
+            </div>
         </div>
     );
 }
