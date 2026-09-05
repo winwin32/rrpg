@@ -589,6 +589,14 @@ function Game() {
         setSelectedUnit(ownedUnit.id);
     }
 
+    function logout() {
+        sessionStorage.removeItem(PROFILE_SESSION_KEY);
+        setPlayerProfile(null);
+        setProfileName("");
+        setProfileImage("");
+        setSelectedUnit(null);
+    }
+
     const claimedUnitIds = new Set(
         players.map(player => player.unitId)
     );
@@ -873,12 +881,20 @@ function Game() {
                     {playerProfile?.role === "game-master" && (
                         <button
                             onClick={resetBoard}
-                            className="reset-board-button"
+                            className="board-action-button"
                             title="Reset the board to initial state"
                         >
                             Reset Board
                         </button>
                     )}
+
+                    <button
+                        type="button"
+                        className="board-action-button"
+                        onClick={logout}
+                    >
+                        Logout
+                    </button>
 
                     {sortedPlayers.length === 0 ? (
                         <p className="empty-player-list">
