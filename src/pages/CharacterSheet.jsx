@@ -376,41 +376,6 @@ function CharacterSheet() {
         sendCharacterData(sheet, []);
     }
 
-    function importLocalCharacter() {
-        try {
-            const savedData = JSON.parse(
-                localStorage.getItem(LOCAL_CHARACTER_DATA_KEY)
-            );
-
-            if (!savedData?.characterSheet) {
-                setConnectionError("No local character data was found.");
-                return;
-            }
-
-            const importedSheet = {
-                ...createDefaultSheet(),
-                ...savedData.characterSheet,
-                mastery: {
-                    ...createDefaultSheet().mastery,
-                    ...(savedData.characterSheet.mastery || {})
-                },
-                characteristics: normalizeCharacteristics(
-                    savedData.characterSheet.characteristics
-                )
-            };
-            setCharacterSheet(importedSheet);
-            setSheetStarted(true);
-            sendCharacterData(
-                importedSheet,
-                Array.isArray(savedData.abilities)
-                    ? savedData.abilities
-                    : []
-            );
-        } catch {
-            setConnectionError("The local character data could not be imported.");
-        }
-    }
-
     function importCharacterFile(event) {
         const file = event.target.files?.[0];
         if (!file) {
@@ -661,10 +626,17 @@ function CharacterSheet() {
                     <button
                         className="character-sheet-save-button"
                         type="button"
-                        onClick={importLocalCharacter}
+                        onClick={() => playerImportFileRef.current?.click()}
                     >
-                        Import from local storage
+                        Import character data
                     </button>
+                    <input
+                        ref={playerImportFileRef}
+                        type="file"
+                        accept="application/json,.json"
+                        hidden
+                        onChange={importCharacterFile}
+                    />
                 </div>
             </div>
         );
