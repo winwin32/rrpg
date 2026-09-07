@@ -177,6 +177,8 @@ function CharacterSheet() {
     const [connectionError, setConnectionError] = useState("");
     const [sheetStarted, setSheetStarted] = useState(false);
     const [gmDataStatus, setGmDataStatus] = useState("");
+    const [gmProfiles, setGmProfiles] = useState([]);
+    const [gmImportChanges, setGmImportChanges] = useState(null);
     const [dataStatus, setDataStatus] = useState("");
     const reconnectTimeoutRef = useRef(null);
     const importFileRef = useRef(null);
@@ -282,8 +284,15 @@ function CharacterSheet() {
                     return;
                 }
 
+                if (message.type === "character-data-summary") {
+                    setGmProfiles(message.profiles || []);
+                    return;
+                }
+
                 if (message.type === "character-data-imported") {
                     setGmDataStatus("Imported");
+                    setGmProfiles(message.profiles || []);
+                    setGmImportChanges(message.changes || null);
                     return;
                 }
 
@@ -629,6 +638,43 @@ function CharacterSheet() {
                     />
                     {gmDataStatus && <span>{gmDataStatus}</span>}
                 </div>
+                <div className="character-data-summary">
+                    <h2>Saved Characters</h2>
+                    {gmProfiles.length === 0 ? (
+                        <p>No character data saved.</p>
+                    ) : (
+                        <ul>
+                            {gmProfiles.map(character => (
+                                <li key={character.unitId}>
+                                    <strong>{character.profileName}</strong>
+                                    {character.tokenName && ` (${character.tokenName})`}
+                                    <span>
+                                        {character.hasSheet
+                                            ? "Character sheet saved"
+                                            : "No character sheet"}
+                                        {character.updatedAt
+                                            ? ` - Updated ${new Date(character.updatedAt).toLocaleString()}`
+                                            : " - Never updated"}
+                                    </span>
+                                </li>
+                            ))}
+                        </ul>
+                    )}
+                </div>
+                {gmImportChanges && (
+                    <div className="character-data-summary">
+                        <h2>Last Import Changes</h2>
+                        <p>Added: {gmImportChanges.added.length}</p>
+                        <p>Updated: {gmImportChanges.updated.length}</p>
+                        <p>Deleted: {gmImportChanges.deleted.length}</p>
+                        {gmImportChanges.added.length > 0 && (
+                            <p>Added profiles: {gmImportChanges.added.join(", ")}</p>
+                        )}
+                        {gmImportChanges.deleted.length > 0 && (
+                            <p>Deleted profiles: {gmImportChanges.deleted.join(", ")}</p>
+                        )}
+                    </div>
+                )}
             </div>
         );
     }

@@ -949,6 +949,35 @@ svg {
     gap: 10px;
 }
 
+.character-data-summary {
+    margin-top: 24px;
+    padding: 16px;
+    color: #ccc;
+    background: #242424;
+    border: 1px solid #444;
+    border-radius: 8px;
+}
+
+.character-data-summary h2 {
+    margin-top: 0;
+    color: white;
+    font-size: 18px;
+}
+
+.character-data-summary ul {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-left: 20px;
+}
+
+.character-data-summary li span {
+    display: block;
+    margin-top: 3px;
+    color: #aaa;
+    font-size: 13px;
+}
+
 .character-sheet-section {
     display: flex;
     flex-direction: column;

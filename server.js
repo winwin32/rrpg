@@ -120,6 +120,16 @@ function getUnitsWithCharacterData() {
     }));
 }
 
+function getCharacterDataSummary() {
+    return Object.entries(characterData).map(([unitId, data]) => ({
+        unitId,
+        profileName: data.profile?.name || "Unknown profile",
+        tokenName: data.profile?.imageName || "",
+        hasSheet: Boolean(data.characterSheet),
+        updatedAt: data.updatedAt || null
+    }));
+}
+
 let boardUnits = loadBoardState();
 const characterData = loadCharacterData();
 mergeCharacterDataFromUnits(boardUnits);
@@ -277,6 +287,12 @@ websocketServer.on("connection", socket => {
             }
 
             sendState();
+            if (isGameMaster) {
+                socket.send(JSON.stringify({
+                    type: "character-data-summary",
+                    profiles: getCharacterDataSummary()
+                }));
+            }
             return;
         }
 
@@ -330,6 +346,10 @@ websocketServer.on("connection", socket => {
                     )
                 }
             }));
+            socket.send(JSON.stringify({
+                type: "character-data-summary",
+                profiles: getCharacterDataSummary()
+            }));
             return;
         }
 
@@ -343,9 +363,21 @@ websocketServer.on("connection", socket => {
                 return;
             }
 
-            Object.entries(message.data.profiles).forEach(([unitId, data]) => {
+            const previousProfiles = new Set(Object.keys(characterData));
+            const importedProfiles = message.data.profiles;
+            const added = [];
+            const updated = [];
+            const importedAt = new Date().toISOString();
+
+            Object.entries(importedProfiles).forEach(([unitId, data]) => {
                 if (!data || typeof data !== "object") {
                     return;
+                }
+
+                if (previousProfiles.has(unitId)) {
+                    updated.push(unitId);
+                } else {
+                    added.push(unitId);
                 }
 
                 characterData[unitId] = {
@@ -353,14 +385,26 @@ websocketServer.on("connection", socket => {
                     characterSheet: data.characterSheet || null,
                     abilities: Array.isArray(data.abilities)
                         ? data.abilities
-                        : []
+                        : [],
+                    updatedAt: importedAt
                 };
             });
+
+            const deleted = Object.keys(characterData).filter(
+                unitId => !Object.prototype.hasOwnProperty.call(importedProfiles, unitId)
+            );
+            deleted.forEach(unitId => delete characterData[unitId]);
 
             saveCharacterData();
             sendState();
             socket.send(JSON.stringify({
-                type: "character-data-imported"
+                type: "character-data-imported",
+                changes: {
+                    added,
+                    updated,
+                    deleted
+                },
+                profiles: getCharacterDataSummary()
             }));
             return;
         }
@@ -444,6 +488,7 @@ websocketServer.on("connection", socket => {
                 ];
             }
             characterData[targetUnit.id] = unitData;
+            unitData.updatedAt = new Date().toISOString();
             saveCharacterData();
             sendState();
             return;
@@ -464,7 +509,8 @@ websocketServer.on("connection", socket => {
                 ...(characterData[client.profile.unitId] || {}),
                 profile: client.profile,
                 characterSheet: message.characterSheet,
-                abilities: message.abilities
+                abilities: message.abilities,
+                updatedAt: new Date().toISOString()
             };
             saveCharacterData();
             sendState();
@@ -495,7 +541,8 @@ websocketServer.on("connection", socket => {
 
             characterData[targetUnit.id] = {
                 ...(characterData[targetUnit.id] || {}),
-                characterSheet: message.characterSheet
+                characterSheet: message.characterSheet,
+                updatedAt: new Date().toISOString()
             };
             saveCharacterData();
             socket.send(JSON.stringify({
