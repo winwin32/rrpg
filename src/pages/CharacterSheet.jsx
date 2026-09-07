@@ -17,7 +17,8 @@ const masteryFields = [
     "Dramatic Flair",
     "Faith",
     "Natural Connection",
-    "Creature Familiarity"
+    "Creature Familiarity",
+    "Magical Heritage"
 ];
 
 const secondaryAbilities = [

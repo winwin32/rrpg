@@ -38,3 +38,6 @@ Natural Connection
 
 
 Creature Familiarity
+
+
+Magical Heritage
