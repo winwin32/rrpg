@@ -168,6 +168,7 @@ function CharacterSheet() {
     const [profile] = useState(getStoredProfile);
     const socketRef = useRef(null);
     const pendingSheetRef = useRef(null);
+    const pendingCharacterDataRef = useRef(null);
     const [characterSheet, setCharacterSheet] = useState(
         createDefaultSheet
     );
@@ -237,6 +238,14 @@ function CharacterSheet() {
                         characterSheet: pendingSheetRef.current
                     }));
                 }
+
+                if (pendingCharacterDataRef.current) {
+                    characterSheetSocket.send(JSON.stringify({
+                        type: "update-character-data",
+                        targetUnitId: profile.unitId,
+                        ...pendingCharacterDataRef.current
+                    }));
+                }
             });
 
             characterSheetSocket.addEventListener("message", event => {
@@ -259,6 +268,7 @@ function CharacterSheet() {
                     message.type === "character-data-saved"
                 ) {
                     pendingSheetRef.current = null;
+                    pendingCharacterDataRef.current = null;
                     if (playerImportPendingRef.current) {
                         playerImportPendingRef.current = false;
                         setDataStatus("Imported");
@@ -362,9 +372,14 @@ function CharacterSheet() {
     }
 
     function sendCharacterData(sheet, abilities) {
+        pendingCharacterDataRef.current = {
+            characterSheet: sheet,
+            abilities
+        };
         const activeSocket = socketRef.current;
 
         if (!canEdit || activeSocket?.readyState !== WebSocket.OPEN) {
+            setDataStatus("Waiting for connection...");
             return;
         }
 
@@ -374,6 +389,18 @@ function CharacterSheet() {
             characterSheet: sheet,
             abilities
         }));
+
+        const pendingData = pendingCharacterDataRef.current;
+
+        window.setTimeout(() => {
+            if (
+                playerImportPendingRef.current &&
+                pendingCharacterDataRef.current === pendingData
+            ) {
+                setDataStatus("Import failed: server did not confirm the data.");
+                playerImportPendingRef.current = false;
+            }
+        }, 10000);
     }
 
     function startNewSheet() {
