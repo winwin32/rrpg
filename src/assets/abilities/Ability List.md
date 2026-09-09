@@ -4,7 +4,7 @@
 
 ## **False Image**
 
-*Requires 1 Magical Secrets (Illusion Mastery)*
+*(One Time Effect) Gain 1  Magical Secrets (Illusion Mastery)*
 
 **Trigger**
 
@@ -332,7 +332,7 @@ Dispel all current illusions
 
 ## **Clacking Bones**
 
-*Requires 1 Dark Power (Necromancy Mastery)*
+*(One Time Effect) Gain 1  Dark Power (Necromancy Mastery)*
 
 **Trigger**
 
@@ -362,7 +362,7 @@ Break this ability
 
 ## **Restless Soul**
 
-*Requires 1 Dark Power (Necromancy Mastery)*
+*(One Time Effect) Gain 1  Dark Power (Necromancy Mastery)*
 
 **Trigger**
 
@@ -392,7 +392,7 @@ Break this ability
 
 ## **Evil Flesh**
 
-*Requires 1 Dark Power (Necromancy Mastery)*
+*(One Time Effect) Gain 1  Dark Power (Necromancy Mastery)*
 
 **Trigger**
 
@@ -634,7 +634,7 @@ Reforge **Clacking Bones**, **Restless Souls**, or **Evil Flesh**
 
 ## **Block**
 
-*Requires 1 Shield Training (Shield Mastery)*
+*(One Time Effect) Gain 1  Shield Training (Shield Mastery)*
 
 **Trigger**
 
@@ -656,7 +656,7 @@ Gain **Glancing Blow x1**
 
 ## **Stand Firm**
 
-*Requires 1 Shield Training (Shield Mastery)*
+*(One Time Effect) Gain 1  Shield Training (Shield Mastery)*
 
 **Trigger**
 
@@ -768,7 +768,7 @@ This ability cannot be reforged
 
 ## **Battle Stance**
 
-*Requires 1 Heavy Weapons Training (Heavy Mastery)*
+*(One Time Effect) Gain 1  Heavy Weapons Training (Heavy Mastery)*
 
 **Trigger**
 
@@ -796,7 +796,7 @@ This ability functions as **Broken**
 
 ## **Hold Your Ground**
 
-*Requires 1 Heavy Weapons Training (Heavy Mastery)*
+*(One Time Effect) Gain 1  Heavy Weapons Training (Heavy Mastery)*
 
 **Trigger**
 
@@ -928,7 +928,7 @@ Gain **Empowered x1** for each Broken ability
 
 *Passive*
 
-*Requires 1 Light Weapons Training (Light Mastery)*
+*(One Time Effect) Gain 1  Light Weapons Training (Light Mastery)*
 
 **Range:**
 
@@ -950,7 +950,7 @@ This ability does not function
 
 *Passive*
 
-*Requires 1 Light Weapons Training (Light Mastery) and Coup de Grâce*
+*(One Time Effect) Gain 1  Light Weapons Training (Light Mastery) and Coup de Grâce*
 
 **Range:**
 
@@ -1110,7 +1110,7 @@ Lose **Immobilized**
 
 *Passive*
 
-*Requires 1 Dual Weapons Training (Dual Wielding Mastery)*
+*(One Time Effect) Gain 1  Dual Weapons Training (Dual Wielding Mastery)*
 
 **Range:**
 
@@ -1134,7 +1134,7 @@ Lose **Immobilized**
 
 *Passive*
 
-*Requires 1 Dual Weapons Training (Dual Wielding Mastery)*
+*(One Time Effect) Gain 1  Dual Weapons Training (Dual Wielding Mastery)*
 
 **Range:**
 
@@ -1244,7 +1244,7 @@ Lose **Dazed x1**
 
 *Passive*
 
-*Requires 1 Long Ranged Weapons Training (Long Ranged Mastery)*
+*(One Time Effect) Gain 1  Long Ranged Weapons Training (Long Ranged Mastery)*
 
 **Whole**
 
@@ -1353,7 +1353,7 @@ Lose **Dazed x1**
 
 *Passive*
 
-*Requires 1 Long Ranged Weapons Training (Long Ranged Mastery)*
+*(One Time Effect) Gain 1  Long Ranged Weapons Training (Long Ranged Mastery)*
 
 **Range:**
 
@@ -1379,7 +1379,7 @@ Lose **Dazed x1**
 
 ## **Spirit Animal**
 
-*Requires 1 Creature Familiarity (Taming Mastery)*
+*(One Time Effect) Gain 1  Creature Familiarity (Taming Mastery)*
 
 **Trigger**
 
@@ -1557,7 +1557,7 @@ Dismount
 
 ## **Amphibian**
 
-*Requires 1 Natural Connection (Animal Form Mastery)*
+*(One Time Effect) Gain 1  Natural Connection (Animal Form Mastery)*
 
 **Trigger**
 
@@ -1654,7 +1654,7 @@ On a success, target receives **immobilized**
 
 ## **Bird**
 
-*Requires 1 Natural Connection (Animal Form Mastery)*
+*(One Time Effect) Gain 1  Natural Connection (Animal Form Mastery)*
 
 **Trigger**
 
@@ -1740,7 +1740,7 @@ Gain **Empowered x1**
 
 *Passive*
 
-*Requires 1 Natural Connection (Animal Form Mastery) and Bird*
+*(One Time Effect) Gain 1  Natural Connection (Animal Form Mastery) and Bird*
 
 **Range**
 
@@ -1762,7 +1762,7 @@ Gain **Empowered x1**
 
 ## **Reptile**
 
-*Requires 1 Natural Connection (Animal Form Mastery)*
+*(One Time Effect) Gain 1  Natural Connection (Animal Form Mastery)*
 
 **Trigger**
 
@@ -1816,7 +1816,7 @@ Gain **Tough x1**
 
 ## **Regeneration**
 
-*Requires 1 Natural Connection (Animal Form Mastery) and Reptile*
+*(One Time Effect) Gain 1  Natural Connection (Animal Form Mastery) and Reptile*
 
 **Trigger**
 
@@ -1866,7 +1866,7 @@ Gain **Tough x1**
 
 ## **Mammal**
 
-*Requires 1 Natural Connection (Animal Form Mastery)*
+*(One Time Effect) Gain 1  Natural Connection (Animal Form Mastery)*
 
 **Trigger**
 
@@ -1918,7 +1918,7 @@ Gain **Quick x1**
 
 ## **Charge**
 
-*Requires 1 Natural Connection (Animal Form Mastery) and Mammal*
+*(One Time Effect) Gain 1  Natural Connection (Animal Form Mastery) and Mammal*
 
 **Trigger**
 
@@ -1964,7 +1964,7 @@ Gain **Quick x1**
 
 ## **Arachnid**
 
-*Requires 1 Natural Connection (Animal Form Mastery)*
+*(One Time Effect) Gain 1  Natural Connection (Animal Form Mastery)*
 
 **Trigger**
 
@@ -1994,7 +1994,7 @@ May gain Savage x3 to reforge this ability
 
 *Passive*
 
-*Requires 1 Natural Connection (Animal Form Mastery) and Arachnid*
+*(One Time Effect) Gain 1  Natural Connection (Animal Form Mastery) and Arachnid*
 
 **Whole**
 
@@ -2054,7 +2054,7 @@ On a success, target receives **immobilized**
 
 ## **Heal**
 
-*Requires 1 Faith (Justice and Mercy Mastery)*
+*(One Time Effect) Gain 1  Faith (Justice and Mercy Mastery)*
 
 **Trigger**
 
@@ -2084,7 +2084,7 @@ This ability cannot be reforged by **Heal**
 
 ## **Meditate**
 
-*Requires 1 Faith (Justice and Mercy Mastery)*
+*(One Time Effect) Gain 1  Faith (Justice and Mercy Mastery)*
 
 **Trigger**
 
@@ -2306,29 +2306,25 @@ Reveal one true Positive Motivator to the target
 
 ---
 
-# Performance
+### **The Show Must Go On**
 
-## **The Show Must Go On**
-
-Passive 
-
-*Requires at least 1 Dramatic Flair (Performance Mastery)*
+*Requires at least 1 Dramatic Flair*
 
 **Whole**
 
-Gain **Crescendo x1**
+Gain **Crescendo x1**. Lose all **Crescendo** if one of the caster’s abilities is **Broken**.
 
-Lose all **Crescendo** if one of the caster’s abilities is **Broken**
+When moving, caster can move an extra number of hexes equal to **Crescendo**
 
----
+### **Combat Cantata**
 
-## **Combat Cantata**
+*(One Time Effect) Gain 1 Dramatic Flair*
 
-*Requires 1 Dramatic Flair (Performance Mastery) and The Show Must Go On*
+*Requires The Show Must Go On*
 
 **Trigger**
 
-When the caster attempts to put on a powerful performance that strengthens their allies attacks
+When the caster attempts to put on a powerful performance that strengthens their allies’ attacks
 
 **Range**
 
@@ -2336,19 +2332,17 @@ Adjacent
 
 **Whole**
 
-Choose any number of allies
+Choose any number of allies. Each target receives **Empowered** equal to the caster’s **Crescendo**.
 
-Each target receives **Empowered** equal to the caster’s **Crescendo**
+### **Resolute Round**
 
----
+*(One Time Effect) Gain 1 Dramatic Flair*
 
-## **Resolute Round**
-
-*Requires 1 Dramatic Flair (Performance Mastery) and The Show Must Go On*
+*Requires The Show Must Go On*
 
 **Trigger**
 
-When the caster attempts to put on a stately performance that solidifies their allies defenses 
+When the caster attempts to put on a stately performance that solidifies their allies’ defenses
 
 **Range**
 
@@ -2356,29 +2350,7 @@ Adjacent
 
 **Whole**
 
-Choose any number of allies
-
-Each target receives **Tough** equal to the caster’s **Crescendo**
-
----
-
-## **Speedy Serenade**
-
-*Requires 1 Dramatic Flair (Performance Mastery) and The Show Must Go On*
-
-**Trigger**
-
-When the caster attempts to put on a lively performance that speeds their allies feet
-
-**Range**
-
-Adjacent
-
-**Whole**
-
-Choose any number of allies
-
-Each target receives **Quick** equal to the caster’s **Crescendo**
+Choose any number of allies. Each target receives **Tough** equal to the caster’s **Crescendo**.
 
 ---
 
@@ -2466,7 +2438,7 @@ Then break this ability
 
 *Passive*
 
-*Requires 1 Arcane Energy (The Elements Mastery)*
+*(One Time Effect) Gain 1  Arcane Energy (The Elements Mastery)*
 
 **Whole**
 
@@ -2514,7 +2486,7 @@ If the caster has at least 1 **Arcane Chaos**, (before resolving the attacks abo
 
 ## **Summon Fire Elemental**
 
-*Requires 1 Arcane Energy (The Elements Mastery)*
+*(One Time Effect) Gain 1  Arcane Energy (The Elements Mastery)*
 
 **Trigger**
 
@@ -2560,7 +2532,7 @@ Lose **Arcane Chaos x1**
 
 ## **Flame Jets**
 
-*Requires 1 Arcane Energy (The Elements Mastery)*
+*(One Time Effect) Gain 1  Arcane Energy (The Elements Mastery)*
 
 **Trigger**
 
@@ -2670,7 +2642,7 @@ If the caster has at least 1 **Arcane Chaos**, (before resolving the attacks abo
 
 ## **Summon Water Elemental**
 
-*Requires 1 Arcane Energy (The Elements Mastery)*
+*(One Time Effect) Gain 1  Arcane Energy (The Elements Mastery)*
 
 **Trigger**
 
@@ -2720,7 +2692,7 @@ Lose **Arcane Chaos x1**
 
 *Passive*
 
-*Requires 1 Arcane Energy (The Elements Mastery)*
+*(One Time Effect) Gain 1  Arcane Energy (The Elements Mastery)*
 
 **Whole**
 
@@ -2822,7 +2794,7 @@ If the caster has at least 1 **Arcane Chaos**, (before resolving the attacks abo
 
 ## **Summon Air Elemental**
 
-*Requires 1 Arcane Energy (The Elements Mastery)*
+*(One Time Effect) Gain 1  Arcane Energy (The Elements Mastery)*
 
 **Trigger**
 
@@ -2872,7 +2844,7 @@ Lose **Arcane Chaos x1**
 
 ## **Flight**
 
-*Requires 1 Arcane Energy (The Elements Mastery)*
+*(One Time Effect) Gain 1  Arcane Energy (The Elements Mastery)*
 
 **Trigger**
 
@@ -3020,7 +2992,7 @@ If the caster has at least 1 **Arcane Chaos**, (before resolving the attacks abo
 
 ## **Summon Earth Elemental**
 
-*Requires 1 Arcane Energy (The Elements Mastery)*
+*(One Time Effect) Gain 1  Arcane Energy (The Elements Mastery)*
 
 **Trigger**
 
@@ -3068,7 +3040,7 @@ Lose **Arcane Chaos x1**
 
 *Passive*
 
-*Requires 1 Arcane Energy (The Elements Mastery)*
+*(One Time Effect) Gain 1  Arcane Energy (The Elements Mastery)*
 
 **Whole**
 
@@ -3186,7 +3158,7 @@ Gain one of the following:
 
 ## Fine Spirits
 
-*Requires 1 Magical Heritage*
+*(One Time Effect) Gain 1  Magical Heritage*
 
 Passive
 
@@ -3234,7 +3206,7 @@ If the caster and the subject are touching the ground walls or ceiling, become a
 
 ## Soothing Dreams 
 
-*Requires 1 Magical Heritage*
+*(One Time Effect) Gain 1  Magical Heritage*
 
 Passive
 
@@ -3376,7 +3348,7 @@ Become aware of all sources of heat in range
 
 ## Musclebound 
 
-*Requires 1 Magical Heritage*
+*(One Time Effect) Gain 1  Magical Heritage*
 
 Passive
 
@@ -3451,7 +3423,7 @@ Make 1 hex Trapped
 
 ## Low to the Ground 
 
-*Requires 1 Magical Heritage*
+*(One Time Effect) Gain 1  Magical Heritage*
 
 Passive
 
@@ -3490,7 +3462,7 @@ Gain the “Grotesque appearance” social context
 
 Action Pool is now determined by Darkness rather than Comfort
 
-Gain Darkness x3 each rest 
+Gain +6 Darkness each rest 
 
 - - -
 
@@ -3512,7 +3484,7 @@ Attack a living creature. If attack is successful, break this ability and reforg
 
 **Broken**
 
-Gain Darkness x4 next rest. 
+Gain +4 Darkness next rest. 
 
 This ability cannot be reforged 
 

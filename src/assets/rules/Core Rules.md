@@ -211,31 +211,48 @@ To convince the other person in a social situation, they must have more positive
 
 The starting motivators will be determined by **Social Context**. 
 
-**Social Context** is a basic detail of a character’s life that describes their background or connections to the people around them. 
+**Social Contexts** represent factors that influence the way characters react to one another. 
 
-### Example Social Contexts:
+They are primarily used to determine first impressions and may cause others to view the character as dangerous, snooty, untrustworthy, or any number of other descriptions.
 
-- Member of the Dwarven Silver Hammer Clan
+### Examples of Social Contexts:
+- Member of the Dwarven Silver Hammer clan
+- Trained at a college of Demonic Lore
+- Really ugly
 
-- Versed in Demonic Lore 
+The examples above include...
 
-- Really ugly 
+a) membership in a group
 
-### Example Positive Motivators 
+b) an item of status or indication of
+training
 
-- The party greeted the governor with the proper ancestral greeting 
+c) a physical trait that impacts social interaction. 
 
-- The delegate thinks the knight is very dashing 
+But they can include anything that would cause an NPC to treat the character differently.
 
-- The party is offering a nice bribe if the governor lets them 
+Players are encouraged to create their own Social Contexts, but should okay them with the GM before adding them to their character.
 
-### Example Negative Motivators 
+Social Contexts can lead to both positive and negative motivators.
 
-- The elf maiden is disgusted that a dwarf is speaking to her 
+**POSITIVE MOTIVATORS**
 
--  The dryad is furious that the party cut down a tree for firewood last night 
+- The party greets the Governor with the appropriate ancestral greeting.
 
--  The librarian is scared the king will punish him if he lets the party read the forbidden tome 
+- The delegate thinks the knight is very dashing.
+
+- The party meets with nobles who are impressed with a member attending a
+prestigious college.
+
+**NEGATIVE MOTIVATORS**
+
+- An elf maiden is disgusted that a dwarf is speaking to her.
+
+- A librarian worries that agents of the king might try to censor her collection
+of books.
+
+- Villagers run for shelter upon seeing a barbarian from a notoriously violent
+tribe.
 
 Most motivators begin the encounter as hidden but are revealed as the person and the party take actions. 
 

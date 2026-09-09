@@ -63,15 +63,15 @@ Begin with 5 Body, 5 Mind, 5 Soul and 5 movement
 
 - Gain +1 to roll when using that ability 
 
-**Choose “social context”**
+**Answer each the following and record them under “Social Context”**
 
-- Choose one social context that fits the character's background 
+- What groups is the character a part of because of their race or culture? 
 
-- Choose one social context or more that connects the character to other characters in the party
+- What status or social recognition has the character gained as a result of developing their abilities?
 
-### Race and Culture (Free)
+- What physical traits does the character have that might affect a social interaction?
 
-Choose a “social context” that fits the character's race and culture 
+- What bond of community or convenience does the character have with the other members of the party? 
 
 ### Equipment (Free)
 
@@ -105,6 +105,11 @@ Stylish Outfit
 
 -  +1 Soul 
 
+#### Personal Effects:
+
+Using different kinds of mundane weapons or shields does not change a character’s stats in any way. 
+
+Players can choose **up to 3 weapons** or shields to own and use, either as melee, ranged or magic-focused weapons.  
 
 ## Allocate 5 Experience Points 
 
@@ -118,33 +123,9 @@ When receiving a new item or ability, answer “How did the character get this?�
 
 - - -
 
-> ## Magical Race
-> 
-> Passive
-> 
-> **Whole**
-> 
-> Gain 1 Magical Heritage
-
-- - -
-
-> ### **Shield** 
-> 
-> Passive 
-> 
-> -  Gain weapon (no “heavy” or “long ranged” tags) 
-> 
-> -  Gain shield 
-> 
-> -  Unlock and gain 1 Shield Training 
-> 
-> -  +1 Body 
-> 
-> -  “Threatening” social context 
-
 > ### **Block**
 > 
-> *Requires 1 Shield Training*
+> *(One Time Effect) Gain 1 Shield Training*
 > 
 > **Trigger**
 > 
@@ -162,7 +143,7 @@ When receiving a new item or ability, answer “How did the character get this?�
  
 > ### **Stand Firm**
 > 
-> *Requires 1 Shield Training*
+> *(One Time Effect) Gain 1 Shield Training*
 > 
 > **Trigger**
 > 
@@ -180,21 +161,9 @@ When receiving a new item or ability, answer “How did the character get this?�
 
 - - -
 
-> ### **Heavy**
-> 
-> Passive 
-> 
-> -  Gain weapon (requires “heavy” tag) 
-> 
-> -  Unlock and gain 1 Heavy Weapon Training 
-> 
-> -  +1 Body 
-> 
-> -  “Threatening” social context 
-
 > ### **Battle Stance**
 > 
-> *Requires 1 Heavy Weapons Training*
+> *(One Time Effect) Gain 1 Heavy Weapons Training*
 > 
 > **Trigger**
 > 
@@ -216,7 +185,7 @@ When receiving a new item or ability, answer “How did the character get this?�
  
 > ### **Hold Your Ground**
 > 
-> *Requires 1 Heavy Weapons Training*
+> *(One Time Effect) Gain 1 Heavy Weapons Training*
 > 
 > **Trigger**
 > 
@@ -238,21 +207,9 @@ When receiving a new item or ability, answer “How did the character get this?�
 
 - - -
 
-> ### **Light**
-> 
-> Passive 
-> 
-> -  Gain weapon (requires “light” tag) 
-> 
-> -  Unlock and gain 1 Light Weapon Training
-> 
-> -  +1 Body 
-> 
-> -  “Threatening” social context 
-
 > ### **Lightning Footwork**
 > 
-> *Requires 1 Light Weapons Training*
+> *(One Time Effect) Gain 1 Light Weapons Training*
 > 
 > *Passive*
 > 
@@ -268,7 +225,7 @@ When receiving a new item or ability, answer “How did the character get this?�
  
 > ### **Sharp Edge**
 > 
-> *Requires 1 Light Weapons Training and Coup de Grâce*
+> *(One Time Effect) Gain 1 Light Weapons Training*
 > 
 > *Passive*
 > 
@@ -284,21 +241,9 @@ When receiving a new item or ability, answer “How did the character get this?�
 
 - - -
 
-> ### **Dual Wielding**
-> 
-> Passive 
-> 
-> -  Gain 2 weapons (no “heavy” or “long ranged” tags)
-> 
-> -  Unlock and gain 1 Dual Weapons Training 
-> 
-> -  +1 Body 
-> 
-> -  “Threatening” social context 
-
 > ### **Blade Dance**
 > 
-> *Requires 1 Dual Weapons Training*
+> *(One Time Effect) Gain 1 Dual Weapons Training*
 > 
 > *Passive*
 > 
@@ -318,7 +263,7 @@ When receiving a new item or ability, answer “How did the character get this?�
  
 > ### **Flowing Step**
 > 
-> *Requires 1 Dual Weapons Training*
+> *(One Time Effect) Gain 1 Dual Weapons Training*
 > 
 > *Passive*
 > 
@@ -338,27 +283,15 @@ When receiving a new item or ability, answer “How did the character get this?�
 
 - - -
 
-> ### **Long Ranged**
-> 
-> Passive 
-> 
-> -  Gain 1 weapon (requires “long-ranged” tag) 
-> 
-> -  Unlock and gain 1 Long Ranged Weapons Training 
-> 
-> -  +1 Body 
-> 
-> -  “Threatening” social context 
-
 > ### **Artillery**
 > 
-> *Requires 1 Long Ranged Weapons Training*
+> *(One Time Effect) Gain 1 Long Ranged Weapons Training*
 > 
 > *Passive*
 > 
 > **Whole**
 > 
-> Attacks at range no longer require Ammo and gain 1 additional range. Gain **Fragile x3**.
+> Attacks at range no longer require Ammo and (One Time Effect) Gain 1 additional range. Gain **Fragile x3**.
 > 
 > **Broken**
 > 
@@ -370,7 +303,7 @@ When receiving a new item or ability, answer “How did the character get this?�
  
 > ### **Ankle Shot**
 > 
-> *Requires 1 Long Ranged Weapons Training*
+> *(One Time Effect) Gain 1 Long Ranged Weapons Training*
 > 
 > *Passive*
 > 
@@ -390,27 +323,15 @@ When receiving a new item or ability, answer “How did the character get this?�
 
 - - -
 
-> ### **The Elements**
-> 
-> Passive 
-> 
-> -  Gain “Elemental Crystal”
-> 
-> -  Unlock and gain 1 Arcane Energy   
-> 
-> -  Gain “Studious” social context 
-> 
-> -  +1 Mind 
-
 > ### **Magic Missile**
 > 
-> *Requires 1 Arcane Energy*
+> *(One Time Effect) Gain 1 Arcane Energy*
 > 
 > *Passive*
 > 
 > **Whole**
 > 
-> Attacks at range no longer require Ammo and gain 1 additional range. Gain **Fragile x3**.
+> Attacks at range no longer require Ammo and (One Time Effect) Gain 1 additional range. Gain **Fragile x3**.
 > 
 > **Broken**
 > 
@@ -422,7 +343,7 @@ When receiving a new item or ability, answer “How did the character get this?�
  
 > ### **Summon Fire Elemental**
 > 
-> *Requires 1 Arcane Energy*
+> *(One Time Effect) Gain 1 Arcane Energy*
 > 
 > **Trigger**
 > 
@@ -446,7 +367,7 @@ When receiving a new item or ability, answer “How did the character get this?�
  
 > ### **Flame Jets**
 > 
-> *Requires 1 Arcane Energy*
+> *(One Time Effect) Gain 1 Arcane Energy*
 > 
 > **Trigger**
 > 
@@ -470,7 +391,7 @@ When receiving a new item or ability, answer “How did the character get this?�
  
 > ### **Summon Water Elemental**
 > 
-> *Requires 1 Arcane Energy*
+> *(One Time Effect) Gain 1 Arcane Energy*
 > 
 > **Trigger**
 > 
@@ -494,7 +415,7 @@ When receiving a new item or ability, answer “How did the character get this?�
  
 > ### **Frozen Steps**
 > 
-> *Requires 1 Arcane Energy*
+> *(One Time Effect) Gain 1 Arcane Energy*
 > 
 > *Passive*
 > 
@@ -512,7 +433,7 @@ When receiving a new item or ability, answer “How did the character get this?�
  
 > ### **Summon Air Elemental**
 > 
-> *Requires 1 Arcane Energy*
+> *(One Time Effect) Gain 1 Arcane Energy*
 > 
 > **Trigger**
 > 
@@ -536,7 +457,7 @@ When receiving a new item or ability, answer “How did the character get this?�
  
 > ### **Flight**
 > 
-> *Requires 1 Arcane Energy*
+> *(One Time Effect) Gain 1 Arcane Energy*
 > 
 > **Trigger**
 > 
@@ -560,7 +481,7 @@ When receiving a new item or ability, answer “How did the character get this?�
  
 > ### **Summon Earth Elemental**
 > 
-> *Requires 1 Arcane Energy*
+> *(One Time Effect) Gain 1 Arcane Energy*
 > 
 > **Trigger**
 > 
@@ -584,7 +505,7 @@ When receiving a new item or ability, answer “How did the character get this?�
  
 > ### **Meteor Smash**
 > 
-> *Requires 1 Arcane Energy*
+> *(One Time Effect) Gain 1 Arcane Energy*
 > 
 > *Passive*
 > 
@@ -602,21 +523,9 @@ When receiving a new item or ability, answer “How did the character get this?�
 
 - - -
 
-> ### **Necromancy**
-> 
-> Passive 
-> 
-> -  Gain “Grimoire”
-> 
-> -  Unlock and gain 1 Dark Power  
-> 
-> -  Gain “Creepy” social context 
-> 
-> -  +1 Mind 
-
 > ### **Clacking Bones**
 > 
-> *Requires 1 Dark Power*
+> *(One Time Effect) Gain 1 Dark Power*
 > 
 > **Trigger**
 > 
@@ -636,7 +545,7 @@ When receiving a new item or ability, answer “How did the character get this?�
  
 > ### **Restless Soul**
 > 
-> *Requires 1 Dark Power*
+> *(One Time Effect) Gain 1 Dark Power*
 > 
 > **Trigger**
 > 
@@ -656,7 +565,7 @@ When receiving a new item or ability, answer “How did the character get this?�
  
 > ### **Evil Flesh**
 > 
-> *Requires 1 Dark Power*
+> *(One Time Effect) Gain 1 Dark Power*
 > 
 > **Trigger**
 > 
@@ -676,19 +585,9 @@ When receiving a new item or ability, answer “How did the character get this?�
 
 - - -
 
-> ### **Illusions**
->
-> Passive 
-> 
-> -  Gain “Night’s Cloak”
-> 
-> -  Unlock and gain 1 Magical Secrets 
-> 
-> -  +1 Mind 
-
 > ### **False Image**
 > 
-> *Requires 1 Magical Secrets*
+> *(One Time Effect) Gain 1 Magical Secrets*
 > 
 > **Trigger**
 > 
@@ -710,29 +609,21 @@ When receiving a new item or ability, answer “How did the character get this?�
 
 - - -
 
-> ### **Performance**
-> 
-> Passive 
-> 
-> -  Gain “Musical Instrument” or other tool for performance 
-> 
-> -  Unlock and gain 1 Dramatic Flair 
-> 
-> -  Gain “Performer” social context  
-> 
-> -  +1 Soul
-
 > ### **The Show Must Go On**
 > 
-> *Requires at least 1 Dramatic Flair to purchase*
+> *Requires at least 1 Dramatic Flair*
 > 
 > **Whole**
 > 
 > Gain **Crescendo x1**. Lose all **Crescendo** if one of the caster’s abilities is **Broken**.
+> 
+> When moving, caster can move an extra number of hexes equal to **Crescendo**
  
 > ### **Combat Cantata**
 > 
-> *Requires 1 Dramatic Flair and The Show Must Go On*
+> *(One Time Effect) Gain 1 Dramatic Flair*
+> 
+> *Requires The Show Must Go On*
 > 
 > **Trigger**
 > 
@@ -748,7 +639,9 @@ When receiving a new item or ability, answer “How did the character get this?�
  
 > ### **Resolute Round**
 > 
-> *Requires 1 Dramatic Flair and The Show Must Go On*
+> *(One Time Effect) Gain 1 Dramatic Flair*
+> 
+> *Requires The Show Must Go On*
 > 
 > **Trigger**
 > 
@@ -761,40 +654,12 @@ When receiving a new item or ability, answer “How did the character get this?�
 > **Whole**
 > 
 > Choose any number of allies. Each target receives **Tough** equal to the caster’s **Crescendo**.
- 
-> ### **Speedy Serenade**
-> 
-> *Requires 1 Dramatic Flair and The Show Must Go On*
-> 
-> **Trigger**
-> 
-> When the caster attempts to put on a lively performance that speeds their allies’ feet
-> 
-> **Range**
-> 
-> Adjacent
-> 
-> **Whole**
-> 
-> Choose any number of allies. Each target receives **Quick** equal to the caster’s **Crescendo**.
 
 - - -
 
-> ### **Justice and Mercy**
-> 
-> Passive 
-> 
-> -  Gain “Symbol of Faith” 
-> 
-> -  Unlock and gain 1 Faith
-> 
-> -  Gain “Pious” social context  
-> 
-> -  +1 Soul
-
 > ### **Meditate**
 > 
-> *Requires 1 Faith*
+> *(One Time Effect) Gain 1 Faith*
 > 
 > **Trigger**
 > 
@@ -810,7 +675,7 @@ When receiving a new item or ability, answer “How did the character get this?�
 
 > ### **Heal**
 > 
-> *Requires 1 Faith*
+> *(One Time Effect) Gain 1 Faith*
 > 
 > **Trigger**
 > 
@@ -830,21 +695,9 @@ When receiving a new item or ability, answer “How did the character get this?�
 
 - - -
 
-> ### **Animal Form**
-> 
-> Passive 
-> 
-> -  Gain “Wild Totem” 
-> 
-> -  Unlock and gain 1 Natural Connection
-> 
-> -  Gain “Outlander” social context 
-> 
-> -  +1 Soul
-
 > ### **Amphibian**
 > 
-> *Requires 1 Natural Connection*
+> *(One Time Effect) Gain 1 Natural Connection*
 > 
 > **Trigger**
 > 
@@ -862,7 +715,7 @@ When receiving a new item or ability, answer “How did the character get this?�
  
 > ### **Bird**
 > 
-> *Requires 1 Natural Connection*
+> *(One Time Effect) Gain 1 Natural Connection*
 > 
 > **Trigger**
 > 
@@ -880,7 +733,7 @@ When receiving a new item or ability, answer “How did the character get this?�
  
 > ### **Tactical Retreat**
 > 
-> *Requires 1 Natural Connection and Bird*
+> *(One Time Effect) Gain 1 Natural Connection and Bird*
 > 
 > *Passive*
 > 
@@ -902,7 +755,7 @@ When receiving a new item or ability, answer “How did the character get this?�
  
 > ### **Reptile**
 > 
-> *Requires 1 Natural Connection*
+> *(One Time Effect) Gain 1 Natural Connection*
 > 
 > **Trigger**
 > 
@@ -918,7 +771,7 @@ When receiving a new item or ability, answer “How did the character get this?�
  
 > ### **Regeneration**
 > 
-> *Requires 1 Natural Connection and Reptile*
+> *(One Time Effect) Gain 1 Natural Connection and Reptile*
 > 
 > **Trigger**
 > 
@@ -934,7 +787,7 @@ When receiving a new item or ability, answer “How did the character get this?�
  
 > ### **Mammal**
 > 
-> *Requires 1 Natural Connection*
+> *(One Time Effect) Gain 1 Natural Connection*
 > 
 > **Trigger**
 > 
@@ -950,7 +803,7 @@ When receiving a new item or ability, answer “How did the character get this?�
  
 > ### **Charge**
 > 
-> *Requires 1 Natural Connection and Mammal*
+> *(One Time Effect) Gain 1 Natural Connection and Mammal*
 > 
 > **Trigger**
 > 
@@ -974,7 +827,7 @@ When receiving a new item or ability, answer “How did the character get this?�
  
 > ### **Arachnid**
 > 
-> *Requires 1 Natural Connection*
+> *(One Time Effect) Gain 1 Natural Connection*
 > 
 > **Trigger**
 > 
@@ -990,7 +843,7 @@ When receiving a new item or ability, answer “How did the character get this?�
  
 > ### **Wall-Crawler**
 > 
-> *Requires 1 Natural Connection and Arachnid*
+> *(One Time Effect) Gain 1 Natural Connection and Arachnid*
 > 
 > *Passive*
 > 
@@ -1000,21 +853,9 @@ When receiving a new item or ability, answer “How did the character get this?�
 
 - - -
 
-> ### **Taming**
-> 
-> Passive 
-> 
-> -  Gain “Bag of Treats” 
-> 
-> -  Unlock and gain 1 Creature Familiarity 
-> 
-> -  Gain “Animal Lover” social context
-> 
-> -  +1 Soul
-
 > ### **Spirit Animal**
 > 
-> *Requires 1 Creature Familiarity*
+> *(One Time Effect) Gain 1 Creature Familiarity*
 > 
 > **Trigger**
 > 
@@ -1042,7 +883,7 @@ When receiving a new item or ability, answer “How did the character get this?�
 
 > ### **Fine Spirits**
 > 
-> *Requires 1 Magical Heritage*
+> *(One Time Effect) Gain 1 Magical Heritage*
 > 
 > *Passive*
 > 
@@ -1052,7 +893,7 @@ When receiving a new item or ability, answer “How did the character get this?�
  
 > ### **Soothing Dreams**
 > 
-> *Requires 1 Magical Heritage*
+> *(One Time Effect) Gain 1 Magical Heritage*
 > 
 > **Whole**
 > 
@@ -1060,7 +901,7 @@ When receiving a new item or ability, answer “How did the character get this?�
  
 > ### **Musclebound**
 > 
-> *Requires 1 Magical Heritage*
+> *(One Time Effect) Gain 1 Magical Heritage*
 > 
 > *Passive*
 > 
@@ -1070,7 +911,7 @@ When receiving a new item or ability, answer “How did the character get this?�
  
 > ### **Low to the Ground**
 > 
-> *Requires 1 Magical Heritage*
+> *(One Time Effect) Gain 1 Magical Heritage*
 > 
 > *Passive*
 > 

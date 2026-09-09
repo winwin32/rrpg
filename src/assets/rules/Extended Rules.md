@@ -566,7 +566,9 @@ When first creating a character, players get 5 experience points and choose one 
 
 To level up, characters need to complete the main objective of 3 encounters.
 
-All characters receive 2 experience points to spend every level up. They also receive their **Foreshadowed Ability** for free.
+All characters receive 2 experience points to spend every level up, and add a permanent +1 to Body Mind or Soul.
+
+They also receive their **Foreshadowed Ability** for free.
 
 If the character is missing requirements for a foreshadowed ability, it is held in reserve. 
 
