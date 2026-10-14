@@ -452,6 +452,9 @@ function Game() {
     const [playerProfile, setPlayerProfile] =
         useState(storedProfile);
 
+    const [isProfileModalOpen, setIsProfileModalOpen] =
+        useState(false);
+
     const [profileName, setProfileName] =
         useState(storedProfile?.name || "");
 
@@ -472,6 +475,21 @@ function Game() {
             ...initialUnits,
             ...initialEnemies
         ]);
+
+    const [boardPlanes, setBoardPlanes] =
+        useState([]);
+
+    const [activePlaneId, setActivePlaneId] =
+        useState("");
+
+    const [newPlaneName, setNewPlaneName] =
+        useState("");
+
+    const [paintColor, setPaintColor] =
+        useState("#d66b42");
+
+    const [boardToolMode, setBoardToolMode] =
+        useState("select");
 
     const [selectedUnit, setSelectedUnit] =
         useState(storedProfile?.unitId || null);
@@ -517,6 +535,15 @@ function Game() {
 
             if (Array.isArray(message.units)) {
                 setUnits(message.units);
+            }
+
+            if (Array.isArray(message.planes)) {
+                setBoardPlanes(message.planes);
+                setActivePlaneId(currentPlaneId =>
+                    message.planes.some(plane => plane.id === currentPlaneId)
+                        ? currentPlaneId
+                        : message.planes.at(-1)?.id || ""
+                );
             }
 
             setPlayers(
@@ -657,6 +684,56 @@ function Game() {
                 })
             );
         }
+    }
+
+    function updateBoardPlanes(nextPlanes) {
+        if (
+            playerProfile?.role !== "game-master" ||
+            socket?.readyState !== WebSocket.OPEN
+        ) {
+            return;
+        }
+
+        setBoardPlanes(nextPlanes);
+        socket.send(JSON.stringify({
+            type: "update-board-planes",
+            planes: nextPlanes
+        }));
+    }
+
+    function createBoardPlane() {
+        if (!newPlaneName.trim()) {
+            return;
+        }
+
+        const plane = {
+            id: `plane-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+            name: newPlaneName.trim(),
+            cells: {}
+        };
+
+        updateBoardPlanes([...boardPlanes, plane]);
+        setActivePlaneId(plane.id);
+        setNewPlaneName("");
+    }
+
+    function deleteActiveBoardPlane() {
+        if (!activePlaneId) {
+            return;
+        }
+
+        const activePlane = boardPlanes.find(
+            plane => plane.id === activePlaneId
+        );
+        if (!activePlane || !window.confirm(`Delete the "${activePlane.name}" plane?`)) {
+            return;
+        }
+
+        const nextPlanes = boardPlanes.filter(
+            plane => plane.id !== activePlaneId
+        );
+        updateBoardPlanes(nextPlanes);
+        setActivePlaneId(nextPlanes.at(-1)?.id || "");
     }
 
 
@@ -865,7 +942,61 @@ function Game() {
     // HANDLE HEX CLICK
     // =========================
 
+    function paintBoardCell(col, row) {
+        if (
+            playerProfile?.role !== "game-master" ||
+            boardToolMode === "select"
+        ) {
+            return;
+        }
+
+        const activePlane = boardPlanes.find(
+            plane => plane.id === activePlaneId
+        );
+        if (!activePlane) {
+            return;
+        }
+
+        const cellKey = `${col},${row}`;
+        const cells = { ...activePlane.cells };
+        if (boardToolMode === "erase") {
+            delete cells[cellKey];
+        } else {
+            cells[cellKey] = paintColor;
+        }
+
+        updateBoardPlanes(boardPlanes.map(plane =>
+            plane.id === activePlaneId
+                ? { ...plane, cells }
+                : plane
+        ));
+    }
+
+    function handleBoardPointerDown(event, col, row) {
+        if (
+            playerProfile?.role !== "game-master" ||
+            boardToolMode === "select"
+        ) {
+            return;
+        }
+
+        event.preventDefault();
+        paintBoardCell(col, row);
+    }
+
+    function handleBoardPointerEnter(event, col, row) {
+        if (event.buttons === 1) {
+            paintBoardCell(col, row);
+        }
+    }
+
     function handleHexClick(col, row) {
+        if (
+            playerProfile?.role === "game-master" &&
+            boardToolMode !== "select"
+        ) {
+            return;
+        }
 
         const clickedUnit =
             units.find(
@@ -966,7 +1097,7 @@ function Game() {
             {/* PROFILE MODAL              */}
             {/* ========================= */}
 
-            {!playerProfile && (
+            {!playerProfile && isProfileModalOpen && (
 
                 <div className="profile-overlay">
 
@@ -1098,22 +1229,109 @@ function Game() {
                     </div>
 
                     {playerProfile?.role === "game-master" && (
-                        <button
-                            onClick={resetBoard}
-                            className="board-action-button"
-                            title="Reset the board to initial state"
-                        >
-                            Reset Board
-                        </button>
+                        <>
+                            <button
+                                onClick={resetBoard}
+                                className="board-action-button"
+                                title="Reset the board to initial state"
+                            >
+                                Reset Board
+                            </button>
+
+                            <section className="board-tools" aria-label="Game master board tools">
+                                <h2>Board planes</h2>
+
+                                <div className="board-tool-modes" role="group" aria-label="Hex tool">
+                                    {["select", "paint", "erase"].map(mode => (
+                                        <button
+                                            key={mode}
+                                            type="button"
+                                            className={boardToolMode === mode ? "active" : ""}
+                                            aria-pressed={boardToolMode === mode}
+                                            onClick={() => setBoardToolMode(mode)}
+                                        >
+                                            {mode[0].toUpperCase() + mode.slice(1)}
+                                        </button>
+                                    ))}
+                                </div>
+
+                                <label className="board-color-control">
+                                    Paint color
+                                    <input
+                                        type="color"
+                                        value={paintColor}
+                                        onChange={event => setPaintColor(event.target.value)}
+                                        aria-label="Choose paint color"
+                                    />
+                                </label>
+
+                                <label className="board-plane-control">
+                                    Active plane
+                                    <select
+                                        value={activePlaneId}
+                                        onChange={event => setActivePlaneId(event.target.value)}
+                                    >
+                                        <option value="">Choose a plane</option>
+                                        {boardPlanes.map(plane => (
+                                            <option key={plane.id} value={plane.id}>
+                                                {plane.name}
+                                            </option>
+                                        ))}
+                                    </select>
+                                </label>
+
+                                <form
+                                    className="board-plane-create"
+                                    onSubmit={event => {
+                                        event.preventDefault();
+                                        createBoardPlane();
+                                    }}
+                                >
+                                    <input
+                                        type="text"
+                                        value={newPlaneName}
+                                        onChange={event => setNewPlaneName(event.target.value)}
+                                        placeholder="New plane name"
+                                        maxLength={40}
+                                        aria-label="New plane name"
+                                    />
+                                    <button
+                                        type="submit"
+                                        disabled={!newPlaneName.trim() || connectionStatus !== "connected"}
+                                    >
+                                        Create
+                                    </button>
+                                </form>
+
+                                <button
+                                    type="button"
+                                    className="board-action-button"
+                                    onClick={deleteActiveBoardPlane}
+                                    disabled={!activePlaneId || connectionStatus !== "connected"}
+                                >
+                                    Delete active plane
+                                </button>
+                            </section>
+                        </>
                     )}
 
-                    <button
-                        type="button"
-                        className="board-action-button"
-                        onClick={logout}
-                    >
-                        Logout
-                    </button>
+                    {playerProfile ? (
+                        <button
+                            type="button"
+                            className="board-action-button"
+                            onClick={logout}
+                        >
+                            Logout
+                        </button>
+                    ) : (
+                        <button
+                            type="button"
+                            className="board-action-button"
+                            onClick={() => setIsProfileModalOpen(true)}
+                        >
+                            Login
+                        </button>
+                    )}
 
                     {sortedPlayers.length === 0 ? (
                         <p className="empty-player-list">
@@ -1235,10 +1453,36 @@ function Game() {
                                 onMouseLeave={() =>
                                     setHoveredHex(null)
                                 }
+                                onPointerDown={event =>
+                                    handleBoardPointerDown(event, col, row)
+                                }
+                                onPointerEnter={event =>
+                                    handleBoardPointerEnter(event, col, row)
+                                }
                                 style={{
                                     cursor:
-                                        "pointer"
+                                        playerProfile?.role === "game-master" && boardToolMode !== "select"
+                                            ? "crosshair"
+                                            : "pointer"
                                 }}
+                            />
+                        );
+                    })
+                )}
+
+                {boardPlanes.map(plane =>
+                    Object.entries(plane.cells).map(([cellKey, color]) => {
+                        const [col, row] = cellKey.split(",").map(Number);
+                        const { x, y } = getHexPosition(col, row);
+
+                        return (
+                            <polygon
+                                key={`${plane.id}-${cellKey}`}
+                                points={hexPoints(x, y)}
+                                fill={color}
+                                fillOpacity="0.72"
+                                stroke="none"
+                                pointerEvents="none"
                             />
                         );
                     })
@@ -1374,6 +1618,12 @@ function Game() {
                     return (
                         <g
                             key={unit.id}
+                            onPointerDown={event =>
+                                handleBoardPointerDown(event, unit.col, unit.row)
+                            }
+                            onPointerEnter={event =>
+                                handleBoardPointerEnter(event, unit.col, unit.row)
+                            }
                             onClick={event => {
 
                                 event.stopPropagation();
@@ -1385,7 +1635,9 @@ function Game() {
                             }}
                             style={{
                                 cursor:
-                                    "pointer"
+                                    playerProfile?.role === "game-master" && boardToolMode !== "select"
+                                        ? "crosshair"
+                                        : "pointer"
                             }}
                         >
 

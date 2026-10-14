@@ -12,7 +12,65 @@ import { WebSocketServer } from "ws";
 const PORT = Number(process.env.PORT || 3001);
 const STATE_FILE = new URL("./board-state.json", import.meta.url);
 const CHARACTER_DATA_FILE = new URL("./character-data.json", import.meta.url);
+const BOARD_COLUMNS = 11;
+const BOARD_ROWS = 12;
 const clients = new Map();
+
+function normalizeBoardPlanes(planes) {
+    if (!Array.isArray(planes) || planes.length > 32) {
+        return null;
+    }
+
+    const planeIds = new Set();
+    const normalizedPlanes = [];
+
+    for (const plane of planes) {
+        if (
+            !plane ||
+            typeof plane.id !== "string" ||
+            !/^[\w-]{1,64}$/.test(plane.id) ||
+            planeIds.has(plane.id) ||
+            typeof plane.name !== "string" ||
+            !plane.name.trim() ||
+            plane.name.trim().length > 40 ||
+            !plane.cells ||
+            typeof plane.cells !== "object" ||
+            Array.isArray(plane.cells)
+        ) {
+            return null;
+        }
+
+        const cells = {};
+
+        for (const [key, color] of Object.entries(plane.cells)) {
+            const match = key.match(/^(\d+),(\d+)$/);
+            if (
+                !match ||
+                Number(match[1]) >= BOARD_COLUMNS ||
+                Number(match[2]) >= BOARD_ROWS ||
+                typeof color !== "string" ||
+                !/^#[0-9a-f]{6}$/i.test(color)
+            ) {
+                return null;
+            }
+
+            cells[key] = color.toLowerCase();
+        }
+
+        if (Object.keys(cells).length > BOARD_COLUMNS * BOARD_ROWS) {
+            return null;
+        }
+
+        planeIds.add(plane.id);
+        normalizedPlanes.push({
+            id: plane.id,
+            name: plane.name.trim(),
+            cells
+        });
+    }
+
+    return normalizedPlanes;
+}
 
 function loadBoardState() {
     try {
@@ -20,11 +78,14 @@ function loadBoardState() {
             readFileSync(STATE_FILE, "utf8")
         );
 
-        return Array.isArray(savedState.units)
-            ? savedState.units
-            : null;
+        return {
+            units: Array.isArray(savedState.units)
+                ? savedState.units
+                : null,
+            planes: normalizeBoardPlanes(savedState.planes || []) || []
+        };
     } catch {
-        return null;
+        return { units: null, planes: [] };
     }
 }
 
@@ -48,7 +109,8 @@ function saveBoardState() {
                 col: unit.col,
                 row: unit.row,
                 type: unit.type
-            }))
+            })),
+            planes: boardPlanes
         }, null, 2),
         "utf8"
     );
@@ -130,7 +192,9 @@ function getCharacterDataSummary() {
     }));
 }
 
-let boardUnits = loadBoardState();
+const savedBoardState = loadBoardState();
+let boardUnits = savedBoardState.units;
+let boardPlanes = savedBoardState.planes;
 const characterData = loadCharacterData();
 mergeCharacterDataFromUnits(boardUnits);
 saveCharacterData();
@@ -151,6 +215,7 @@ function sendState() {
     const message = JSON.stringify({
         type: "state",
         units: getUnitsWithCharacterData(),
+        planes: boardPlanes,
         players: Array.from(clients.values())
             .filter(client => client.profile)
             .map(client => client.profile)
@@ -199,6 +264,7 @@ websocketServer.on("connection", socket => {
     socket.send(JSON.stringify({
         type: "state",
         units: getUnitsWithCharacterData(),
+        planes: boardPlanes,
         players: Array.from(clients.values())
             .filter(connectedClient => connectedClient.profile)
             .map(connectedClient => connectedClient.profile)
@@ -303,6 +369,7 @@ websocketServer.on("connection", socket => {
             message.type !== "update-ability-status" &&
             message.type !== "update-character-sheet" &&
             message.type !== "update-character-data" &&
+            message.type !== "update-board-planes" &&
             message.type !== "export-character-data" &&
             message.type !== "import-character-data" &&
             message.type !== "reset-board"
@@ -548,6 +615,22 @@ websocketServer.on("connection", socket => {
             socket.send(JSON.stringify({
                 type: "character-sheet-saved"
             }));
+            sendState();
+            return;
+        }
+
+        if (message.type === "update-board-planes") {
+            if (client.profile.role !== "game-master") {
+                return;
+            }
+
+            const normalizedPlanes = normalizeBoardPlanes(message.planes);
+            if (!normalizedPlanes) {
+                return;
+            }
+
+            boardPlanes = normalizedPlanes;
+            saveBoardState();
             sendState();
             return;
         }
