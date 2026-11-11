@@ -491,6 +491,9 @@ function Game() {
     const [boardToolMode, setBoardToolMode] =
         useState("select");
 
+    const [planeFileStatus, setPlaneFileStatus] =
+        useState("");
+
     const [selectedUnit, setSelectedUnit] =
         useState(storedProfile?.unitId || null);
 
@@ -691,7 +694,7 @@ function Game() {
             playerProfile?.role !== "game-master" ||
             socket?.readyState !== WebSocket.OPEN
         ) {
-            return;
+            return false;
         }
 
         setBoardPlanes(nextPlanes);
@@ -699,6 +702,7 @@ function Game() {
             type: "update-board-planes",
             planes: nextPlanes
         }));
+        return true;
     }
 
     function createBoardPlane() {
@@ -734,6 +738,77 @@ function Game() {
         );
         updateBoardPlanes(nextPlanes);
         setActivePlaneId(nextPlanes.at(-1)?.id || "");
+    }
+
+    function exportBoardPlanes() {
+        const exportData = {
+            version: 1,
+            planes: boardPlanes
+        };
+        const fileUrl = URL.createObjectURL(
+            new Blob([JSON.stringify(exportData, null, 2)], {
+                type: "application/json"
+            })
+        );
+        const downloadLink = document.createElement("a");
+        downloadLink.href = fileUrl;
+        downloadLink.download = `board-planes-${new Date().toISOString().slice(0, 10)}.json`;
+        downloadLink.click();
+        window.setTimeout(() => URL.revokeObjectURL(fileUrl), 1000);
+        setPlaneFileStatus(`Exported ${boardPlanes.length} plane${boardPlanes.length === 1 ? "" : "s"}.`);
+    }
+
+    async function importBoardPlanes(event) {
+        const file = event.target.files?.[0];
+        event.target.value = "";
+        if (!file) {
+            return;
+        }
+
+        try {
+            const importData = JSON.parse(await file.text());
+            const importedPlanes = importData?.version === 1
+                ? importData.planes
+                : null;
+            const planeIds = new Set();
+
+            if (
+                !Array.isArray(importedPlanes) ||
+                importedPlanes.length > 32 ||
+                importedPlanes.some(plane =>
+                    !plane ||
+                    typeof plane.id !== "string" ||
+                    !/^[\w-]{1,64}$/.test(plane.id) ||
+                    planeIds.has(plane.id) ||
+                    typeof plane.name !== "string" ||
+                    !plane.name.trim() ||
+                    plane.name.trim().length > 40 ||
+                    !plane.cells ||
+                    typeof plane.cells !== "object" ||
+                    Array.isArray(plane.cells)
+                    || Object.entries(plane.cells).some(([key, color]) => {
+                        const cell = key.match(/^(\d+),(\d+)$/);
+                        return !cell ||
+                            Number(cell[1]) >= COLS ||
+                            Number(cell[2]) >= ROWS ||
+                            typeof color !== "string" ||
+                            !/^#[0-9a-f]{6}$/i.test(color);
+                    }) || !planeIds.add(plane.id)
+                )
+            ) {
+                throw new Error("This file does not contain valid board planes.");
+            }
+
+            if (!updateBoardPlanes(importedPlanes)) {
+                throw new Error("Connect to the game before importing planes.");
+            }
+            setActivePlaneId(importedPlanes.at(-1)?.id || "");
+            setPlaneFileStatus(`Imported ${importedPlanes.length} plane${importedPlanes.length === 1 ? "" : "s"}.`);
+        } catch (error) {
+            setPlaneFileStatus(error instanceof SyntaxError
+                ? "Could not read that JSON file."
+                : error.message || "Could not import board planes.");
+        }
     }
 
 
@@ -945,7 +1020,7 @@ function Game() {
     function paintBoardCell(col, row) {
         if (
             playerProfile?.role !== "game-master" ||
-            boardToolMode === "select"
+            !["paint", "erase"].includes(boardToolMode)
         ) {
             return;
         }
@@ -975,7 +1050,7 @@ function Game() {
     function handleBoardPointerDown(event, col, row) {
         if (
             playerProfile?.role !== "game-master" ||
-            boardToolMode === "select"
+            !["paint", "erase"].includes(boardToolMode)
         ) {
             return;
         }
@@ -993,7 +1068,7 @@ function Game() {
     function handleHexClick(col, row) {
         if (
             playerProfile?.role === "game-master" &&
-            boardToolMode !== "select"
+            ["paint", "erase"].includes(boardToolMode)
         ) {
             return;
         }
@@ -1248,7 +1323,11 @@ function Game() {
                                             type="button"
                                             className={boardToolMode === mode ? "active" : ""}
                                             aria-pressed={boardToolMode === mode}
-                                            onClick={() => setBoardToolMode(mode)}
+                                            onClick={() => setBoardToolMode(currentMode =>
+                                                mode === "select" || currentMode === mode
+                                                    ? "select"
+                                                    : mode
+                                            )}
                                         >
                                             {mode[0].toUpperCase() + mode.slice(1)}
                                         </button>
@@ -1311,6 +1390,30 @@ function Game() {
                                 >
                                     Delete active plane
                                 </button>
+
+                                <div className="board-plane-file-actions">
+                                    <button
+                                        type="button"
+                                        onClick={exportBoardPlanes}
+                                    >
+                                        Export JSON
+                                    </button>
+                                    <label className={`board-plane-import ${connectionStatus !== "connected" ? "disabled" : ""}`}>
+                                        Import JSON
+                                        <input
+                                            type="file"
+                                            accept=".json,application/json"
+                                            onChange={importBoardPlanes}
+                                            disabled={connectionStatus !== "connected"}
+                                        />
+                                    </label>
+                                </div>
+
+                                {planeFileStatus && (
+                                    <p className="board-plane-file-status" role="status">
+                                        {planeFileStatus}
+                                    </p>
+                                )}
                             </section>
                         </>
                     )}

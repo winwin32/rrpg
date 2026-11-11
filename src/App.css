@@ -256,6 +256,54 @@ body {
     cursor: pointer;
 }
 
+.board-plane-file-actions {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+    margin-top: 12px;
+}
+
+.board-plane-file-actions button,
+.board-plane-import {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    min-height: 36px;
+    box-sizing: border-box;
+    padding: 6px 4px;
+    color: #e8e8e8;
+    background: #171717;
+    border: 1px solid #666;
+    border-radius: 4px;
+    font: inherit;
+    font-size: 12px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.board-plane-file-actions button:hover,
+.board-plane-import:hover:not(.disabled) {
+    background: #292929;
+    border-color: #888;
+}
+
+.board-plane-import input {
+    display: none;
+}
+
+.board-plane-import.disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.board-plane-file-status {
+    margin: 8px 0 0;
+    color: #c8d5cb;
+    font-size: 12px;
+    overflow-wrap: anywhere;
+}
+
 .board-tool-modes button.active {
     color: #171717;
     background: #d5d0c4;
