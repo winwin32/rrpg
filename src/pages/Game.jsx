@@ -525,6 +525,11 @@ function Game() {
             }
 
             if (message.type !== "state") {
+                if (message.type === "enemy-duplicated") {
+                    setSelectedUnit(message.unitId);
+                    return;
+                }
+
                 if (message.type === "error") {
                     setMultiplayerError(message.message || "Multiplayer error");
                     setProfileImage("");
@@ -689,6 +694,37 @@ function Game() {
         }
     }
 
+    function duplicateEnemy(enemyId) {
+        if (
+            playerProfile?.role !== "game-master" ||
+            socket?.readyState !== WebSocket.OPEN
+        ) {
+            return;
+        }
+
+        socket.send(JSON.stringify({
+            type: "duplicate-enemy",
+            targetUnitId: enemyId
+        }));
+    }
+
+    function adjustEnemyDamage(delta) {
+        if (
+            playerProfile?.role !== "game-master" ||
+            selectedToken?.type !== "enemy" ||
+            ![-1, 1].includes(delta) ||
+            socket?.readyState !== WebSocket.OPEN
+        ) {
+            return;
+        }
+
+        socket.send(JSON.stringify({
+            type: "adjust-enemy-damage",
+            targetUnitId: selectedToken.id,
+            delta
+        }));
+    }
+
     function updateBoardPlanes(nextPlanes) {
         if (
             playerProfile?.role !== "game-master" ||
@@ -751,6 +787,42 @@ function Game() {
             })
         );
         const downloadLink = document.createElement("a");
+                    {playerProfile?.role === "game-master" && selectedToken?.type === "enemy" && (
+                        <aside className="ability-panel enemy-damage-panel">
+                            <h2>{selectedToken.name}</h2>
+                            <div className="enemy-damage-controls">
+                                <span>Damage taken</span>
+                                <output aria-live="polite">
+                                    {Number.isInteger(selectedToken.damage) && selectedToken.damage >= 0
+                                        ? selectedToken.damage
+                                        : 0}
+                                </output>
+                                <div className="enemy-damage-buttons">
+                                    <button
+                                        type="button"
+                                        onClick={() => adjustEnemyDamage(-1)}
+                                        disabled={
+                                            connectionStatus !== "connected" ||
+                                            !selectedToken.damage
+                                        }
+                                        aria-label={`Decrease damage for ${selectedToken.name}`}
+                                        title="Decrease damage"
+                                    >
+                                        -
+                                    </button>
+                                    <button
+                                        type="button"
+                                        onClick={() => adjustEnemyDamage(1)}
+                                        disabled={connectionStatus !== "connected"}
+                                        aria-label={`Increase damage for ${selectedToken.name}`}
+                                        title="Increase damage"
+                                    >
+                                        +
+                                    </button>
+                                </div>
+                            </div>
+                        </aside>
+                    )}
         downloadLink.href = fileUrl;
         downloadLink.download = `board-planes-${new Date().toISOString().slice(0, 10)}.json`;
         downloadLink.click();
@@ -940,6 +1012,9 @@ function Game() {
     const selectedToken = units.find(
         unit => unit.id === selectedUnit
     );
+    const enemyTokens = units
+        .filter(unit => unit.type === "enemy")
+        .sort((first, second) => first.name.localeCompare(second.name));
 
     const displayedAbilities =
         playerProfile?.role !== "game-master" &&
@@ -1312,6 +1387,38 @@ function Game() {
                             >
                                 Reset Board
                             </button>
+
+                            <section className="enemy-token-tools" aria-label="Enemy tokens">
+                                <h2>Enemy tokens</h2>
+                                {enemyTokens.length === 0 ? (
+                                    <p className="empty-player-list">No enemy tokens</p>
+                                ) : (
+                                    <ul className="enemy-token-list">
+                                        {enemyTokens.map(enemy => (
+                                            <li key={enemy.id}>
+                                                <button
+                                                    type="button"
+                                                    className={`enemy-token-select${selectedUnit === enemy.id ? " active" : ""}`}
+                                                    onClick={() => setSelectedUnit(enemy.id)}
+                                                    title={`Select ${enemy.name}`}
+                                                >
+                                                    {enemy.name}
+                                                </button>
+                                                <button
+                                                    type="button"
+                                                    className="enemy-token-copy"
+                                                    onClick={() => duplicateEnemy(enemy.id)}
+                                                    disabled={connectionStatus !== "connected"}
+                                                    aria-label={`Copy ${enemy.name}`}
+                                                    title={`Copy ${enemy.name}`}
+                                                >
+                                                    Copy
+                                                </button>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                )}
+                            </section>
 
                             <section className="board-tools" aria-label="Game master board tools">
                                 <h2>Board planes</h2>

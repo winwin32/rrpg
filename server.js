@@ -1,6 +1,7 @@
 /* global process */
 
 import { createServer } from "node:http";
+import { randomUUID } from "node:crypto";
 import {
     readFileSync,
     renameSync,
@@ -108,7 +109,10 @@ function saveBoardState() {
                 image: unit.image,
                 col: unit.col,
                 row: unit.row,
-                type: unit.type
+                type: unit.type,
+                ...(unit.type === "enemy"
+                    ? { damage: Number.isInteger(unit.damage) && unit.damage >= 0 ? unit.damage : 0 }
+                    : {})
             })),
             planes: boardPlanes
         }, null, 2),
@@ -230,6 +234,34 @@ function sendState() {
 
 function isValidPosition(value) {
     return Number.isInteger(value) && value >= 0;
+}
+
+function findClosestOpenPosition(unit) {
+    let closestPosition = null;
+    let closestDistance = Infinity;
+
+    for (let row = 0; row < BOARD_ROWS; row += 1) {
+        for (let col = 0; col < BOARD_COLUMNS; col += 1) {
+            if (boardUnits.some(item => item.col === col && item.row === row)) {
+                continue;
+            }
+
+            const unitQ = unit.col - (unit.row - (unit.row & 1)) / 2;
+            const candidateQ = col - (row - (row & 1)) / 2;
+            const distance = Math.max(
+                Math.abs(candidateQ - unitQ),
+                Math.abs(row - unit.row),
+                Math.abs((candidateQ + row) - (unitQ + unit.row))
+            );
+
+            if (distance < closestDistance) {
+                closestDistance = distance;
+                closestPosition = { col, row };
+            }
+        }
+    }
+
+    return closestPosition;
 }
 
 function mergeTokenAbilities(incomingUnits) {
@@ -370,6 +402,8 @@ websocketServer.on("connection", socket => {
             message.type !== "update-character-sheet" &&
             message.type !== "update-character-data" &&
             message.type !== "update-board-planes" &&
+            message.type !== "duplicate-enemy" &&
+            message.type !== "adjust-enemy-damage" &&
             message.type !== "export-character-data" &&
             message.type !== "import-character-data" &&
             message.type !== "reset-board"
@@ -630,6 +664,71 @@ websocketServer.on("connection", socket => {
             }
 
             boardPlanes = normalizedPlanes;
+            saveBoardState();
+            sendState();
+            return;
+        }
+
+        if (message.type === "duplicate-enemy") {
+            if (client.profile.role !== "game-master") {
+                return;
+            }
+
+            const sourceUnit = boardUnits.find(
+                unit => unit.id === message.targetUnitId && unit.type === "enemy"
+            );
+            if (!sourceUnit) {
+                return;
+            }
+
+            const position = findClosestOpenPosition(sourceUnit);
+            if (!position) {
+                return;
+            }
+
+            const baseName = sourceUnit.name.replace(/ \(\d+\)$/, "");
+            const usedNames = new Set(boardUnits.map(unit => unit.name));
+            let copyNumber = 2;
+            while (usedNames.has(`${baseName} (${copyNumber})`)) {
+                copyNumber += 1;
+            }
+
+            const copiedUnit = {
+                ...sourceUnit,
+                id: randomUUID(),
+                name: `${baseName} (${copyNumber})`,
+                damage: 0,
+                ...position
+            };
+            boardUnits.push(copiedUnit);
+            saveBoardState();
+            sendState();
+            socket.send(JSON.stringify({
+                type: "enemy-duplicated",
+                unitId: copiedUnit.id
+            }));
+            return;
+        }
+
+        if (message.type === "adjust-enemy-damage") {
+            if (
+                client.profile.role !== "game-master" ||
+                ![-1, 1].includes(message.delta)
+            ) {
+                return;
+            }
+
+            const targetUnit = boardUnits.find(
+                unit => unit.id === message.targetUnitId && unit.type === "enemy"
+            );
+            if (!targetUnit) {
+                return;
+            }
+
+            const currentDamage = Number.isInteger(targetUnit.damage) && targetUnit.damage >= 0
+                ? targetUnit.damage
+                : 0;
+            targetUnit.damage = Math.max(0, currentDamage + message.delta);
             saveBoardState();
             sendState();
             return;

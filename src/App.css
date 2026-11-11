@@ -52,6 +52,48 @@ body {
     max-height: 320px;
 }
 
+.enemy-damage-controls {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 12px 8px;
+    color: #ddd;
+    font-size: 13px;
+}
+
+.enemy-damage-controls output {
+    color: #fff;
+    font-size: 20px;
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+}
+
+.enemy-damage-buttons {
+    display: grid;
+    grid-column: 1 / -1;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+}
+
+.enemy-damage-buttons button {
+    min-height: 34px;
+    color: #eee;
+    background: #171717;
+    border: 1px solid #666;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.enemy-damage-buttons button:hover:not(:disabled) {
+    background: #333;
+}
+
+.enemy-damage-buttons button:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
 .ability-panel h2 {
     margin: 0 0 14px;
     padding-bottom: 10px;
@@ -225,6 +267,65 @@ body {
 
 .board-action-button:active {
     background: #101010;
+}
+
+.enemy-token-tools {
+    margin-top: 18px;
+    padding-top: 14px;
+    border-top: 1px solid #555;
+}
+
+.enemy-token-tools h2 {
+    margin: 0 0 10px;
+}
+
+.enemy-token-list {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.enemy-token-list li {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 4px;
+}
+
+.enemy-token-select,
+.enemy-token-copy {
+    min-width: 0;
+    padding: 6px;
+    color: #ddd;
+    background: #171717;
+    border: 1px solid #555;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.enemy-token-select {
+    overflow: hidden;
+    text-align: left;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.enemy-token-select.active {
+    border-color: #e6bd52;
+    color: #ffe28a;
+}
+
+.enemy-token-select:hover,
+.enemy-token-copy:hover:not(:disabled) {
+    background: #292929;
+}
+
+.enemy-token-copy:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
 }
 
 .board-tools {
